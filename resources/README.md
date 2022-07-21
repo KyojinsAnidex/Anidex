@@ -2,12 +2,14 @@
 1. [Official Tutorial](https://svelte.dev/tutorial/basics)
 2. [Official Docs](https://svelte.dev/docs)
 3. [This playlist with double digit views...](https://www.youtube.com/playlist?list=PLFAU47Id44XHuWQt84YWbaBBL0CI1nFXk)
+4. [CSS](https://tailwindcss.com/)
+5. [Adding Tailwind to Svelte](https://tailwindcss.com/docs/guides/sveltekit?fbclid=IwAR2g_B5lP640CR_F70pCHkVzbX2IoPhszjj8PzBlt0tAffDxwNPRuhutB3I)
 
 ### Postgresql
 1. [Official Postgresql Docs](https://www.postgresql.org/docs/14/index.html)
 
 ### NodeJS and ExpressJS
-**That Udemy Course Modules 6 and 7...**
+**That Udemy Course Modules 6 and 7...** [Drive Link](https://drive.google.com/drive/u/1/folders/1Ftcq5Pxf5Aq2Mn3V6qU70QixoVllTmrC)
 1. [ExpressJS getting started](https://expressjs.com/en/starter/installing.html)
 2. [ExpressJS Docs](https://expressjs.com/en/guide/routing.html) (Just check top navbar for next pages) 
 
