@@ -1,7 +1,7 @@
 # Svelte
-1.[Official Page and tutorials]https://svelte.dev/
-2.[CSS]https://tailwindcss.com/
-3.[Adding Tailwind to Svelte]https://tailwindcss.com/docs/guides/sveltekit?fbclid=IwAR2g_B5lP640CR_F70pCHkVzbX2IoPhszjj8PzBlt0tAffDxwNPRuhutB3I
+1.[Official Page and tutorials](https://svelte.dev/)
+2.[CSS](https://tailwindcss.com/)
+3.[Adding Tailwind to Svelte](https://tailwindcss.com/docs/guides/sveltekit?fbclid=IwAR2g_B5lP640CR_F70pCHkVzbX2IoPhszjj8PzBlt0tAffDxwNPRuhutB3I)
 
 # Postgresql
 1. [Official Postgresql Docs](https://www.postgresql.org/docs/14/index.html)
