@@ -1,0 +1,18 @@
+### Svelte
+1. [Official Tutorial](https://svelte.dev/tutorial/basics)
+2. [Official Docs](https://svelte.dev/docs)
+3. [This playlist with double digit views...](https://www.youtube.com/playlist?list=PLFAU47Id44XHuWQt84YWbaBBL0CI1nFXk)
+
+### Postgresql
+1. [Official Postgresql Docs](https://www.postgresql.org/docs/14/index.html)
+
+### NodeJS and ExpressJS
+**That Udemy Course Modules 6 and 7...**
+1. [ExpressJS getting started](https://expressjs.com/en/starter/installing.html)
+2. [ExpressJS Docs](https://expressjs.com/en/guide/routing.html) (Just check top navbar for next pages) 
+
+### RESTfull API with ExpressJS and Postgresql
+**That Udemy Course Modules 6 and 7... It is just that good**
+1. [Good Video](https://www.youtube.com/watch?v=_Mun4eOOf2Q)
+2. [Postgresql website had this one](https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/)
+3. [Official NodeJS Postgresql library Docs](https://node-postgres.com/guides/project-structure/)
