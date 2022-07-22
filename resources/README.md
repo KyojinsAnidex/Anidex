@@ -4,6 +4,9 @@
 3. [This playlist with double digit views...](https://www.youtube.com/playlist?list=PLFAU47Id44XHuWQt84YWbaBBL0CI1nFXk)
 4. [CSS](https://tailwindcss.com/)
 5. [Adding Tailwind to Svelte](https://tailwindcss.com/docs/guides/sveltekit?fbclid=IwAR2g_B5lP640CR_F70pCHkVzbX2IoPhszjj8PzBlt0tAffDxwNPRuhutB3I)
+6. [Buildin an app with tailwind and svelte video](https://www.youtube.com/watch?v=YipaPr4Aex8) 
+7. [Sveltekit for beginner video](https://www.youtube.com/watch?v=ydR_M0fw9Xc) 
+8. [React vs svelte...](https://www.twilio.com/blog/react-svelte-comparing-basics) 
 
 ### Postgresql
 1. [Official Postgresql Docs](https://www.postgresql.org/docs/14/index.html)
