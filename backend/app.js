@@ -1,17 +1,24 @@
+require("dotenv").config();
+
 const path = require("path");
 const fs = require("fs");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-require("dotenv").config();
+
 
 const port = process.env.port || 5000;
 
-const db = require('./db/index');
+const HttpError = require("./models/http_error");
+const db = require("./db/index");
+const mountRouter = require('./routes/index');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+// serve static images
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 // probably better than cors
 app.use((req, res, next) => {
@@ -25,16 +32,50 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', async (req, res) => {
-    try {
-        
-        const result = await db.query('SELECT * FROM anime');
-        res.status(200).json({ans: result.rows});
-    } catch (err) {
-        console.error(err.message);
-    }
+/**
+ * router mounting 
+ */
+mountRouter(app);
+
+//test get endpoint 
+app.get("/", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM anime");
+    res.status(200).json({ ans: result.rows });
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
+
+/**
+ * No route found error
+ */
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
+});
+
+/**
+ * General Http error message for a server side error, 
+ * deletes associated file as this req could not be processed
+ */
+app.use((error, req, res, next) => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({ message: error.message || "An unknown error occurred!" });
+});
+
+/**
+ * Server starts
+ */
 app.listen(port, () => {
   console.log("Server listenning on port " + port);
 });
