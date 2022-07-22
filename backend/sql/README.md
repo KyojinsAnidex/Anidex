@@ -24,7 +24,7 @@ Logout and log back in as user 'me':
 
 The prompt should look like this:
 
-` anidex=> `
+` postgres=> `
 
 #### Creating a database
 

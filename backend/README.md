@@ -32,6 +32,10 @@ PASSWORD='password'
 DATABASE_PORT=5432
 ```
 
+#### Configuring the database
+
+Go to `./sql` folder, follow the [instructions](https://github.com/Mohaimin41/Anidex/tree/main/backend/sql)
+
 #### Running the server: 
 
 We are using nodemon to have a continuously running server. To start: 
