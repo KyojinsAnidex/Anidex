@@ -14,6 +14,24 @@ Move to \\backend folder, install dependencies:
 
 ` npm install `
 
+#### Ok, forgot .env file
+
+In the `./backend` folder, create a file named `.env`
+
+In that file copy this:
+
+```
+#server port
+PORT=5000
+
+#database connection information
+USER='me'
+HOST='localhost'
+DATABASE='anidex'
+PASSWORD='password'
+DATABASE_PORT=5432
+```
+
 #### Running the server: 
 
 We are using nodemon to have a continuously running server. To start: 
@@ -21,3 +39,4 @@ We are using nodemon to have a continuously running server. To start:
 ` npm start `
 
 To quit, press ` Ctrl + C ` and then type ` y `
+
