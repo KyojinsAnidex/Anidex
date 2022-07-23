@@ -10,7 +10,7 @@ In a suitable folder, clone the repo:
 
 Move to \\backend folder, install dependencies:
 
-` cd .\backend`
+` cd ./backend`
 
 ` npm install `
 
