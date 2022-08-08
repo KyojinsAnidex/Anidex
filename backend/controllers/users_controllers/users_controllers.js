@@ -62,7 +62,7 @@ const getUserByID = async (req, res, next) => {
     ", " +
     dbModel.users.admin +
     " FROM " +
-    tables.users +
+    dbModel.tables.users +
     " WHERE " +
     dbModel.users.userIDNOTNULL +
     " = $1";
@@ -99,8 +99,10 @@ const loginUser = async (req, res, next) => {
         dbModel.tables.users +
         " WHERE " +
         dbModel.users.mailNOTNULL +
-        " = " + "'" +
-        email + "'"
+        " = " +
+        "'" +
+        email +
+        "'"
     );
   } catch (err) {
     return next(
@@ -116,23 +118,23 @@ const loginUser = async (req, res, next) => {
 
   //password check
   let isValidPassword = false;
-  // try {
-  //   isValidPassword = await bcrypt.compare(
-  //     password,
-  //     existingUser.rows[0].security_key
-  //   );
-  // } catch (err) {
-  //   return next(
-  //     new HttpError(
-  //       "Logging in user failed, please check your credentials and try again.",
-  //       500
-  //     )
-  //   );
-  // }
-
-  if (existingUser.rows[0].security_key === password) {
-    isValidPassword = true;
+  try {
+    isValidPassword = await bcrypt.compare(
+      password,
+      existingUser.rows[0].security_key
+    );
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Logging in user failed, please check your credentials and try again.",
+        500
+      )
+    );
   }
+
+  // if (existingUser.rows[0].security_key === password) {
+  //   isValidPassword = true;
+  // }
 
   if (!isValidPassword) {
     return next(
@@ -143,7 +145,7 @@ const loginUser = async (req, res, next) => {
   let token;
   try {
     token = jwt.sign({ userId: name, email: email }, process.env.JWT_KEY, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
   } catch (err) {
     return next(
@@ -152,7 +154,7 @@ const loginUser = async (req, res, next) => {
   }
 
   res.status(200).json({
-    userid : name,
+    userid: name,
     email: email,
     token: token,
   });
@@ -163,11 +165,12 @@ const signupUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
+      new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
 
   const { email, password, name, bio } = req.body;
+  // const pictureid = req.file.path;
 
   //is user already in db?
   let existingUser;
@@ -198,11 +201,11 @@ const signupUser = async (req, res, next) => {
   //hash password
   let hashedPassword = password;
 
-  // try {
-  //   hashedPassword = await bcrypt.hash(password, 12);
-  // } catch (err) {
-  //   return next(new HttpError("Could not create user, please try again.", 500));
-  // }
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    return next(new HttpError("Could not create user, please try again.", 500));
+  }
 
   //real insert
   let createdUser;
@@ -217,13 +220,13 @@ const signupUser = async (req, res, next) => {
     dbModel.users.userIDNOTNULL +
     ", " +
     dbModel.users.bio +
-    ") VALUES ( '" +
+    " ) VALUES ( '" +
     email +
     "' , '" +
     hashedPassword +
     "' , '" +
     name +
-    "' , '" + 
+    "' , '" +
     bio +
     "' ) RETURNING *";
   try {
@@ -244,7 +247,7 @@ const signupUser = async (req, res, next) => {
   let token;
   try {
     token = jwt.sign({ userId: name, email: email }, process.env.JWT_KEY, {
-      expiresIn: "1h"
+      expiresIn: "1h",
     });
   } catch (err) {
     return next(
