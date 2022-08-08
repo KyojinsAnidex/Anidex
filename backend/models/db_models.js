@@ -100,7 +100,7 @@ const episode = {
   episodeNOTNULL: "episode",
   seasonNOTNULL: "season",
   airingdate: "airingdate",
-  title: "title",
+  titleNOTNULL: "title",
   runtime: "runtime",
   episoderating: "episoderating",
   animeIDNOTNULL: "animeid",
