@@ -1,4 +1,4 @@
-### How to start the database server
+### How to create the necessary Database
 
 #### Creating a new postgresql user
 
@@ -16,21 +16,28 @@ Grant user 'me' database creation ability:
 
 ` ALTER ROLE me CREATEDB; `
 
-Logout and log back in as user 'me': 
+Logout: 
 
 ` \q `
+
+**Drop previous ***anidex*** :**
+
+` dropdb -U me -d anidex `
+
+and log back in as user 'me':
 
 ` psql -d postgres -U me `
 
 The prompt should look like this:
 
-` postgres=> `
+` me=> `
 
 #### Creating a database
 
 First list all database just to check:
 
 ` \l `
+
 
 **Now create database ***anidex*** :**
 
@@ -45,8 +52,6 @@ Just to check connection parameters:
 ` \conninfo `
 
 #### Creating the tables from this sql: 
-
-On time of writing 22 JUL 9:20, **we have no foreign key set**
 
 Copy and save the .sql file. Then copy it's absolute save path.
 

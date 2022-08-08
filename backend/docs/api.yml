@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: Anidex API
+  description: We tried to make a RESTfull API for anidex backend.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:5000"
+    description: only working server for now
+
+tags:
+  - name: anime
+    description: anime endpoints
+  - name: user
+    description: user endpoints
+  - name: watchlist
+    description: watchlist endpoints
+
+paths:
+  "/anime":
+    get:
+      summary: returns all anime if successful
+      tags:
+        - anime
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    $ref: "#/components/schemas/AnimeAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/anime/{aid}":
+    get:
+      summary: returns the anime specified by the anime id if found
+      tags:
+        - anime
+      parameters:
+        - $ref: "#/components/parameters/animeidParam"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  anime:
+                    $ref: "#/components/schemas/AnimeCommon"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+  "/users":
+    get:
+      summary:
+      tags:
+        - user
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    $ref: "#/components/schemas/UserAllOutput"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+  "/users/{uid}":
+    get:
+      summary: returns user specified by user id if found
+      tags:
+        - user
+      responses:
+        "200":
+          description: success
+          content:
+           application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: "#/components/schemas/UserSingleOutput"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+components:
+  # Reusable schemas (data models)
+  schemas:
+    UserSignIn:
+      type: object
+      properties:
+        userid:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+        email:
+          type: string
+          format: email
+          required: true
+        bio:
+          type: string
+
+    #  userIDNOTNULL: "userid",
+    #   passwordNOTNULL: "security_key",
+    #   mailNOTNULL: "email",
+    #   bio: "biography",
+    #   pictureNOTNULL: "pictureid",
+    #   admin: "admin",
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          required: true
+        password:
+          type: string
+          required: true
+
+    UserSingleOutput:
+      type: object
+      properties:
+        userid:
+          type: string
+        email:
+          type: string
+          format: email
+        bio:
+          type: string
+        pictureid:
+          type: string
+        admin:
+          type: boolean
+
+    UserAllOutput:
+      type: array
+      items:
+        $ref: "#/components/schemas/UserSingleOutput"
+
+    AnimeCommon:
+      type: object
+      properties:
+        animeid:
+          type: integer
+          minimum: 1
+        title:
+          type: string
+        releaseseason:
+          type: string
+          enum: ["Spring", "Summer", "Winter", "Fall"]
+        releasedate:
+          type: string
+          format: date
+        averagerating:
+          type: number
+        animerank:
+          type: integer
+        synopsis:
+          type: string
+
+    AnimeAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/AnimeCommon"
+
+    WatchlistEntry:
+      type: object
+      properties:
+        aniemid:
+          type: integer
+          required: true
+        userid:
+          type: string
+          required: true
+
+    WatchlistWhole:
+      type: array
+      items:
+        type: integer
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    userIDParam:
+      in: path
+      name: userid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: userID of user
+
+    animeidParam:
+      in: path
+      name: animeid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: animeid of the anime
+
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  responses:
+    400badrequest:
+      description: the API request was badly formed
+
+    404NotFound:
+      description: the requested resource was not found
+
+    500ServerSideError:
+      description: unknown server side error happened, please try again later
+
+    422InvalidInput:
+      description: provided inputs are invalid, please check your inputs
+
+    403Forbidden:
+      description: the requested resource or operation is not available for this user
+
+    401AuthFailure:
+      description: failure in authenticating this API call
+  # Reusable examples
+  examples:
+    userSignInExample:
+      value:
+      summary: Sample user sign in request body
+
+    userLoginExample:
+      value:
+      summary: Sample user login request body
+
+    userSingleExample:
+      value:
+      summary: Sample user response body
+
+    watchlistEntryExample:
+      value:
+      summary: Sample watchlist entry

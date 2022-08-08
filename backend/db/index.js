@@ -48,10 +48,10 @@ const query = async (text, params) => {
 
     //return pg pool.query result object
     return res;
-
   } catch (err) {
-    
-    console.log("ERROR EXECUTING QUERY: " + err.message + "\n" + err.stack);
+    console.log(
+      "ERROR EXECUTING QUERY: " + text + "\n" + err.message + "\n" + err.stack
+    );
 
     //silly logging for now
     try {
@@ -73,10 +73,10 @@ const query = async (text, params) => {
           }
         }
       );
-    
     } catch (err) {
       console.log("Error writing file: " + err.message + " " + err.stack);
     }
+    return false;
   }
 };
 

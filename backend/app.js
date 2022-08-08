@@ -6,11 +6,16 @@ const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const YAML = require('yamljs');
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = YAML.load('./docs/api.yml');
 
 const port = process.env.port || 5000;
 
 const HttpError = require("./models/http_error");
 const db = require("./db/index");
+
+
 const mountRouter = require('./routes/index');
 
 const app = express();
@@ -18,7 +23,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // serve static images
-app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 // probably better than cors
 app.use((req, res, next) => {
@@ -33,12 +38,15 @@ app.use((req, res, next) => {
 });
 
 /**
- * router mounting 
+ * router mounting
  */
 mountRouter(app);
 
-//test get endpoint 
-app.get("/", async (req, res) => {
+//swagger docs
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+//test get endpoint
+app.get("/" , async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM anime");
     res.status(200).json({ ans: result.rows });
@@ -46,7 +54,6 @@ app.get("/", async (req, res) => {
     console.error(err.message);
   }
 });
-
 
 /**
  * No route found error
@@ -57,7 +64,7 @@ app.use((req, res, next) => {
 });
 
 /**
- * General Http error message for a server side error, 
+ * General Http error message for a server side error,
  * deletes associated file as this req could not be processed
  */
 app.use((error, req, res, next) => {
