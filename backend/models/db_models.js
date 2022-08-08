@@ -117,7 +117,7 @@ const genre = {
 };
 
 const personnel = {
-  personnelIDNOTNULL: "personnel",
+  personnelIDNOTNULL: "personnelid",
   lastnameNOTNULL: "lastname",
   firstnameNOTNULL: "firstname",
   gender: "gender",
