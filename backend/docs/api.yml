@@ -242,7 +242,7 @@ paths:
     get:
       summary: login a user
       tags:
-        - user
+        - watchlist
       
       parameters:
         - $ref: '#/components/parameters/userIDparam'

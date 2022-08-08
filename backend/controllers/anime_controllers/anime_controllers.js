@@ -165,9 +165,19 @@ const getAllAnimeItems = async (req, res, next) => {
   }
 };
 
+const addAnime = (req, res, next) => {
+  
+};
+
+const editAnime = (req, res, next) => {
+
+};
+
 module.exports = {
   getAllAnime,
   getAnimeByID,
   getAllAnimePictures,
   getAllAnimeItems,
+  addAnime,
+  editAnime
 };

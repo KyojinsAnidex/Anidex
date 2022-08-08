@@ -42,6 +42,12 @@ const getWatchlistOfUser = async (req, res, next) => {
   }
 };
 
+const addAnimeToWatchlist = (req, res, next) => {};
+
+const deleteAnimeFromWatchlist = (req, res, next) => {};
+
 module.exports = {
   getWatchlistOfUser,
+  addAnimeToWatchlist,
+  deleteAnimeFromWatchlist,
 };

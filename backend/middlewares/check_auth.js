@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
     }
     const decodedToken = jwt.verify(token, process.env.jwt_key);
     
-    //this adds userData field with userID from token, we will also probably follow this
+    //this adds userData.userId field to req with userID from token, we will also probably follow this
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (err) {

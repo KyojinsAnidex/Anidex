@@ -12,24 +12,15 @@ router.get('/', animeControllers.getAllAnime);
 router.get('/pictures/:aid', animeControllers.getAllAnimePictures);
 
 router.get('/items/:aid', animeControllers.getAllAnimeItems);
-// router.get('/studios/:aid',);
-
-// router.get('/characters/:aid',);
-
-// router.get('/personnel/:aid',);
-
-// router.get('/genre/:aid',);
 
 router.get('/:aid', animeControllers.getAnimeByID);
 
-// router.use(check_auth);
+router.use(check_auth);
 
 //protected
-// router.post('/', );
+router.post('/', [],animeControllers.addAnime);
 
-
-// //protected
-// router.patch('/:aid',);
+// router.patch('/:aid',[], animeControllers.editAnime);
 
 // //protected Admin
 // router.delete('/:aid',);

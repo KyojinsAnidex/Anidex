@@ -9,11 +9,10 @@ const router = express.Router();
 router.get('/:uid', watchlistControllers.getWatchlistOfUser);
 
 // //protected routes
-// router.use(check_auth);
+router.use(check_auth);
 
-// router.post('/:uid', );
+router.post('/:uid',watchlistControllers.addAnimeToWatchlist );
 
-// //protected Admin
-// router.delete('/:uid',);
+router.delete('/:uid', watchlistControllers.deleteAnimeFromWatchlist);
 
 module.exports = router;
