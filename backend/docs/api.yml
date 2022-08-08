@@ -245,7 +245,7 @@ paths:
         - watchlist
       
       parameters:
-        - $ref: '#/components/parameters/userIDparam'
+        - $ref: '#/components/parameters/uid'
       responses:
         "200":
           description: success
@@ -636,7 +636,7 @@ components:
       name: uid
       required: true
       schema:
-        type: integer
+        type: string
         minimum: 1
       description: userID of user
 
