@@ -6,6 +6,7 @@ import {Router,Route} from "svelte-navigator";
 import Searchresults from "./routes/searchresults.svelte";
 import Aboutus from "./routes/aboutus.svelte";
 import Accinfo from "./routes/accinfo.svelte";
+import Logout from "./routes/logout.svelte";
 
 
 
@@ -126,6 +127,9 @@ $:{
     </Route>
     <Route path="/accinfo">
        <Accinfo/>
+    </Route>
+    <Route path="logout">
+        <Logout/>
     </Route>
     </main>
 </Router>
