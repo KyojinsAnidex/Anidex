@@ -4,6 +4,7 @@ const watchlistControllers = require("./watchlist_controllers/watchlist_controll
 const searchControllers = require("./search_controllers/search_controllers");
 const characterControllers = require("./character_controllers/character_controllers");
 const personnelControllers = require("./personnel_controllers/personnel_controllers");
+const genreControllers = require("./genre_controllers/genre_controllers");
 
 module.exports = {
   animeControllers,
@@ -12,4 +13,5 @@ module.exports = {
   searchControllers,
   characterControllers,
   personnelControllers,
+  genreControllers,
 };

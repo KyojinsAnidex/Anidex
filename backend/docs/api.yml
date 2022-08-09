@@ -24,6 +24,8 @@ tags:
     description: review and comment endpoints
   - name: watchroom
     description: watchroom endpoints
+  - name: genre
+    description: genre endpoints
 
 paths:
   "/anime":
@@ -55,7 +57,7 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        $ref: '#/components/requestBodies/AnimeInput'
+        $ref: "#/components/requestBodies/AnimeInput"
       responses:
         "201":
           description: success
@@ -68,11 +70,12 @@ paths:
                     type: boolean
                   animeid:
                     type: integer
+        "401":
+          $ref: '#/components/responses/401AuthFailure'
         "422":
           $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
-
 
   "/anime/{aid}":
     get:
@@ -97,11 +100,11 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerSideError"
-  
+
   "/anime/pictures/{aid}":
     get:
       summary: get anime pictures
-      tags: 
+      tags:
         - anime
       parameters:
         - $ref: "#/components/parameters/aid"
@@ -121,12 +124,12 @@ paths:
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
-          $ref: "#/components/responses/500ServerSideError" 
+          $ref: "#/components/responses/500ServerSideError"
 
   "/anime/items/{aid}":
     get:
       summary: get anime items
-      tags: 
+      tags:
         - anime
       parameters:
         - $ref: "#/components/parameters/aid"
@@ -142,25 +145,25 @@ paths:
                     type: boolean
                   characters:
                     type: array
-                    items: 
+                    items:
                       type: integer
                   genre:
                     type: array
-                    items: 
+                    items:
                       type: string
                   personnel:
                     type: array
-                    items: 
+                    items:
                       type: integer
                   studios:
                     type: array
-                    items: 
+                    items:
                       type: string
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
-          $ref: "#/components/responses/500ServerSideError" 
-  
+          $ref: "#/components/responses/500ServerSideError"
+
   "/users":
     get:
       summary: get all users
@@ -189,12 +192,12 @@ paths:
       tags:
         - user
       parameters:
-        - $ref: '#/components/parameters/uid'
+        - $ref: "#/components/parameters/uid"
       responses:
         "200":
           description: success
           content:
-           application/json:
+            application/json:
               schema:
                 type: object
                 properties:
@@ -211,21 +214,21 @@ paths:
     post:
       summary: signup a new user
       tags:
-        - user 
+        - user
       requestBody:
         description: signup data
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSignIn'
+              $ref: "#/components/schemas/UserSignIn"
       responses:
         "201":
           description: success
           content:
-           application/json:
+            application/json:
               schema:
-                $ref: '#/components/schemas/LoginSuccessOutput'                
+                $ref: "#/components/schemas/LoginSuccessOutput"
         "422":
           $ref: "#/components/responses/422InvalidInput"
         "500":
@@ -242,15 +245,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserLogin'
+              $ref: "#/components/schemas/UserLogin"
       responses:
         "200":
           description: success
           content:
-           application/json:
+            application/json:
               schema:
-                $ref: '#/components/schemas/LoginSuccessOutput'
-                  
+                $ref: "#/components/schemas/LoginSuccessOutput"
+
         "401":
           $ref: "#/components/responses/401AuthFailure"
         "422":
@@ -264,15 +267,15 @@ paths:
       tags:
         - watchlist
       parameters:
-        - $ref: '#/components/parameters/uid'
+        - $ref: "#/components/parameters/uid"
       responses:
         "200":
           description: success
           content:
-           application/json:
+            application/json:
               schema:
-                $ref: '#/components/schemas/WatchlistWhole'
-                  
+                $ref: "#/components/schemas/WatchlistWhole"
+
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -283,38 +286,39 @@ paths:
       tags:
         - watchlist
       parameters:
-        - $ref: '#/components/parameters/uid'
+        - $ref: "#/components/parameters/uid"
       security:
         - BearerAuth: []
       requestBody:
-        $ref: '#/components/requestBodies/watchlistInput'
+        $ref: "#/components/requestBodies/watchlistInput"
       responses:
         "201":
           description: success
           content:
-           application/json:
+            application/json:
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                   WatchlistEntry:
-                    $ref: '#/components/schemas/WatchlistEntry'  
+                    $ref: "#/components/schemas/WatchlistEntry"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
         "422":
           $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
-
 
   "/search/anime":
     post:
       summary: search an anime
       tags:
         - search
-      
+
       requestBody:
-          $ref: '#/components/requestBodies/searchItem'
-      
+        $ref: "#/components/requestBodies/searchItem"
+
       responses:
         "200":
           description: success
@@ -326,7 +330,7 @@ paths:
                   success:
                     type: boolean
                   resultAnime:
-                    $ref: "#/components/schemas/AnimeAll"    
+                    $ref: "#/components/schemas/AnimeAll"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -337,9 +341,9 @@ paths:
       summary: search users
       tags:
         - search
-      
+
       requestBody:
-          $ref: '#/components/requestBodies/searchItem'
+        $ref: "#/components/requestBodies/searchItem"
 
       responses:
         "200":
@@ -352,7 +356,7 @@ paths:
                   success:
                     type: boolean
                   resultUsers:
-                    $ref: "#/components/schemas/UserAllOutput"    
+                    $ref: "#/components/schemas/UserAllOutput"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -363,10 +367,10 @@ paths:
       summary: search characters
       tags:
         - search
-      
+
       requestBody:
-          $ref: '#/components/requestBodies/searchItem'
-          
+        $ref: "#/components/requestBodies/searchItem"
+
       responses:
         "200":
           description: success
@@ -378,7 +382,7 @@ paths:
                   success:
                     type: boolean
                   resultUsers:
-                    $ref: "#/components/schemas/characterAll"    
+                    $ref: "#/components/schemas/characterAll"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -389,10 +393,10 @@ paths:
       summary: search personnel
       tags:
         - search
-      
+
       requestBody:
-          $ref: '#/components/requestBodies/searchItem'
-          
+        $ref: "#/components/requestBodies/searchItem"
+
       responses:
         "200":
           description: success
@@ -404,22 +408,19 @@ paths:
                   success:
                     type: boolean
                   resultUsers:
-                    $ref: "#/components/schemas/PersonnelAll"    
+                    $ref: "#/components/schemas/PersonnelAll"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerSideError"
-
 
   "/search/episodes":
     post:
       summary: search episodes
       tags:
         - search
-      
       requestBody:
-          $ref: '#/components/requestBodies/searchItem'
-          
+        $ref: "#/components/requestBodies/searchItem"
       responses:
         "200":
           description: success
@@ -431,7 +432,280 @@ paths:
                   success:
                     type: boolean
                   resultUsers:
-                    $ref: "#/components/schemas/episodesAll"    
+                    $ref: "#/components/schemas/episodesAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/search/studio":
+    post:
+      summary: search studio
+      tags:
+        - search
+      requestBody:
+        $ref: "#/components/requestBodies/searchItem"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  resultUsers:
+                    $ref: "#/components/schemas/studioAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/characters":
+    get:
+      summary: get all characters
+      tags:
+        - character
+      responses:
+        "200":
+          description: successfully got all character
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/characterSingle"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new character
+      tags:
+        - character
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/characterInput"
+      responses:
+        "201":
+          description: successfully added a character
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  characterid:
+                    description: newly created character id
+                    type: integer
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/characters/{cid}":
+    get:
+      summary: get a single character
+      tags:
+        - character
+      parameters:
+        - $ref: "#/components/parameters/cid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  character:
+                    $ref: "#/components/schemas/characterSingle"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/genre":
+    get:
+      summary: get all genre
+      tags:
+        - genre
+      responses:
+        "200":
+          description: successfully got all genre
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      type: string
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new genre
+      tags:
+        - genre
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: genre request body
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genre:
+                  type: string
+              required:
+                - genre
+      responses:
+        "201":
+          description: successfully added a genre
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newGenreName:
+                    description: newly created genre
+                    type: string
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/genre/anime":
+    post:
+      summary: get ids of all anime of a single genre
+      tags:
+        - genre
+      requestBody:
+        description: the genre to list anime of
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                searchedGenre:
+                  type: string
+              required:
+                - searchedGenre
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  animeOfGenre:
+                    type: array
+                    items:
+                      type: integer
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/personnel":
+    get:
+      summary: get all personnel data
+      tags:
+        - personnel
+      responses:
+        "200":
+          description: successfully got all person
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/personnel"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new person
+      tags:
+        - personnel
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/PersonInput"
+      responses:
+        "201":
+          description: successfully added a person
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  personnelID:
+                    description: newly created personnel id
+                    type: integer
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+  "/personnel/{pid}":
+    get:
+      summary: get a single person
+      tags:
+        - personnel
+      parameters:
+        - $ref: "#/components/parameters/pid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  person:
+                    $ref: "#/components/schemas/personnel"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -456,11 +730,11 @@ components:
         - userid
         - password
         - email
-        
+
     UserLogin:
       type: object
       properties:
-        name: 
+        name:
           type: string
         email:
           type: string
@@ -540,7 +814,7 @@ components:
         userid:
           type: string
         favourite:
-          type: boolean 
+          type: boolean
       required:
         - animeid
         - userid
@@ -549,7 +823,7 @@ components:
     WatchlistWhole:
       type: array
       items:
-        $ref: '#/components/schemas/WatchlistEntry'
+        $ref: "#/components/schemas/WatchlistEntry"
 
     AnimePicture:
       type: object
@@ -558,12 +832,12 @@ components:
           type: string
         poster:
           type: boolean
-    
+
     AnimeGallery:
       type: array
       items:
-        $ref: '#/components/schemas/AnimePicture'
-    
+        $ref: "#/components/schemas/AnimePicture"
+
     characterSingle:
       type: object
       properties:
@@ -590,7 +864,7 @@ components:
     characterAll:
       type: array
       items:
-        $ref: '#/components/schemas/characterSingle'
+        $ref: "#/components/schemas/characterSingle"
 
     personnel:
       type: object
@@ -619,8 +893,8 @@ components:
     PersonnelAll:
       type: array
       items:
-        $ref: '#/components/schemas/personnel'
-    
+        $ref: "#/components/schemas/personnel"
+
     episodeSingle:
       type: object
       properties:
@@ -642,12 +916,11 @@ components:
           type: number
         animeid:
           type: integer
-    
+
     episodesAll:
       type: array
       items:
-        $ref: '#/components/schemas/episodeSingle'
-    
+        $ref: "#/components/schemas/episodeSingle"
 
     studioSingle:
       type: object
@@ -666,7 +939,7 @@ components:
     studioAll:
       type: array
       items:
-        $ref: '#/components/schemas/studioSingle'
+        $ref: "#/components/schemas/studioSingle"
 
     failedResponses:
       type: object
@@ -675,7 +948,7 @@ components:
           type: boolean
         message:
           type: string
-    
+
     watchlistInput:
       type: object
       properties:
@@ -702,6 +975,24 @@ components:
         - releasedate
         - synopsis
 
+    PersonInput:
+      type: object
+      properties:
+        lastname:
+          type: string
+        firstname:
+          type: string
+        gender:
+          type: string
+        birthday:
+          type: string
+          format: date
+      required:
+        - lastname
+        - firstname
+        - gender
+        - birthday
+
   requestBodies:
     searchItem:
       description: search string
@@ -713,15 +1004,17 @@ components:
             properties:
               searchString:
                 type: string
-    
+            required:
+              - searchString
+
     AnimeInput:
       description: anime data to add
       required: true
       content:
         application/json:
           schema:
-           $ref: "#/components/schemas/AnimeInput"
-    
+            $ref: "#/components/schemas/AnimeInput"
+
     watchlistInput:
       description: watchlist entry to add
       required: true
@@ -730,7 +1023,7 @@ components:
           schema:
             type: object
             properties:
-              animeid: 
+              animeid:
                 type: integer
               favourite:
                 type: boolean
@@ -738,6 +1031,35 @@ components:
               - animeid
               - favourite
 
+    characterInput:
+      description: new character to entry
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              lastname:
+                type: string
+              firstname:
+                type: string
+              gender:
+                type: string
+              role:
+                type: string
+            required:
+              - lastname
+              - firstname
+              - gender
+              - role
+
+    PersonInput:
+      description: request body for personnel
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PersonInput"
 
   # Reusable path, query, header and cookie parameters
   parameters:
@@ -758,14 +1080,23 @@ components:
         minimum: 1
       description: animeid of the anime
 
-    jwtAuth:
-      in: header
-      name: jwtAuth
+    cid:
+      in: path
+      name: cid
       required: true
       schema:
-        type: string
-        format: jwt
-      description: jwt token in header for authentication
+        type: integer
+        minimum: 1
+      description: character id of the character
+
+    pid:
+      in: path
+      name: pid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: personnel id of the person
 
   securitySchemes:
     BearerAuth:
@@ -780,41 +1111,39 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-      
+            $ref: "#/components/schemas/failedResponses"
+
     404NotFound:
       description: the requested resource was not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-            
+            $ref: "#/components/schemas/failedResponses"
 
     500ServerSideError:
       description: unknown server side error happened, please try again later
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-      
+            $ref: "#/components/schemas/failedResponses"
+
     422InvalidInput:
       description: provided inputs are invalid, please check your inputs
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-      
+            $ref: "#/components/schemas/failedResponses"
+
     403Forbidden:
       description: the requested resource or operation is not available for this user
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-      
+            $ref: "#/components/schemas/failedResponses"
+
     401AuthFailure:
-      description: failure in authenticating this API call
+      description: failure in authenticating this API call by JWT
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/failedResponses'
-      
+            $ref: "#/components/schemas/failedResponses"

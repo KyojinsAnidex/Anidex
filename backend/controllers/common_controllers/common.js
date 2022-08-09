@@ -13,8 +13,13 @@ const getAllFromTable = async (req, res, next, searchingTable, searchingName) =>
       new HttpError("Fetching all " + searchingName + " failed, please try again later.", 500)
     );
   }
+  if (allRes === false) {
+    return next(
+      new HttpError("Fetching all " + searchingName + " failed, please try again later.", 500)
+    );
+  }
 
-  if (allRes === false || allRes.rowCount === 0) {
+  if (allRes.rowCount === 0) {
     res.status(404).json({
       success: false,
       message: "No "+ searchingName +" found",
