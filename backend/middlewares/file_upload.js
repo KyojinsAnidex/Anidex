@@ -7,6 +7,7 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg",
 };
 
+// content type: multipart/form
 const fileUpload = multer({
   limits: 5242880 * 2, // 10 MB limit
   storage: multer.diskStorage({

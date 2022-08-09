@@ -29,7 +29,11 @@ const getAnimeByID = async (req, res, next) => {
       new HttpError("Fetching anime failed, please try again later.", 500)
     );
   }
-
+  if (searchedAnime === false) {
+    return next(
+      new HttpError("Fetching anime failed, please try again later.", 500)
+    );
+  }
   if (searchedAnime.rowCount != 0) {
     res.status(200).json({
       success: true,
@@ -69,6 +73,14 @@ const getAllAnimePictures = async (req, res, next) => {
       )
     );
   }
+  if (searchedPics === false) {
+    return next(
+      new HttpError(
+        "Fetching anime gallery failed, please try again later",
+        500
+      )
+    );
+  }
 
   if (searchedPics.rowCount != 0) {
     res.status(200).json({
@@ -93,7 +105,7 @@ const getAllAnimePictures = async (req, res, next) => {
 const getAllAnimeItems = async (req, res, next) => {
   const animeid = req.params.aid;
   let animeItems = {
-    genre : {},
+    genre: {},
     studios: {},
     charcters: {},
     personnel: {},
@@ -107,7 +119,9 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animeisofgenre +
         " WHERE " +
         dbModels.animeisofgenre.animeIDNOTNULL +
-        " = " + animeid + ";"
+        " = " +
+        animeid +
+        ";"
     );
     animeItems.charcters = await db.query(
       "SELECT " +
@@ -116,7 +130,9 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animecharacter +
         " WHERE " +
         dbModels.animecharacter.animeIDNOTNULL +
-        " = " + animeid + ";"
+        " = " +
+        animeid +
+        ";"
     );
     animeItems.personnel = await db.query(
       "SELECT " +
@@ -125,7 +141,9 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animestaff +
         " WHERE " +
         dbModels.animestaff.animeIDNOTNULL +
-        " = " + animeid + ";"
+        " = " +
+        animeid +
+        ";"
     );
     animeItems.studios = await db.query(
       "SELECT " +
@@ -134,9 +152,22 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animestudio +
         " WHERE " +
         dbModels.animestudio.animeIDNOTNULL +
-        " = " + animeid + ";"
+        " = " +
+        animeid +
+        ";"
     );
   } catch (err) {
+    return next(
+      new HttpError("Fetching anime items failed, please try again later", 500)
+    );
+  }
+
+  if (
+    animeItems.charcters === false ||
+    animeItems.genre === false ||
+    animeItems.personnel === false ||
+    animeItems.studios === false
+  ) {
     return next(
       new HttpError("Fetching anime items failed, please try again later", 500)
     );
@@ -173,16 +204,16 @@ const addAnime = async (req, res, next) => {
     );
   }
 
-  const {title, releasedate, synopsis} = req.body;
+  const { title, releasedate, synopsis } = req.body;
 
   let existingAnime;
   try {
     existingAnime = await db.query(
-      "SELECT * FROM " + 
-      dbModels.tables.anime + 
-      " WHERE " + 
-      dbModels.anime.titleNOTNULL + 
-      " = $1 ;", 
+      "SELECT * FROM " +
+        dbModels.tables.anime +
+        " WHERE " +
+        dbModels.anime.titleNOTNULL +
+        " = $1 ;",
       [title]
     );
   } catch (err) {
@@ -190,39 +221,48 @@ const addAnime = async (req, res, next) => {
       new HttpError("Adding new anime failed, please try again later", 500)
     );
   }
+  if (existingAnime === false) {
+    return next(
+      new HttpError("Adding new anime failed, please try again later", 500)
+    );
+  }
 
   if (existingAnime.rowCount != 0) {
-    return next(
-      new HttpError("Anime with same title exists already", 422)
-    );
-  } 
+    return next(new HttpError("Anime with same title exists already", 422));
+  }
 
   let createdAnime;
   let queryText;
-  queryText = 
-  "INSERT INTO " +
-  dbModels.tables.anime +
-  " ( " +
-  dbModels.anime.titleNOTNULL + 
-  ", " + 
-  dbModels.anime.releasedateNOTNULL + 
-  ", " + 
-  dbModels.anime.synopsis + 
-  " ) VALUES ( '" +
-  title + 
-  "' , '" + 
-  releasedate +
-  "' , '" + 
-  synopsis + 
-  "' ) RETURNING * ;";
+  queryText =
+    "INSERT INTO " +
+    dbModels.tables.anime +
+    " ( " +
+    dbModels.anime.titleNOTNULL +
+    ", " +
+    dbModels.anime.releasedateNOTNULL +
+    ", " +
+    dbModels.anime.synopsis +
+    " ) VALUES ( '" +
+    title +
+    "' , '" +
+    releasedate +
+    "' , '" +
+    synopsis +
+    "' ) RETURNING * ;";
   try {
     createdAnime = await db.query(queryText);
-  } catch (err) { 
+  } catch (err) {
     return next(
       new HttpError("Adding anime failed, please try again later", 500)
     );
   }
-  
+
+  if (createdAnime === false) {
+    return next(
+      new HttpError("Adding anime failed, please try again later", 500)
+    );
+  }
+
   if (createdAnime.rowCount === 0) {
     return next(
       new HttpError("Adding anime failed, please try again later", 500)
@@ -233,12 +273,9 @@ const addAnime = async (req, res, next) => {
     success: true,
     animeid: createdAnime.rows[0].animeid,
   });
-
 };
 
-const editAnime = async (req, res, next) => {
-
-};
+const editAnime = async (req, res, next) => {};
 
 module.exports = {
   getAllAnime,
@@ -246,5 +283,5 @@ module.exports = {
   getAllAnimePictures,
   getAllAnimeItems,
   addAnime,
-  editAnime
+  editAnime,
 };

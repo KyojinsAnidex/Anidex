@@ -55,12 +55,7 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: anime data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AnimeInput'
+        $ref: '#/components/requestBodies/AnimeInput'
       responses:
         "201":
           description: success
@@ -292,20 +287,7 @@ paths:
       security:
         - BearerAuth: []
       requestBody:
-        description: watchlist data
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                animeid:
-                  type: integer
-                favourite:
-                  type: boolean
-              required:
-                - animeid
-                - favourite
+        $ref: '#/components/requestBodies/watchlistInput'
       responses:
         "201":
           description: success
@@ -731,6 +713,31 @@ components:
             properties:
               searchString:
                 type: string
+    
+    AnimeInput:
+      description: anime data to add
+      required: true
+      content:
+        application/json:
+          schema:
+           $ref: "#/components/schemas/AnimeInput"
+    
+    watchlistInput:
+      description: watchlist entry to add
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              animeid: 
+                type: integer
+              favourite:
+                type: boolean
+            required:
+              - animeid
+              - favourite
+
 
   # Reusable path, query, header and cookie parameters
   parameters:

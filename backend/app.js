@@ -6,17 +6,15 @@ const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const YAML = require('yamljs');
+const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
-const swaggerFile = YAML.load('./docs/api.yml');
+const swaggerFile = YAML.load("./docs/api.yml");
 
 const port = process.env.port || 5000;
 
 const HttpError = require("./models/http_error");
-const db = require("./db/index");
 
-
-const mountRouter = require('./routes/index');
+const mountRouter = require("./routes/index");
 
 const app = express();
 
@@ -37,27 +35,13 @@ app.use((req, res, next) => {
   next();
 });
 
-/**
- * router mounting
- */
+// routers mounted
 mountRouter(app);
 
-//swagger docs
+// swagger docs
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-//test get endpoint
-app.get("/" , async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM anime");
-    res.status(200).json({ ans: result.rows });
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-/**
- * No route found error
- */
+// No route found error
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;

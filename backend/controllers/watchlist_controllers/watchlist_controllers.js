@@ -15,8 +15,8 @@ const getWatchlistOfUser = async (req, res, next) => {
   let queryText =
     "SELECT " +
     watchlist.animeIDNOTNULL +
-    ", " + 
-    watchlist.favouriteNOTNULL + 
+    ", " +
+    watchlist.favouriteNOTNULL +
     " FROM " +
     tables.watchlist +
     " WHERE " +
@@ -26,6 +26,12 @@ const getWatchlistOfUser = async (req, res, next) => {
   try {
     userWatchlist = await db.query(queryText, [userID]);
   } catch (err) {
+    return next(
+      new HttpError("Fetching watchlist failed, please try again later.", 500)
+    );
+  }
+
+  if (userWatchlist === false) {
     return next(
       new HttpError("Fetching watchlist failed, please try again later.", 500)
     );
@@ -46,68 +52,91 @@ const getWatchlistOfUser = async (req, res, next) => {
 
 const addAnimeToWatchlist = async (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()){
+  if (!errors.isEmpty()) {
     return next(
       new HttpError("Invalid inputs provided, please check your inputs", 422)
     );
   }
   const userid = req.params.uid;
-  const {animeid, favourite} = req.body;
+  const { animeid, favourite } = req.body;
 
   let existingEntry;
   try {
     existingEntry = await db.query(
-      "SELECT * FROM " + 
-      tables.watchlist + 
-      " WHERE " + 
-      watchlist.animeIDNOTNULL + 
-      " = $1 AND " +
-      watchlist.userIDNOTNULL + 
-      " = $2 ;",
+      "SELECT * FROM " +
+        tables.watchlist +
+        " WHERE " +
+        watchlist.animeIDNOTNULL +
+        " = $1 AND " +
+        watchlist.userIDNOTNULL +
+        " = $2 ;",
       [animeid, userid]
     );
   } catch (err) {
     return next(
-      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+      new HttpError(
+        "Adding entry to watchlist failed, please try again later",
+        500
+      )
+    );
+  }
+  if (existingEntry === false) {
+    return next(
+      new HttpError(
+        "Adding entry to watchlist failed, please try again later",
+        500
+      )
     );
   }
 
   if (existingEntry.rowCount != 0) {
-    return next(
-      new HttpError("Anime already in your watchlist!", 422)
-    );
+    return next(new HttpError("Anime already in your watchlist!", 422));
   }
 
   let createdEntry;
   let queryText;
-  queryText = 
-  "INSERT INTO " + 
-  tables.watchlist + 
-  " VALUES ( '" + 
-  userid + 
-  "', " + 
-  favourite + 
-  ", " + 
-  animeid +
-  " ) RETURNING * ;"
-  ;
+  queryText =
+    "INSERT INTO " +
+    tables.watchlist +
+    " VALUES ( '" +
+    userid +
+    "', " +
+    favourite +
+    ", " +
+    animeid +
+    " ) RETURNING * ;";
   try {
-    createdEntry = await db.query(queryText)
+    createdEntry = await db.query(queryText);
   } catch (err) {
     return next(
-      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+      new HttpError(
+        "Adding entry to watchlist failed, please try again later",
+        500
+      )
+    );
+  }
+
+  if (createdEntry === false) {
+    return next(
+      new HttpError(
+        "Adding entry to watchlist failed, please try again later",
+        500
+      )
     );
   }
 
   if (createdEntry.rowCount === 0) {
     return next(
-      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+      new HttpError(
+        "Adding entry to watchlist failed, please try again later",
+        500
+      )
     );
   }
 
   res.status(201).json({
-    success: true, 
-    watchlistEntry: createdEntry.rows[0]
+    success: true,
+    watchlistEntry: createdEntry.rows[0],
   });
 };
 

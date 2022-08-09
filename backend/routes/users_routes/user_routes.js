@@ -16,7 +16,6 @@ router.post(
     check("name").not().isEmpty(),
     check("password").not().isEmpty(),
     check("email").normalizeEmail().isEmail(),
-    // check("pictureid").not().isEmpty(),
   ],
   userControllers.signupUser
 );

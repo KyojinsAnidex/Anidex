@@ -24,10 +24,14 @@ const getAnimeByName = async (req, res, next) => {
     searchedAnime = await db.query(queryText);
   } catch (err) {
     return next(
-      new HttpError("searching anime failed, please try again later", 500)
+      new HttpError("Searching anime failed, please try again later", 500)
     );
   }
-
+  if (searchedAnime === false ) {
+    return next(
+      new HttpError("Searching anime failed, please try again later", 500)
+    );
+  }
   if (searchedAnime.rowCount == 0) {
     res.status(404).json({
       success: false,
@@ -69,7 +73,12 @@ const getUserByName = async (req, res, next) => {
     searchedUser = await db.query(queryText);
   } catch (err) {
     return next(
-      new HttpError("searching user failed, please try again later", 500)
+      new HttpError("Searching user failed, please try again later", 500)
+    );
+  }
+  if (searchedUser === false ) {
+    return next(
+      new HttpError("Searching user failed, please try again later", 500)
     );
   }
 
@@ -108,9 +117,16 @@ const getCharByName = async (req, res, next) => {
     searchedCharacter = await db.query(queryText);
   } catch (err) {
     return next(
-      new HttpError("searching character failed, please try again later", 500)
+      new HttpError("Searching character failed, please try again later", 500)
     );
   }
+
+  if (searchedCharacter === false ) {
+    return next(
+      new HttpError("Searching character failed, please try again later", 500)
+    );
+  }
+
 
   if (searchedCharacter.rowCount == 0) {
     res.status(404).json({
@@ -151,6 +167,12 @@ const getPersonnelByName = async (req, res, next) => {
     );
   }
 
+  if (searchedPersonnel === false ) {
+    return next(
+      new HttpError("Searching personnel failed, please try again later", 500)
+    );
+  }
+
   if (searchedPersonnel.rowCount == 0) {
     res.status(404).json({
       success: false,
@@ -181,6 +203,12 @@ const getStudioByName = async (req, res, next) => {
   try {
     searchedStudio = await db.query(queryText);
   } catch (err) {
+    return next(
+      new HttpError("Searching studio failed, please try again later", 500)
+    );
+  }
+
+  if (searchedStudio === false ) {
     return next(
       new HttpError("Searching studio failed, please try again later", 500)
     );
@@ -220,6 +248,13 @@ const getEpisodeByName = async (req, res, next) => {
       new HttpError("Searcing episodes failed, please try again later", 500)
     );
   }
+
+  if (searchedEpisode === false ) {
+    return next(
+      new HttpError("Searching episode failed, please try again later", 500)
+    );
+  }
+
 
   if (searchedEpisode.rowCount == 0) {
     res.status(404).json({

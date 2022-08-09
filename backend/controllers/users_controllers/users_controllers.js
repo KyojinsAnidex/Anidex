@@ -32,6 +32,12 @@ const getAllUsers = async (req, res, next) => {
     );
   }
 
+  if (allUsers === false) {
+    return next(
+      new HttpError("Fetching users failed, please try again later", 500)
+    );
+  }
+
   if (allUsers.rowCount > 0) {
     res.status(200).json({
       success: true,
@@ -75,6 +81,12 @@ const getUserByID = async (req, res, next) => {
     );
   }
 
+  if (searchedUser === false) {
+    return next(
+      new HttpError("Fetching user failed, please try again later.", 500)
+    );
+  }
+
   if (searchedUser.rowCount != 0) {
     res.status(200).json({
       success: true,
@@ -111,6 +123,11 @@ const loginUser = async (req, res, next) => {
         "'"
     );
   } catch (err) {
+    return next(
+      new HttpError("Loggin in user failed, please try again later.", 500)
+    );
+  }
+  if (existingUser === false) {
     return next(
       new HttpError("Loggin in user failed, please try again later.", 500)
     );
@@ -197,6 +214,11 @@ const signupUser = async (req, res, next) => {
       new HttpError("Signing up failed, please try again later.", 500)
     );
   }
+  if (existingUser === false) {
+    return next(
+      new HttpError("Signing up failed, please try again later.", 500)
+    );
+  }
 
   if (existingUser.rowCount > 0) {
     return next(
@@ -239,6 +261,11 @@ const signupUser = async (req, res, next) => {
   try {
     createdUser = await db.query(queryText);
   } catch (err) {
+    return next(
+      new HttpError("Signing up user failed, please try again later.", 500)
+    );
+  }
+  if (createdUser === false) {
     return next(
       new HttpError("Signing up user failed, please try again later.", 500)
     );

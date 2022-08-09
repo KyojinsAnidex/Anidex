@@ -19,7 +19,8 @@ const query = async (text, params) => {
     const start = Date.now();
 
     //serve and store res, it will have query results at res.rows property
-    const res = await pool.query(text, params);
+    let res = false;
+    res = await pool.query(text, params);
 
     const duration = Date.now() - start;
 
@@ -49,9 +50,7 @@ const query = async (text, params) => {
     //return pg pool.query result object
     return res;
   } catch (err) {
-    console.log(
-      "ERROR EXECUTING QUERY: " + text + "\n" + err.message + "\n" + err.stack
-    );
+    console.log("ERROR EXECUTING QUERY: " + text + "\n" + err.message + "\n");
 
     //silly logging for now
     try {
@@ -65,7 +64,8 @@ const query = async (text, params) => {
           "\n" +
           err.message +
           "\n" +
-          err.stack,
+          err.stack +
+          "\n",
 
         (err) => {
           if (err) {
