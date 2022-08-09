@@ -1,3 +1,8 @@
-<p class="mx-10 my-6">
-    abcd
-</p>
+<script>
+import Login from "./routes/login.svelte";
+
+import Signup from "./routes/signup.svelte";
+
+
+</script>
+<Signup/>
