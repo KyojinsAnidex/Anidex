@@ -1,5 +1,4 @@
 const { validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken");
 
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
@@ -40,7 +39,7 @@ const getSinglePerson = async (req, res, next) => {
   if (searchedPerson === false || searchedPerson.rowCount === 0) {
     res.status(404).json({
       success: false,
-      message: "No person with provided characterID",
+      message: "No person with provided personnel id",
     });
   } else {
     res.status(200).json({
@@ -124,7 +123,7 @@ const addPerson = async (req, res, next) => {
   } else {
     res.status(201).json({
       success: true,
-      newPerson: createdPerson.rows[0],
+      // newPerson: createdPerson.rows[0],
       personnelID: createdPerson.rows[0].personnelid,
     });
   }
