@@ -124,12 +124,12 @@ const loginUser = async (req, res, next) => {
     );
   } catch (err) {
     return next(
-      new HttpError("Loggin in user failed, please try again later.", 500)
+      new HttpError("Logging in user failed, please try again later. Had problem running a query in database", 500)
     );
   }
   if (existingUser === false) {
     return next(
-      new HttpError("Loggin in user failed, please try again later.", 500)
+      new HttpError("Logging in user failed, please try again later. Running the query yielded a false result", 500)
     );
   }
 
@@ -172,7 +172,7 @@ const loginUser = async (req, res, next) => {
     });
   } catch (err) {
     return next(
-      new HttpError("Logging in user failed, please try again later.", 500)
+      new HttpError("Logging in user failed, please try again later. JWT token making failed", 500)
     );
   }
 
