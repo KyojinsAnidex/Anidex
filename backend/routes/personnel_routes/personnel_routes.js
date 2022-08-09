@@ -20,6 +20,7 @@ router.post(
     check("firstname").not().isEmpty(),
     check("lastname").not().isEmpty(),
     check("gender").not().isEmpty(),
+    check("birthday").not().isEmpty(),
   ],
   personnelControllers.addPerson
 );

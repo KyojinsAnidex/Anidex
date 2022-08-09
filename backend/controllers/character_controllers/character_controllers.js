@@ -8,7 +8,13 @@ const dbModels = require("../../models/db_models");
 const common = require("../common_controllers/common");
 
 const getAllChar = async (req, res, next) => {
-  common.getAllFromTable(req, res, dbModels.tables.characters, "characters");
+  common.getAllFromTable(
+    req,
+    res,
+    next,
+    dbModels.tables.characters,
+    "characters"
+  );
 };
 
 const getAChar = async (req, res, next) => {
