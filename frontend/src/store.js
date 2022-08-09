@@ -1,12 +1,12 @@
 import { writable } from "svelte/store";
-export const curruser=writable(
+export let curruser=writable(
 {
     name:'',
     mail:''
 })
-export const search=writable({
+export let search=writable({
     txt:'',
     type:''
 }
 )
-export const state=writable(0);
+export let state=writable(0);
