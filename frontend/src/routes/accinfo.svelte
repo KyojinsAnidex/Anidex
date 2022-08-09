@@ -7,10 +7,10 @@
   let res = {
     success: false,
     user: 
-    {userId: "",
+    {userid: "",
     email: "",
     biography: "",
-    pictureId: "",
+    pictureid: "",
     admin: ""}
   };
 
@@ -24,7 +24,6 @@
           alert("User Not Found");
         } else {
           res = temp;
-          console.log(res);
           image = image + res.user.pictureid;
         }
       })
@@ -39,13 +38,6 @@
 {#await fetchuserinfo() then}
   <div class="container min-w-full">
     <div class="grid grid-cols-1 md:grid-cols-2">
-      <div class="hidden bg-slate-500 md:block">
-        <img
-          class="h-auto bg-cover bg-center bg-no-repeat"
-          src="https://source.unsplash.com/random"
-          alt="bg"
-        />
-      </div>
       <div class="mt-10">
         <div class="flex justify-center">
           <img class="h-52 rounded-full mb-4" src={image} alt="person pic" />
