@@ -15,11 +15,13 @@ const getWatchlistOfUser = async (req, res, next) => {
   let queryText =
     "SELECT " +
     watchlist.animeIDNOTNULL +
+    ", " + 
+    watchlist.favouriteNOTNULL + 
     " FROM " +
     tables.watchlist +
     " WHERE " +
     watchlist.userIDNOTNULL +
-    " = $1";
+    " = $1 ;";
 
   try {
     userWatchlist = await db.query(queryText, [userID]);
@@ -42,7 +44,72 @@ const getWatchlistOfUser = async (req, res, next) => {
   }
 };
 
-const addAnimeToWatchlist = (req, res, next) => {};
+const addAnimeToWatchlist = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()){
+    return next(
+      new HttpError("Invalid inputs provided, please check your inputs", 422)
+    );
+  }
+  const userid = req.params.uid;
+  const {animeid, favourite} = req.body;
+
+  let existingEntry;
+  try {
+    existingEntry = await db.query(
+      "SELECT * FROM " + 
+      tables.watchlist + 
+      " WHERE " + 
+      watchlist.animeIDNOTNULL + 
+      " = $1 AND " +
+      watchlist.userIDNOTNULL + 
+      " = $2 ;",
+      [animeid, userid]
+    );
+  } catch (err) {
+    return next(
+      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+    );
+  }
+
+  if (existingEntry.rowCount != 0) {
+    return next(
+      new HttpError("Anime already in your watchlist!", 422)
+    );
+  }
+
+  let createdEntry;
+  let queryText;
+  queryText = 
+  "INSERT INTO " + 
+  tables.watchlist + 
+  " VALUES ( '" + 
+  userid + 
+  "', " + 
+  favourite + 
+  ", " + 
+  animeid +
+  " ) RETURNING * ;"
+  ;
+  try {
+    createdEntry = await db.query(queryText)
+  } catch (err) {
+    return next(
+      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+    );
+  }
+
+  if (createdEntry.rowCount === 0) {
+    return next(
+      new HttpError("Adding entry to watchlist failed, please try again later", 500)
+    );
+  }
+
+  res.status(201).json({
+    success: true, 
+    watchlistEntry: createdEntry.rows[0]
+  });
+};
 
 const deleteAnimeFromWatchlist = (req, res, next) => {};
 

@@ -48,6 +48,37 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+    post:
+      summary: adds an anime
+      tags:
+        - anime
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: anime data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimeInput'
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  animeid:
+                    type: integer
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+
   "/anime/{aid}":
     get:
       summary: returns the anime specified by the anime id if found
@@ -134,7 +165,6 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerSideError" 
-
   
   "/users":
     get:
@@ -157,12 +187,12 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerSideError"
+
   "/users/{uid}":
     get:
       summary: returns user specified by user id if found
       tags:
         - user
-
       parameters:
         - $ref: '#/components/parameters/uid'
       responses:
@@ -183,48 +213,41 @@ paths:
           $ref: "#/components/responses/500ServerSideError"
 
   "/users/signup":
-    get:
+    post:
       summary: signup a new user
       tags:
-        - user
-      
+        - user 
       requestBody:
         description: signup data
         required: true
-
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserSignIn'
-
       responses:
-        "200":
+        "201":
           description: success
           content:
            application/json:
               schema:
-                $ref: '#/components/schemas/LoginSuccessOutput'
-                  
-        "404":
-          $ref: "#/components/responses/404NotFound"
+                $ref: '#/components/schemas/LoginSuccessOutput'                
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
   "/users/login":
-    get:
+    post:
       summary: login a user
       tags:
         - user
-      
       requestBody:
         description: login data
         required: true
-
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserLogin'
-
       responses:
         "200":
           description: success
@@ -233,17 +256,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginSuccessOutput'
                   
-        "404":
-          $ref: "#/components/responses/404NotFound"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
   "/watchlist/{uid}":
     get:
-      summary: login a user
+      summary: view user watchlist
       tags:
         - watchlist
-      
       parameters:
         - $ref: '#/components/parameters/uid'
       responses:
@@ -258,6 +282,47 @@ paths:
           $ref: "#/components/responses/404NotFound"
         "500":
           $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add anime to user watchlist
+      tags:
+        - watchlist
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: watchlist data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                animeid:
+                  type: integer
+                favourite:
+                  type: boolean
+              required:
+                - animeid
+                - favourite
+      responses:
+        "201":
+          description: success
+          content:
+           application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  WatchlistEntry:
+                    $ref: '#/components/schemas/WatchlistEntry'  
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
 
   "/search/anime":
     post:
@@ -398,29 +463,32 @@ components:
       properties:
         userid:
           type: string
-          required: true
         password:
           type: string
-          required: true
         email:
           type: string
           format: email
-          required: true
         bio:
           type: string
+      required:
+        - userid
+        - password
+        - email
+        
     UserLogin:
       type: object
       properties:
         name: 
           type: string
-          required: true
         email:
           type: string
           format: email
-          required: true
         password:
           type: string
-          required: true
+      required:
+        - name
+        - password
+        - email
 
     LoginSuccessOutput:
       type: object
@@ -487,17 +555,19 @@ components:
       properties:
         aniemid:
           type: integer
-          required: true
         userid:
           type: string
-          required: true
         favourite:
-          type: boolean
+          type: boolean 
+      required:
+        - animeid
+        - userid
+        - favourite
 
     WatchlistWhole:
       type: array
       items:
-        $ref: '#/components/schemas/WatchlistWhole'
+        $ref: '#/components/schemas/WatchlistEntry'
 
     AnimePicture:
       type: object
@@ -616,6 +686,39 @@ components:
       items:
         $ref: '#/components/schemas/studioSingle'
 
+    failedResponses:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    
+    watchlistInput:
+      type: object
+      properties:
+        animeid:
+          type: integer
+        favourite:
+          type: boolean
+      required:
+        - animeid
+        - favourite
+
+    AnimeInput:
+      type: object
+      properties:
+        title:
+          type: string
+        releasedate:
+          type: integer
+          format: date
+        synopsis:
+          type: string
+      required:
+        - title
+        - releasedate
+        - synopsis
 
   requestBodies:
     searchItem:
@@ -637,7 +740,6 @@ components:
       required: true
       schema:
         type: string
-        minimum: 1
       description: userID of user
 
     aid:
@@ -649,39 +751,63 @@ components:
         minimum: 1
       description: animeid of the anime
 
+    jwtAuth:
+      in: header
+      name: jwtAuth
+      required: true
+      schema:
+        type: string
+        format: jwt
+      description: jwt token in header for authentication
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+
   # Reusable responses, such as 401 Unauthorized or 400 Bad Request
   responses:
     400badrequest:
       description: the API request was badly formed
-
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+      
     404NotFound:
       description: the requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+            
 
     500ServerSideError:
       description: unknown server side error happened, please try again later
-
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+      
     422InvalidInput:
       description: provided inputs are invalid, please check your inputs
-
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+      
     403Forbidden:
       description: the requested resource or operation is not available for this user
-
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+      
     401AuthFailure:
       description: failure in authenticating this API call
-  # Reusable examples
-  examples:
-    userSignInExample:
-      value:
-      summary: Sample user sign in request body
-
-    userLoginExample:
-      value:
-      summary: Sample user login request body
-
-    userSingleExample:
-      value:
-      summary: Sample user response body
-
-    watchlistEntryExample:
-      value:
-      summary: Sample watchlist entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failedResponses'
+      

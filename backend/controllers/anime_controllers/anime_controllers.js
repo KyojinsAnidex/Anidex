@@ -20,7 +20,7 @@ const getAnimeByID = async (req, res, next) => {
     dbModels.tables.anime +
     " WHERE " +
     dbModels.anime.animeIDNOTNULL +
-    " = $1";
+    " = $1 ;";
 
   try {
     searchedAnime = await db.query(queryText, [animeID]);
@@ -107,7 +107,7 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animeisofgenre +
         " WHERE " +
         dbModels.animeisofgenre.animeIDNOTNULL +
-        " = " + animeid
+        " = " + animeid + ";"
     );
     animeItems.charcters = await db.query(
       "SELECT " +
@@ -116,7 +116,7 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animecharacter +
         " WHERE " +
         dbModels.animecharacter.animeIDNOTNULL +
-        " = " + animeid
+        " = " + animeid + ";"
     );
     animeItems.personnel = await db.query(
       "SELECT " +
@@ -125,7 +125,7 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animestaff +
         " WHERE " +
         dbModels.animestaff.animeIDNOTNULL +
-        " = " + animeid
+        " = " + animeid + ";"
     );
     animeItems.studios = await db.query(
       "SELECT " +
@@ -134,7 +134,7 @@ const getAllAnimeItems = async (req, res, next) => {
         dbModels.tables.animestudio +
         " WHERE " +
         dbModels.animestudio.animeIDNOTNULL +
-        " = " + animeid
+        " = " + animeid + ";"
     );
   } catch (err) {
     return next(
@@ -144,10 +144,10 @@ const getAllAnimeItems = async (req, res, next) => {
 
   //all row empty, got no data for anime; any row empty, frontend just says no data for that item particularly
   if (
-    animeItems.charcters.rowCount == 0 &&
-    animeItems.genre.rowCount == 0 &&
-    animeItems.personnel.rowCount == 0 &&
-    animeItems.studios.rowCount == 0
+    animeItems.charcters.rowCount === 0 &&
+    animeItems.genre.rowCount === 0 &&
+    animeItems.personnel.rowCount === 0 &&
+    animeItems.studios.rowCount === 0
   ) {
     res.status(404).json({
       success: false,
@@ -165,11 +165,78 @@ const getAllAnimeItems = async (req, res, next) => {
   }
 };
 
-const addAnime = (req, res, next) => {
+const addAnime = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs provided, please check your inputs", 422)
+    );
+  }
+
+  const {title, releasedate, synopsis} = req.body;
+
+  let existingAnime;
+  try {
+    existingAnime = await db.query(
+      "SELECT * FROM " + 
+      dbModels.tables.anime + 
+      " WHERE " + 
+      dbModels.anime.titleNOTNULL + 
+      " = $1 ;", 
+      [title]
+    );
+  } catch (err) {
+    return next(
+      new HttpError("Adding new anime failed, please try again later", 500)
+    );
+  }
+
+  if (existingAnime.rowCount != 0) {
+    return next(
+      new HttpError("Anime with same title exists already", 422)
+    );
+  } 
+
+  let createdAnime;
+  let queryText;
+  queryText = 
+  "INSERT INTO " +
+  dbModels.tables.anime +
+  " ( " +
+  dbModels.anime.titleNOTNULL + 
+  ", " + 
+  dbModels.anime.releasedateNOTNULL + 
+  ", " + 
+  dbModels.anime.synopsis + 
+  " ) VALUES ( '" +
+  title + 
+  "' , '" + 
+  releasedate +
+  "' , '" + 
+  synopsis + 
+  "' ) RETURNING * ;";
+  try {
+    createdAnime = await db.query(queryText);
+  } catch (err) { 
+    return next(
+      new HttpError("Adding anime failed, please try again later", 500)
+    );
+  }
   
+  if (createdAnime.rowCount === 0) {
+    return next(
+      new HttpError("Adding anime failed, please try again later", 500)
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    animeid: createdAnime.rows[0].animeid,
+  });
+
 };
 
-const editAnime = (req, res, next) => {
+const editAnime = async (req, res, next) => {
 
 };
 

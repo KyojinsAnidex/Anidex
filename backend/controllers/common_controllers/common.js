@@ -16,12 +16,12 @@ const getAllFromTable = async (req, res, next, searchingTable, searchingName) =>
 
   if (allRes.rowCount > 0) {
     res.status(200).json({
-      success: "true",
+      success: true,
       results: allRes.rows,
     });
   } else {
     res.status(404).json({
-      success: "false",
+      success: false,
       message: "No "+ searchingName +" found",
     });
   }

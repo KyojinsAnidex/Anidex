@@ -89,6 +89,12 @@ const getUserByID = async (req, res, next) => {
 };
 
 const loginUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid input provided, please check your inputs", 422)
+    );
+  }
   const { name, email, password } = req.body;
 
   let existingUser;
@@ -112,7 +118,7 @@ const loginUser = async (req, res, next) => {
 
   if (existingUser.rowCount === 0) {
     return next(
-      new HttpError("Invalid credentials, could not log you in", 403)
+      new HttpError("Invalid credentials, could not log you in", 401)
     );
   }
 
@@ -256,7 +262,7 @@ const signupUser = async (req, res, next) => {
     );
   }
 
-  res.status(200).json({
+  res.status(201).json({
     success: true,
     userid: name,
     email: email,
