@@ -30,6 +30,9 @@ HOST='localhost'
 DATABASE='anidex'
 PASSWORD='password'
 DATABASE_PORT=5432
+
+#jwt key
+JWT_KEY='sup3r_s3cr3t_d0nt_shar3'
 ```
 
 #### Configuring the database
