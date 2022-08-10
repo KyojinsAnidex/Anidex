@@ -8,24 +8,30 @@ servers:
     description: only working server for now
 
 tags:
-  - name: search
-    description: search endpoints
   - name: anime
     description: anime endpoints
+  - name: episode
+    description: episode related endpoints
   - name: user
     description: user endpoints
   - name: watchlist
     description: watchlist endpoints
+  - name: review
+    description: review and comment endpoints
   - name: personnel
     description: personnel endpoints
   - name: character
     description: character endpoints
-  - name: review
-    description: review and comment endpoints
   - name: watchroom
     description: watchroom endpoints
   - name: genre
     description: genre endpoints
+  - name: reviewVote
+    description: a little weird way of commenting on a review
+  - name: studio
+    description: studio endpoints
+  - name: search
+    description: search endpoints
 
 paths:
   "/anime":
@@ -71,7 +77,7 @@ paths:
                   animeid:
                     type: integer
         "401":
-          $ref: '#/components/responses/401AuthFailure'
+          $ref: "#/components/responses/401AuthFailure"
         "422":
           $ref: "#/components/responses/422InvalidInput"
         "500":
@@ -610,7 +616,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: 
+            schema:
               type: object
               properties:
                 searchedGenre:
@@ -687,6 +693,7 @@ paths:
           $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
+
   "/personnel/{pid}":
     get:
       summary: get a single person
@@ -706,6 +713,289 @@ paths:
                     type: boolean
                   person:
                     $ref: "#/components/schemas/personnel"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/watchroom":
+    get:
+      summary: get all watchrooms data
+      tags:
+        - watchroom
+      responses:
+        "200":
+          description: successfully got all watchroom
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    $ref: "#/components/schemas/WatchroomAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new watchroom
+      tags:
+        - watchroom
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/WatchroomInput"
+      responses:
+        "201":
+          description: successfully added a watchroom
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  watchroomid:
+                    description: newly created watchroom id
+                    type: integer
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/watchroom/{watchroomid}":
+    get:
+      summary: get a single watchroom
+      tags:
+        - watchroom
+      parameters:
+        - $ref: "#/components/parameters/watchroomid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  watchroom:
+                    $ref: "#/components/schemas/WatchroomSingle"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/wachroom/participants/{watchroomid}":
+    get:
+      summary: get ids of all participants of a watchroom
+      tags:
+        - watchroom
+      parameters:
+        - $ref: "#/components/parameters/watchroomid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  participants:
+                    type: array
+                    items:
+                      type: string
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new participant to a watchroom
+      tags:
+        - watchroom
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/watchroomid"
+      requestBody:
+        $ref: "#/components/requestBodies/WatchroomParticipantInput"
+      responses:
+        "201":
+          description: successfully added a participant to a watchroom
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  participant:
+                    $ref: "#/components/schemas/WatchroomParticipants"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/reviews/{aid}":
+    get:
+      summary: get all reviews of this anime
+      tags:
+        - review
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      responses:
+        "200":
+          description: successfully got all review of this anime
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  reviews:
+                    $ref: "#/components/schemas/reviewAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new review to an anime
+      tags:
+        - review
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      requestBody:
+        $ref: "#/components/requestBodies/ReviewInput"
+      responses:
+        "201":
+          description: successfully added a review to this anime
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newReview:
+                    $ref: "#/components/schemas/reviewSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/reviews/single/{reviewid}":
+    get:
+      summary: get a single review
+      tags:
+        - review
+      parameters:
+        - $ref: "#/components/parameters/reviewid"
+      responses:
+        "200":
+          description: successfully got this review
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  review:
+                    $ref: "#/components/schemas/reviewSingle"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/episodes/{aid}":
+    get:
+      summary: get all episodes of the provided anime
+      tags:
+        - episode
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  episodes:
+                    $ref: "#/components/schemas/episodesAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add a new episode to an anime
+      tags:
+        - episode
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      requestBody:
+        $ref: "#/components/requestBodies/EpisodeInput"
+      responses:
+        "201":
+          description: successfully added an episode to this anime
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newEpisode:
+                    $ref: "#/components/schemas/episodeSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/episodes/single/{episodeid}":
+    get:
+      summary: get a single episode with provided id
+      tags:
+        - episode
+      parameters:
+        - $ref: "#/components/parameters/episodeid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  episode:
+                    $ref: "#/components/schemas/episodeSingle"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -809,7 +1099,7 @@ components:
     WatchlistEntry:
       type: object
       properties:
-        aniemid:
+        animeid:
           type: integer
         userid:
           type: string
@@ -922,6 +1212,23 @@ components:
       items:
         $ref: "#/components/schemas/episodeSingle"
 
+    episodeInput:
+      type: object
+      properties:
+        episode:
+          type: integer
+        season:
+          type: integer
+        animeid:
+          type: integer
+        title:
+          type: string
+      required:
+        - episode
+        - season
+        - animeid
+        - title
+
     studioSingle:
       type: object
       properties:
@@ -993,6 +1300,74 @@ components:
         - gender
         - birthday
 
+    WatchroomSingle:
+      type: object
+      properties:
+        watchroomid:
+          type: integer
+          minimum: 1
+        watchroomname:
+          type: string
+        starttime:
+          type: number
+          format: timestamp
+        endtime:
+          type: number
+          format: timestamp
+        animeid:
+          type: integer
+          minimum: 1
+        description:
+          type: string
+
+    WatchroomAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/WatchroomSingle"
+
+    WatchroomParticipants:
+      type: object
+      properties:
+        userid:
+          type: string
+        watchroomid:
+          type: integer
+
+    reviewSingle:
+      type: object
+      properties:
+        reviewid:
+          type: integer
+          minimum: 1
+        content:
+          type: string
+        votes:
+          type: integer
+        reviewtime:
+          type: number
+          format: timestamp
+        animeid:
+          type: integer
+          minimum: 1
+        userid:
+          type: string
+
+    reviewAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/reviewSingle"
+
+    reviewInput:
+      type: object
+      properties:
+        content:
+          type: string
+        animeid:
+          type: integer
+          minimum: 1
+        userid:
+          type: string
+
   requestBodies:
     searchItem:
       description: search string
@@ -1061,6 +1436,55 @@ components:
           schema:
             $ref: "#/components/schemas/PersonInput"
 
+    WatchroomInput:
+      description: new watchroom to create
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              watchroomname:
+                type: string
+              animeid:
+                type: integer
+                minimum: 1
+              description:
+                type: string
+            required:
+              - watchroomname
+              - animeid
+              - description
+
+    WatchroomParticipantInput:
+      description: the participant to add to watchroom
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userid:
+                type: string
+            required:
+              - userid
+
+    ReviewInput:
+      description: new review data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/reviewInput"
+
+    EpisodeInput:
+      description: new episode data
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/episodeInput"
+
   # Reusable path, query, header and cookie parameters
   parameters:
     uid:
@@ -1097,6 +1521,33 @@ components:
         type: integer
         minimum: 1
       description: personnel id of the person
+
+    watchroomid:
+      in: path
+      name: watchroomid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: id of the watchroom
+
+    reviewid:
+      in: path
+      name: reviewid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: id of the review
+
+    episodeid:
+      in: path
+      name: episodeid
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: id of the episode
 
   securitySchemes:
     BearerAuth:

@@ -37,7 +37,13 @@ const getAChar = async (req, res, next) => {
     );
   }
 
-  if (searchedChar === false || searchedChar.rowCount === 0) {
+  if (searchedChar === false) {
+    return next(
+      new HttpError("Fetching character failed, please try again later.", 500)
+    );
+  }
+
+  if (searchedChar.rowCount === 0) {
     res.status(404).json({
       success: false,
       message: "No character with provided characterID",
@@ -116,8 +122,12 @@ const addAChar = async (req, res, next) => {
       new HttpError("Adding character failed, please try again later", 500)
     );
   }
-
-  if (createdChar === false || createdChar.rowCount === 0) {
+  if (createdChar === false) {
+    return next(
+      new HttpError("Adding character failed, please try again later", 500)
+    );
+  }
+  if (createdChar.rowCount === 0) {
     return next(
       new HttpError("Adding character failed, please try again later", 500)
     );
