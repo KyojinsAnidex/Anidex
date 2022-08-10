@@ -48,44 +48,6 @@
       email: "",
       password: "",
     };
-   /* fetch("http://localhost:5000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // like application/json or text/xml
-      },
-      body: JSON.stringify({
-        // Example: Update JSON file with
-        //          local data properties
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        // etc.
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        temp = data;
-        if (temp.success == false) {
-          alert("Could Not log up Try Again");
-          user.name = "";
-          user.email = "";
-          user.password = "";
-        } else if (temp.success == true) {
-          alert("Logged in");
-          state.set(1);
-          $curruser.name = user.name;
-          $curruser.mail = user.email;
-          console.log($curruser);
-          console.log(user);
-          user.name = "";
-          user.email = "";
-          user.password = "";
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });*/
       temp= await proxyhandlelogin();
       if (temp.success == false) {
           alert("Could Not log up Try Again");
@@ -103,6 +65,7 @@
           user.email = "";
           user.password = "";
         }
+        
   }
 </script>
 
