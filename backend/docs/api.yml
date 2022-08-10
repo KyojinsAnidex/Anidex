@@ -18,6 +18,8 @@ tags:
     description: watchlist endpoints
   - name: review
     description: review and comment endpoints
+  - name: animeRating
+    description: anime rating by user endpoints
   - name: personnel
     description: personnel endpoints
   - name: character
@@ -26,8 +28,8 @@ tags:
     description: watchroom endpoints
   - name: genre
     description: genre endpoints
-  - name: reviewVote
-    description: a little weird way of commenting on a review
+  #- name: reviewVote
+  # description: a little weird way of commenting on a review
   - name: studio
     description: studio endpoints
   - name: search
@@ -1023,7 +1025,6 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
-
     post:
       summary: add a new studio
       tags:
@@ -1096,6 +1097,84 @@ paths:
                     type: array
                     items:
                       type: integer
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/animerating/{aid}":
+    get:
+      summary: get all rating of a single anime
+      tags:
+        - animeRating
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  animeStars:
+                    $ref: "#/components/schemas/animeRatingAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/animerating/{uid}":
+    post:
+      summary: rate an anime by this user
+      tags:
+        - animeRating
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      requestBody:
+        $ref: "#/components/requestBodies/AnimeRatingInput"
+      responses:
+        "201":
+          description: successfully rated a new anime
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newRating:
+                    $ref: "#/components/schemas/animeRatingSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/animerating/user/{uid}":
+    get:
+      summary: get all rating by a single user
+      tags:
+        - animeRating
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  allStarsByThisUser:
+                    $ref: "#/components/schemas/animeRatingAll"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -1467,6 +1546,28 @@ components:
           minimum: 1
         userid:
           type: string
+      required:
+        - content
+        - animeid
+        - userid
+
+    animeRatingSingle:
+      type: object
+      properties:
+        userid:
+          type: string
+        animeid:
+          type: integer
+          minimum: 1
+        starcount:
+          type: integer
+          minimum: 0
+          maximum: 10
+
+    animeRatingAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/animeRatingSingle"
 
   requestBodies:
     searchItem:
@@ -1593,13 +1694,32 @@ components:
           schema:
             type: object
             properties:
-              studioname: 
+              studioname:
                 type: string
               office_address:
                 type: string
               website:
                 type: string
                 format: url
+
+    AnimeRatingInput:
+      description: data for a new anime rating
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              animeid:
+                type: integer
+                minimum: 1
+              starcount:
+                type: integer
+                minimum: 0
+                maximum: 10
+            required:
+              - animeid
+              - starcount
 
   # Reusable path, query, header and cookie parameters
   parameters:
@@ -1682,42 +1802,42 @@ components:
   # Reusable responses, such as 401 Unauthorized or 400 Bad Request
   responses:
     400badrequest:
-      description: the API request was badly formed
+      description: Please user the status code to check for failure, not success field. Failure in forming a proper API call
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     404NotFound:
-      description: the requested resource was not found
+      description: Please user the status code to check for failure, not success field. Requested resource was not found.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     500ServerSideError:
-      description: unknown server side error happened, please try again later
+      description: Please user the status code to check for failure, not success field. Unknown server side error occurred, please try again later.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     422InvalidInput:
-      description: provided inputs are invalid, please check your inputs
+      description: Please user the status code to check for failure, not success field. Provided inputs are not valid, please check them.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     403Forbidden:
-      description: the requested resource or operation is not available for this user
+      description: Please user the status code to check for failure, not success field. Failure in authenticating this API call by JWT
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     401AuthFailure:
-      description: failure in authenticating this API call by JWT
+      description: Please user the status code to check for failure, not success field. Failure in authenticating this API call by JWT
       content:
         application/json:
           schema:
