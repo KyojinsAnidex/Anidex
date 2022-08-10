@@ -1,5 +1,5 @@
 <script>
-    import {state,searchresult} from "../store";
+    import {state,searchresult,search} from "../store";
   let animes = {
     success: false,
     results: [],
@@ -55,15 +55,16 @@
     for (let i = 0; i < animes.results.length; i++) {
       let nendpoint = endpoint + animes.results[i].animeid;
       
-          let ntemp =  await proxyfetchanimepic(nendpoint);
+          let ntemp = await  proxyfetchanimepic(nendpoint);
 
           if (ntemp.success == false) {
             alert("Picture Not Found");
           } else {
             pictures[i] = image + ntemp.gallery[0].pictureid;
-            //console.log(ntemp);
+            console.log(ntemp);
           }
         }
+        
     }
   
 </script>

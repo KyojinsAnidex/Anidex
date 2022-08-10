@@ -8,6 +8,7 @@ import Accinfo from "./routes/accinfo.svelte";
 import Logout from "./routes/logout.svelte";
 import Basesearchresults from "./routes/basesearchresults.svelte";
 import Animesearchresult from "./routes/animesearchresult.svelte";
+import Usersearch from "./routes/usersearch.svelte";
 
 </script>
 <Router>
@@ -114,6 +115,8 @@ import Animesearchresult from "./routes/animesearchresult.svelte";
     <Route path="/searchresult">
         {#if $search.type == "anime" }
         <Animesearchresult/>
+        {:else if $search.type=="user"}
+        <Usersearch/>
          {:else}
         <Basesearchresults/>
         {/if}
