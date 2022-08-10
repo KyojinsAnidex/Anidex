@@ -5,6 +5,9 @@ const searchControllers = require("./search_controllers/search_controllers");
 const characterControllers = require("./character_controllers/character_controllers");
 const personnelControllers = require("./personnel_controllers/personnel_controllers");
 const genreControllers = require("./genre_controllers/genre_controllers");
+const watchroomControllers = require("./watchroom_controllers/watchroom_controllers");
+const reviewControllers = require("./review_controllers/review_controllers");
+const episodesControllers = require("./episodes_controller/episodes_controllers");
 
 module.exports = {
   animeControllers,
@@ -14,4 +17,7 @@ module.exports = {
   characterControllers,
   personnelControllers,
   genreControllers,
+  watchroomControllers,
+  reviewControllers,
+  episodesControllers,
 };

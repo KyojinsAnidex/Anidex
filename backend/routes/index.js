@@ -7,6 +7,9 @@ const watchlistRoutes = require("./watchlist_routes/watchlist_routes");
 const charactersRoutes = require("./character_routes/character_routes");
 const personnelRoutes = require("./personnel_routes/personnel_routes");
 const genreRoutes = require("./genre_routes/genre_routes");
+const watchroomRoutes = require("./watchroom_routes/watchroom_routes");
+const reviewRoutes = require("./review_routes/review_routes");
+const episodeRoutes = require("./episodes_routes/episodes_routes");
 
 //export a method to add all routes to app parameter
 module.exports = (app) => {
@@ -20,4 +23,7 @@ module.exports = (app) => {
   app.use("/watchlist", watchlistRoutes);
   app.use("/personnel", personnelRoutes);
   app.use("/genre", genreRoutes);
+  app.use("/watchroom", watchroomRoutes);
+  app.use("/reviews", reviewRoutes);
+  app.use("/episodes", episodeRoutes);
 };
