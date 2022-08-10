@@ -1001,6 +1001,106 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+  "/studios":
+    get:
+      summary: get all studios
+      tags:
+        - studio
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    $ref: "#/components/schemas/studioAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+
+    post:
+      summary: add a new studio
+      tags:
+        - studio
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/StudioInput"
+      responses:
+        "201":
+          description: successfully added a studio
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newStudio:
+                    $ref: "#/components/schemas/studioSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/studios/{studioname}":
+    get:
+      summary: get a single studio with provided id
+      tags:
+        - studio
+      parameters:
+        - $ref: "#/components/parameters/studioname"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  studio:
+                    $ref: "#/components/schemas/studioSingle"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/studios/anime/{studioname}":
+    get:
+      summary: get all anime of a single studio
+      tags:
+        - studio
+      parameters:
+        - $ref: "#/components/parameters/studioname"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  animeOfStudio:
+                    type: array
+                    items:
+                      type: integer
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
 components:
   # Reusable schemas (data models)
   schemas:
@@ -1485,6 +1585,22 @@ components:
           schema:
             $ref: "#/components/schemas/episodeInput"
 
+    StudioInput:
+      description: new studio data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              studioname: 
+                type: string
+              office_address:
+                type: string
+              website:
+                type: string
+                format: url
+
   # Reusable path, query, header and cookie parameters
   parameters:
     uid:
@@ -1548,6 +1664,14 @@ components:
         type: integer
         minimum: 1
       description: id of the episode
+
+    studioname:
+      in: path
+      name: studioname
+      required: true
+      schema:
+        type: string
+      description: id of the studio, may contain spaces and hiphens
 
   securitySchemes:
     BearerAuth:
