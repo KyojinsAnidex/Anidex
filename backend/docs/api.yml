@@ -20,6 +20,8 @@ tags:
     description: review and comment endpoints
   - name: animeRating
     description: anime rating by user endpoints
+  - name: episodeRating
+    description: episode rating by user
   - name: personnel
     description: personnel endpoints
   - name: character
@@ -1180,6 +1182,84 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+  "/episoderating/{episodeid}":
+    get:
+      summary: get all rating of a single episode
+      tags:
+        - episodeRating
+      parameters:
+        - $ref: "#/components/parameters/episodeid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  episodeRates:
+                    $ref: "#/components/schemas/episodeRatingAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/episoderating/{uid}":
+    post:
+      summary: rate an episode by this user
+      tags:
+        - episodeRating
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      requestBody:
+        $ref: "#/components/requestBodies/EpisodeRatingInput"
+      responses:
+        "201":
+          description: successfully rated an episode
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newRating:
+                    $ref: "#/components/schemas/episodeRatingSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/episoderating/user/{uid}":
+    get:
+      summary: get all rating by a single user
+      tags:
+        - episodeRating
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  allRatesByThisUser:
+                    $ref: "#/components/schemas/episodeRatingAll"
+        "404":
+          $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
 components:
   # Reusable schemas (data models)
   schemas:
@@ -1569,6 +1649,25 @@ components:
       items:
         $ref: "#/components/schemas/animeRatingSingle"
 
+    episodeRatingSingle:
+      type: object
+      properties:
+        userid:
+          type: string
+        episodeid:
+          type: integer
+          minimum: 1
+        rating:
+          type: integer
+          minimum: 0
+          maximum: 10
+
+    episodeRatingAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/episodeRatingSingle"
+
+
   requestBodies:
     searchItem:
       description: search string
@@ -1720,6 +1819,25 @@ components:
             required:
               - animeid
               - starcount
+
+    EpisodeRatingInput:
+      description: data for a new episode rating
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              episodeid:
+                type: integer
+                minimum: 1
+              rating:
+                type: integer
+                minimum: 0
+                maximum: 10
+            required:
+              - episodeid
+              - rating
 
   # Reusable path, query, header and cookie parameters
   parameters:
