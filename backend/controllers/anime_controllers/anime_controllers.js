@@ -26,12 +26,12 @@ const getAnimeByID = async (req, res, next) => {
     searchedAnime = await db.query(queryText, [animeID]);
   } catch (err) {
     return next(
-      new HttpError("Fetching anime failed, please try again later.", 500)
+      new HttpError("Fetching anime failed, please try again later.", 500, false)
     );
   }
   if (searchedAnime === false) {
     return next(
-      new HttpError("Fetching anime failed, please try again later.", 500)
+      new HttpError("Fetching anime failed, please try again later.", 500, false)
     );
   }
   if (searchedAnime.rowCount != 0) {

@@ -10,6 +10,8 @@ const genreRoutes = require("./genre_routes/genre_routes");
 const watchroomRoutes = require("./watchroom_routes/watchroom_routes");
 const reviewRoutes = require("./review_routes/review_routes");
 const episodeRoutes = require("./episodes_routes/episodes_routes");
+const studioRoutes = require("./studio_routes/studio_routes");
+// const animeRatingRoutes = require("./animerating_routes/animerating_routes");
 
 //export a method to add all routes to app parameter
 module.exports = (app) => {
@@ -26,4 +28,6 @@ module.exports = (app) => {
   app.use("/watchroom", watchroomRoutes);
   app.use("/reviews", reviewRoutes);
   app.use("/episodes", episodeRoutes);
+  app.use("/studios", studioRoutes);
+  // app.use("/animerating", animeRatingRoutes);
 };
