@@ -4,6 +4,10 @@ export let curruser=writable('crruser',
     name:'',
     mail:''
 })
+export let searchresult = writable('searchresult',{
+    success: false,
+    results: [],
+  });
 export let search=writable('search',{
     txt:'',
     type:''

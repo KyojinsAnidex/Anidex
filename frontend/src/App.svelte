@@ -3,10 +3,10 @@ import Login from "./routes/login.svelte";
 import Signup from "./routes/signup.svelte";
 import {curruser,state,search} from "./store";
 import {Router,Route} from "svelte-navigator";
-import Searchresults from "./routes/searchresults.svelte";
 import Aboutus from "./routes/aboutus.svelte";
 import Accinfo from "./routes/accinfo.svelte";
 import Logout from "./routes/logout.svelte";
+import Basesearchresults from "./routes/basesearchresults.svelte";
 
 
 
@@ -122,7 +122,7 @@ $:{
         <Signup/>
     </Route>
     <Route path="/searchresult">
-        <Searchresults/>
+        <Basesearchresults/>
     </Route>
     <Route path="/aboutus">
         <Aboutus/>
