@@ -1,13 +1,15 @@
 <script>
 import Login from "./routes/login.svelte";
 import Signup from "./routes/signup.svelte";
-import {curruser,state,search} from "./store";
+import {state,search} from "./store";
 import {Router,Route} from "svelte-navigator";
 import Aboutus from "./routes/aboutus.svelte";
 import Accinfo from "./routes/accinfo.svelte";
 import Logout from "./routes/logout.svelte";
 import Basesearchresults from "./routes/basesearchresults.svelte";
 import Animesearchresult from "./routes/animesearchresult.svelte";
+import Usersearch from "./routes/usersearch.svelte";
+import Charactersearch from "./routes/charactersearch.svelte";
 
 </script>
 <Router>
@@ -114,6 +116,10 @@ import Animesearchresult from "./routes/animesearchresult.svelte";
     <Route path="/searchresult">
         {#if $search.type == "anime" }
         <Animesearchresult/>
+        {:else if $search.type=="user"}
+        <Usersearch/>
+        {:else if $search.type=="character"}
+        <Charactersearch/>
          {:else}
         <Basesearchresults/>
         {/if}

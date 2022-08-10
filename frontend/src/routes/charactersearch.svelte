@@ -1,16 +1,27 @@
 <script>
-    import {state,searchresult,search} from "../store";
+    import {state,search} from "../store";
   let animes = {
     success: false,
-    results: [],
+    resultCharacter: [],
   };
-  let animeendpoint="http://localhost:5000/anime";
-  let endpoint = "http://localhost:5000/anime/pictures/";
-  let image = "http://localhost:5000/uploads/images/";
+  let charendpoint="http://localhost:5000/search/characters";
+   let image = "http://localhost:5000/uploads/images/";
   let pictures = [];
-  async function proxyfetchanimeinfo()
+  async function proxyfetchcharinfo()
   {
-    const response = await fetch(animeendpoint);
+    const response = await fetch(charendpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // like application/json or text/xml
+      },
+      body: JSON.stringify({
+        // Example: Update JSON file with
+        //          local data properties
+        searchString:$search.txt
+        // etc.
+      }),
+    });
     if(response.status === 200 )
     {
        return await response.json();
@@ -18,53 +29,31 @@
     else
     {
       alert("An error Try Again");
-      throw new Error(response.statusText);
-          
+      throw new Error(response.statusText);  
     }
   }
-  async function fetchanimeinfo() {
+  async function fetchcharinfo() {
     
-        let temp = await proxyfetchanimeinfo();
+        let temp = await proxyfetchcharinfo();
 
         if (temp.success == false) {
-          alert("No anime Found");
+          alert("No Character Found");
         } else {
           animes = temp;
           console.log(animes);
-          $searchresult=animes
-          fetchanimepic();
+          addcharpic();
         }
       }
-      async function proxyfetchanimepic(source)
-      {
-         const response = await fetch(source);
-         if(response.status === 200 )
-    {
-       return await response.json();
-    }
-    else
-    {
-      alert("An error Try Again");
-      throw new Error(response.statusText);
-          
-    }
+      
          
-      }
       
-  async function fetchanimepic() {
-    for (let i = 0; i < animes.results.length; i++) {
-      let nendpoint = endpoint + animes.results[i].animeid;
       
-          let ntemp = await  proxyfetchanimepic(nendpoint);
-
-          if (ntemp.success == false) {
-            alert("Picture Not Found");
-          } else {
-            pictures[i] = image + ntemp.gallery[0].pictureid;
-            console.log(ntemp);
-          }
+   function addcharpic() {
+    for (let i = 0; i < animes.resultCharacter.length; i++) {
+      
+            pictures[i] = image + animes.resultCharacter[i].pictureid;
+          
         }
-        
     }
   
 </script>
@@ -72,8 +61,8 @@
 <div
   class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
 >
-  {#await fetchanimeinfo() then}
-    {#each animes.results as prop,i}
+  {#await fetchcharinfo() then}
+    {#each animes.resultCharacter as prop,i}
       <div
         class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
       >
@@ -83,23 +72,24 @@
           alt="Anime Pic"
         />
         <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-          {animes.results[i].title}
+          {animes.resultCharacter[i].firstname}
         </h4>
         <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].releaseseason}
+            {animes.resultCharacter[i].lastname}
           </h4>
           <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].releasedate.slice(0, 10)}
-          </h4>
-          <!--
-          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].averagerating}
+            {animes.resultCharacter[i].gender}
           </h4>
           <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].animerank}
+            {animes.resultCharacter[i].age}
           </h4>
-          -->
-        <p class="text-blue-500">{animes.results[i].synopsis}</p>
+          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+            {animes.resultCharacter[i].dateofbirth}
+          </h4>
+          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+            {animes.resultCharacter[i].role}
+          </h4>
+        <p class="text-blue-500">{animes.resultCharacter[i].description}</p>
         {#if $state==1}
         <button
           class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
