@@ -13,12 +13,24 @@
     pictureid: "",
     admin: ""}
   };
+  async function proxyfetchuserinfo()
+  {
+    const response = await fetch(endpoint);
+    if(response.status === 200 )
+    {
+       return await response.json();
+    }
+    else
+    {
+      alert("An error occured Try Again");
+      throw new Error(response.statusText);
+    }
+
+  }
 
   async function fetchuserinfo() {
-      fetch(endpoint)
-      .then((response) => response.json())
-      .then((data) => {
-        let temp = data;
+      
+        let temp = await proxyfetchuserinfo();
 
         if (temp.success == false) {
           alert("User Not Found");
@@ -26,13 +38,7 @@
           res = temp;
           image = image + res.user.pictureid;
         }
-      })
-      
-
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+      }
 </script>
 
 {#await fetchuserinfo() then}

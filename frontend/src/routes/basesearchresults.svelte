@@ -1,5 +1,5 @@
 <script>
-    import {state,searchresult,search} from "../store";
+    import {state,searchresult} from "../store";
   let animes = {
     success: false,
     results: [],
@@ -8,11 +8,23 @@
   let endpoint = "http://localhost:5000/anime/pictures/";
   let image = "http://localhost:5000/uploads/images/";
   let pictures = [];
+  async function proxyfetchanimeinfo()
+  {
+    const response = await fetch(animeendpoint);
+    if(response.status === 200 )
+    {
+       return await response.json();
+    }
+    else
+    {
+      alert("An error Try Again");
+      throw new Error(response.statusText);
+          
+    }
+  }
   async function fetchanimeinfo() {
-    fetch(animeendpoint)
-      .then((response) => response.json())
-      .then((data) => {
-        let temp = data;
+    
+        let temp = await proxyfetchanimeinfo();
 
         if (temp.success == false) {
           alert("No anime Found");
@@ -22,31 +34,38 @@
           $searchresult=animes
           fetchanimepic();
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+      }
+      async function proxyfetchanimepic(source)
+      {
+         const response = await fetch(source);
+         if(response.status === 200 )
+    {
+       return await response.json();
+    }
+    else
+    {
+      alert("An error Try Again");
+      throw new Error(response.statusText);
+          
+    }
+         
+      }
+      
   async function fetchanimepic() {
     for (let i = 0; i < animes.results.length; i++) {
       let nendpoint = endpoint + animes.results[i].animeid;
-      fetch(nendpoint)
-        .then((response) => response.json())
-        .then((data) => {
-          let ntemp = data;
+      
+          let ntemp =  await proxyfetchanimepic(nendpoint);
 
           if (ntemp.success == false) {
             alert("Picture Not Found");
           } else {
             pictures[i] = image + ntemp.gallery[0].pictureid;
-            console.log(ntemp);
+            //console.log(ntemp);
           }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }
     }
-  }
+  
 </script>
 
 <div
