@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2">
       <div class="mt-10">
         <div class="flex justify-center">
-          <img class="h-52 rounded-full mb-4" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="person1 pic"/>
+          <img class="h-52 rounded-full mb-4" src="http://localhost:5000/uploads/images/sadif.jpg" alt="person1 pic"/>
         </div>
         <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">Sadif Ahmed</div>
         <div class="animate-fade-in-down mb-8 text-center text-lg text-sky-800">Wanna Be frontend designer</div>
@@ -14,7 +14,7 @@
       </div>
       <div class="mt-10">
         <div class="flex justify-center">
-            <img class="h-52 rounded-full mb-4" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="person2 pic" />
+            <img class="h-52 rounded-full mb-4" src="http://localhost:5000/uploads/images/mohaimin.jpg" alt="person2 pic" />
         </div>
         <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">Abdullah Al Mohaimin</div>
         <div class="animate-fade-in-down mb-8 text-center text-lg text-sky-800">Wanna Be Awesome</div>

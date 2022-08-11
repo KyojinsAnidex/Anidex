@@ -1,5 +1,5 @@
 <script>
-    import {state,search} from "../store";
+    import {state,search} from "../stores/store";
   let animes = {
     success: false,
     resultUser: [],
