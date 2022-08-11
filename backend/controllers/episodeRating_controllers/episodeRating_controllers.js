@@ -6,90 +6,90 @@ const dbModels = require("../../models/db_models");
 
 const common = require("../common_controllers/common");
 
-const getAnimeAllRating = async (req, res, next) => {
-  let allAnime;
-  const animeid = req.params.aid;
+const getEpisodeAllRating = async (req, res, next) => {
+  let allEpisodes;
+  const episodeid = req.params.episodeid;
 
   let queryText =
     "SELECT * FROM " +
-    dbModels.tables.animestars +
+    dbModels.tables.episoderates +
     " WHERE " +
-    dbModels.animestars.animeIDNOTNULL +
+    dbModels.episoderates.episodeidNOTNULL +
     " = " +
-    animeid +
+    episodeid +
     " ;";
   try {
-    allAnime = await db.query(queryText);
+    allEpisodes = await db.query(queryText);
   } catch (err) {
     return next(
       new HttpError(
-        "Fetching all stars of this anime failed, please try again later.",
+        "Fetching all rates of this episode failed, please try again later.",
         500
       )
     );
   }
-  if (allAnime === false) {
+  if (allEpisodes === false) {
     return next(
       new HttpError(
-        "Fetching all stars of this anime failed, please try again later.",
+        "Fetching all rates of this episode failed, please try again later.",
         500
       )
     );
   }
 
-  if (allAnime.rowCount === 0) {
+  if (allEpisodes.rowCount === 0) {
     res.status(404).json({
       success: false,
-      message: "No stars for this anime found",
+      message: "No rates for this episode were found",
     });
   } else {
     res.status(200).json({
       success: true,
-      animeStars: allAnime.rows,
+      episodeRates: allEpisodes.rows,
     });
   }
 };
 
 const getUserAllRating = async (req, res, next) => {
-  let allStars;
+  let allRates;
   const userid = req.params.uid;
 
   let queryText =
     "SELECT * FROM " +
-    dbModels.tables.animestars +
+    dbModels.tables.episoderates +
     " WHERE " +
-    dbModels.animestars.userIDNOTNULL +
+    dbModels.episoderates.userIDNOTNULL +
     " = '" +
     userid +
     "' ;";
   try {
-    allStars = await db.query(queryText);
+    allRates = await db.query(queryText);
   } catch (err) {
     return next(
       new HttpError(
-        "Fetching all stars by this user failed, please try again later.",
+        "Fetching all rates by this user failed, please try again later.",
         500
       )
     );
   }
-  if (allStars === false) {
+  if (allRates === false) {
     return next(
       new HttpError(
-        "Fetching all stars by this user failed, please try again later.",
+        "Fetching all rates by this user failed, please try again later.",
         500
       )
     );
   }
 
-  if (allStars.rowCount === 0) {
+  if (allRates.rowCount === 0) {
     res.status(404).json({
       success: false,
-      message: "No stars by this user found",
+      message: "No rates by this user found",
     });
   } else {
     res.status(200).json({
       success: true,
-      allStarsByThisUser: allStars.rows,
+      allRatesByThisUser: allRates.rows,
     });
   }
 };
@@ -102,24 +102,24 @@ const addRatingByUser = async (req, res, next) => {
     );
   }
   const userid = req.params.uid;
-  const { animeid, starcount } = req.body;
+  const { episodeid, rating } = req.body;
 
   let existingEntry;
   try {
     existingEntry = await db.query(
       "SELECT * FROM " +
-        dbModels.tables.animestars +
+        dbModels.tables.episoderates +
         " WHERE " +
-        dbModels.animestars.animeIDNOTNULL +
+        dbModels.episoderates.episodeidNOTNULL +
         " = $1 AND " +
-        dbModels.animestars.userIDNOTNULL +
+        dbModels.episoderates.userIDNOTNULL +
         " = $2 ;",
-      [animeid, userid]
+      [episodeid, userid]
     );
   } catch (err) {
     return next(
       new HttpError(
-        "Adding rating to anime failed, please try again later",
+        "Adding rating to episode failed, please try again later",
         500
       )
     );
@@ -127,55 +127,55 @@ const addRatingByUser = async (req, res, next) => {
   if (existingEntry === false) {
     return next(
       new HttpError(
-        "Adding rating to anime failed, please try again later",
+        "Adding rating to episode failed, please try again later",
         500
       )
     );
   }
 
   if (existingEntry.rowCount != 0) {
-    let updatedAnimeRating;
+    let updatedEpisodeRating;
     let queryText;
     queryText =
       "UPDATE " +
-      dbModels.tables.animestars +
+      dbModels.tables.episoderates +
       " SET " +
-      dbModels.animestars.starcountNOTNULL +
+      dbModels.episoderates.ratingNOTNULL +
       " = " +
-      starcount +
+      rating +
       " WHERE " +
-      dbModels.animestars.animeIDNOTNULL +
+      dbModels.episoderates.episodeidNOTNULL +
       " = " +
-      animeid +
+      episodeid +
       " AND " +
-      dbModels.animestars.userIDNOTNULL +
+      dbModels.episoderates.userIDNOTNULL +
       " = '" +
       userid +
       "' RETURNING * ;";
     try {
-      updatedAnimeRating = await db.query(queryText);
+      updatedEpisodeRating = await db.query(queryText);
     } catch (err) {
       return next(
         new HttpError(
-          "Updating rating of anime failed, please try again later",
+          "Updating rating of episode failed, please try again later",
           500
         )
       );
     }
 
-    if (updatedAnimeRating === false) {
+    if (updatedEpisodeRating === false) {
       return next(
         new HttpError(
-          "Updating rating of anime failed, please try again later",
+          "Updating rating of episode failed, please try again later",
           500
         )
       );
     }
 
-    if (updatedAnimeRating.rowCount === 0) {
+    if (updatedEpisodeRating.rowCount === 0) {
       return next(
         new HttpError(
-          "Updating rating of anime failed, please try again later",
+          "Updating rating of episode failed, please try again later",
           500
         )
       );
@@ -183,45 +183,45 @@ const addRatingByUser = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      newRating: updatedAnimeRating.rows[0],
+      newRating: updatedEpisodeRating.rows[0],
     });
   } else {
-    let createdAnimeRating;
+    let createdEpisodeRating;
     let queryText;
     queryText =
       "INSERT INTO " +
-      dbModels.tables.animestars +
+      dbModels.tables.episoderates +
       " VALUES ( '" +
       userid +
       "', " +
-      animeid +
+      episodeid +
       ", " +
-      starcount +
+      rating +
       " ) RETURNING * ;";
     try {
-      createdAnimeRating = await db.query(queryText);
+      createdEpisodeRating = await db.query(queryText);
     } catch (err) {
       return next(
         new HttpError(
-          "Adding rating to anime failed, please try again later",
+          "Adding rating to episode failed, please try again later",
           500
         )
       );
     }
 
-    if (createdAnimeRating === false) {
+    if (createdEpisodeRating === false) {
       return next(
         new HttpError(
-          "Adding rating to anime failed, please try again later",
+          "Adding rating to episode failed, please try again later",
           500
         )
       );
     }
 
-    if (createdAnimeRating.rowCount === 0) {
+    if (createdEpisodeRating.rowCount === 0) {
       return next(
         new HttpError(
-          "Adding rating to anime failed, please try again later",
+          "Adding rating to episode failed, please try again later",
           500
         )
       );
@@ -229,13 +229,13 @@ const addRatingByUser = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      newRating: createdAnimeRating.rows[0],
+      newRating: createdEpisodeRating.rows[0],
     });
   }
 };
 
 module.exports = {
-  getAnimeAllRating,
+  getEpisodeAllRating,
   getUserAllRating,
   addRatingByUser,
 };
