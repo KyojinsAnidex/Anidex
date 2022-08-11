@@ -64,7 +64,7 @@
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
 			<div>
 				<p class="text-2xl">Signup</p>
-				<p>please Signup to continue</p>
+				<p>Please Signup to continue</p>
 			</div>
 			<div class="mt-10">
 				<form on:submit|preventDefault={handlesignup}>
