@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>About Us</title>
+</svelte:head>
 <div class="container min-w-full">
     <div class="grid grid-cols-1 md:grid-cols-2">
       <div class="mt-10">

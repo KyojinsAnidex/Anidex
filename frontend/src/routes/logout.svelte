@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Log out</title>
+</svelte:head>
 <script>
   import { state, search, curruser, searchresult } from "../stores/store";
   function handlelogout() {

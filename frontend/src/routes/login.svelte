@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Log in</title>
+</svelte:head>
 <script>
   import { curruser, state } from "../stores/store";
   let user = {
@@ -31,7 +34,7 @@
       user.name = "";
       user.email = "";
       user.password = "";
-      alert("Could Not log up Try Again");
+      alert("Could Not log in Try Again");
       throw new Error(response.statusText);
           
     }

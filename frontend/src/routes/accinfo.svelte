@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Account Info</title>
+</svelte:head>
 <script>
   import { curruser ,state} from "../stores/store";
   let endpoint = "http://localhost:5000/users/" + $curruser.name;
