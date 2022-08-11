@@ -20,7 +20,7 @@
             <img class="h-52 rounded-full mb-4" src="http://localhost:5000/uploads/images/mohaimin.jpg" alt="person2 pic" />
         </div>
         <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">Abdullah Al Mohaimin</div>
-        <div class="animate-fade-in-down mb-8 text-center text-lg text-sky-800">Wanna Be Awesome</div>
+        <div class="animate-fade-in-down mb-8 text-center text-lg text-sky-800">I just wish to be happy</div>
         <blockquote>
           <p class="animate-fade-in-down mx-12 mb-9 text-center text-sm">
             I am Mohaimin.
