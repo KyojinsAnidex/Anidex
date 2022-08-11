@@ -1,5 +1,5 @@
 <script>
-	import {state, search, curruser } from './../stores/store.js';
+	import {state, search, curruser } from '../stores/store.js';
 
 </script>
 <nav class="font-sans flex flex-col text-center content-center sm:flex-row sm:text-left sm:justify-between py-2 px-6 bg-gray-500 shadow sm:items-baseline w-full">
