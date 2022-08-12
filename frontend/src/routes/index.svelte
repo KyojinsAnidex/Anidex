@@ -95,7 +95,7 @@
            {animes.results[i].releaseseason}
          </h4>
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-           {animes.results[i].releasedate.slice(0, 10)}
+           {animes.results[i].releasedate.slice(0, 4)}
          </h4>
          <!--
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
