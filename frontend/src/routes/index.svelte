@@ -96,7 +96,7 @@
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
            {animes.results[i].releasedate.slice(0, 10)}
          </h4>
-         <a href="x" class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">More Info</a>
+         <a href="/animes/{i}" class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">More Info</a>
          <!--
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
            {animes.results[i].averagerating}
