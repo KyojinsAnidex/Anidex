@@ -81,12 +81,13 @@
    {#each animes.results as prop,i}
      <div
        class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
-     >
+     >  <a href="/animes/{i}">
        <img
          class="h-52 rounded-full mb-4"
          src={pictures[i]}
          alt="Anime Pic"
        />
+       </a>
        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
          {animes.results[i].title}
        </h4>
@@ -96,7 +97,6 @@
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
            {animes.results[i].releasedate.slice(0, 10)}
          </h4>
-         <a href="/animes/{i}" class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">More Info</a>
          <!--
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
            {animes.results[i].averagerating}

@@ -87,7 +87,7 @@
         class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
       >
         <img
-          class="object-cover w-full rounded-md h-72 xl:h-80"
+          class="h-52 rounded-full mb-4"
           src={pictures[i]}
           alt="Anime Pic"
         />
