@@ -15,10 +15,6 @@ $:
   {
     searchdest="/charactersearch";
   }
-  else
-  {
-    searchdest="/basesearchresults";
-  }
 }
 
 </script>
@@ -35,7 +31,7 @@ $:
     </div>
   
     <div class="sm:mb-0 self-center">
-      <!-- <div class="h-10" style="display: table-cell, vertical-align: middle;"> -->
+       
        {#if $state==0}
       <a href="/login" class="text-md no-underline text-black hover:text-blue-dark ml-2 px-1">Log in</a>
       {:else}
@@ -86,7 +82,7 @@ $:
               /></svg
             ></button
           >
-        </a>
+         </a>
         </form>
       </div>
       

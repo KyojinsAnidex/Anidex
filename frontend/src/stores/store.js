@@ -15,3 +15,6 @@ export let search=writable('search',{
 }
 )
 export let state=writable('state',0);
+export let charsearch= writable('charsearch',{success: false,
+    resultCharacter: []});
+export let charpics=  writable('picturelinks',[]);       
