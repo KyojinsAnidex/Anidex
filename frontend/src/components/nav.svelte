@@ -1,5 +1,4 @@
 <script>
-	import { prevent_default, text } from 'svelte/internal';
 import {state, search, curruser } from '../stores/store.js';
 let searchdest;
 $:
