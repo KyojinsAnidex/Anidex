@@ -15,6 +15,10 @@ $:
   {
     searchdest="/charactersearch";
   }
+  else if($search.type=='studio')
+  {
+    searchdest="/studiosearch";
+  }
 }
 
 </script>
@@ -62,6 +66,7 @@ $:
               <option value="anime">Anime</option>
               <option value="user">User</option>
               <option value="character">Character</option>
+              <option value="studio">Studio</option>
             </select>
           </div>
           <a  href={searchdest}>

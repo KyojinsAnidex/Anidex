@@ -1,5 +1,5 @@
 <script>
-    import {state,searchresult,search} from "../stores/store";
+    import {state,animesearch,animepics,search} from "../stores/store";
   let animes = {
     success: false,
     resultAnime: [],
@@ -41,8 +41,10 @@
           alert("No anime Found");
         } else {
           animes = temp;
-          console.log(animes);
+        //  console.log(animes);
           fetchanimepic();
+          $animesearch=animes;
+          
         }
       }
       async function proxyfetchanimepic(source)
@@ -71,9 +73,10 @@
             alert("Picture Not Found");
           } else {
             pictures[i] = image + ntemp.gallery[0].pictureid;
-            //console.log(ntemp);
+          //  console.log(ntemp);
           }
         }
+        $animepics=pictures;
     }
   
 </script>
@@ -86,29 +89,16 @@
       <div
         class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
       >
+      <a href="/resanime/{i}">
         <img
           class="h-52 rounded-full mb-4"
           src={pictures[i]}
           alt="Anime Pic"
         />
+      </a>
         <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
           {animes.resultAnime[i].title}
         </h4>
-        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.resultAnime[i].releaseseason}
-          </h4>
-          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.resultAnime[i].releasedate.slice(0, 10)}
-          </h4>
-          <!--
-          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].averagerating}
-          </h4>
-          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-            {animes.results[i].animerank}
-          </h4>
-          -->
-        <p class="text-blue-500">{animes.resultAnime[i].synopsis}</p>
         {#if $state==1}
         <button
           class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"

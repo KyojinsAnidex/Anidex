@@ -35,7 +35,7 @@
 			alert('No Character Found');
 		} else {
 			animes = temp;
-			console.log(animes);
+//			console.log(animes);
 			addcharpic();
 			$charpics=pictures;
 			$charsearch=animes;

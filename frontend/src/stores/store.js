@@ -17,4 +17,9 @@ export let search=writable('search',{
 export let state=writable('state',0);
 export let charsearch= writable('charsearch',{success: false,
     resultCharacter: []});
-export let charpics=  writable('picturelinks',[]);       
+export let charpics=  writable('picturelinks',[]);  
+export let animesearch=writable('animesearch',{success: false,
+    resultAnime: [],}) 
+export let animepics=writable('animepics',[]);
+export let studiosearch=writable('studiosearch',{success: false,
+    resultAnime: [],}) 
