@@ -84,7 +84,7 @@ const characters = {
   lastnameNOTNULL: "lastname",
   gender: "gender",
   age: "age",
-  dateofbirth: "dateofbirth",
+  // dateofbirth: "dateofbirth",
   role: "role",
   description: "description",
   pictureid: "pictureid",

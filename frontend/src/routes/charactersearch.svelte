@@ -64,9 +64,9 @@
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 					{animes.resultCharacter[i].age + " Years old"}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<!-- <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 					{animes.resultCharacter[i].dateofbirth}
-				</h4>
+				</h4> -->
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 					{animes.resultCharacter[i].role}
 				</h4>

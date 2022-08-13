@@ -30,7 +30,7 @@ and log back in as user 'me':
 
 The prompt should look like this:
 
-` me=> `
+` postgres=> `
 
 #### Creating a database
 

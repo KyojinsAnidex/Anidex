@@ -17,9 +17,9 @@ router.use(check_auth);
 router.post(
   "/",
   [
-    check("watchroomname").not().isEmpty(),
-    check("animeid").not().isEmpty(),
-    check("animeid").isNumeric(),
+    check(["watchroomname", "animeid", "duration"]).not().isEmpty(),
+    // check("animeid").not().isEmpty(),
+    check(["animeid", "duration"]).isNumeric(),
   ],
   watchroomControllers.makeWatchroom
 );

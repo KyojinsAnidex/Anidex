@@ -26,12 +26,20 @@ const getAnimeByID = async (req, res, next) => {
     searchedAnime = await db.query(queryText, [animeID]);
   } catch (err) {
     return next(
-      new HttpError("Fetching anime failed, please try again later.", 500, false)
+      new HttpError(
+        "Fetching anime failed, please try again later.",
+        500,
+        false
+      )
     );
   }
   if (searchedAnime === false) {
     return next(
-      new HttpError("Fetching anime failed, please try again later.", 500, false)
+      new HttpError(
+        "Fetching anime failed, please try again later.",
+        500,
+        false
+      )
     );
   }
   if (searchedAnime.rowCount != 0) {
@@ -109,6 +117,7 @@ const getAllAnimeItems = async (req, res, next) => {
     studios: {},
     charcters: {},
     personnel: {},
+    watchrooms: {},
   };
 
   try {
@@ -156,6 +165,17 @@ const getAllAnimeItems = async (req, res, next) => {
         animeid +
         ";"
     );
+    animeItems.watchrooms = await db.query(
+      "SELECT " +
+        dbModels.watchroom.watchroomidNOTNULL +
+        " FROM " +
+        dbModels.tables.watchroom +
+        " WHERE " +
+        dbModels.watchroom.animeIDNOTNULL +
+        " = " +
+        animeid +
+        ";"
+    );
   } catch (err) {
     return next(
       new HttpError("Fetching anime items failed, please try again later", 500)
@@ -166,7 +186,8 @@ const getAllAnimeItems = async (req, res, next) => {
     animeItems.charcters === false ||
     animeItems.genre === false ||
     animeItems.personnel === false ||
-    animeItems.studios === false
+    animeItems.studios === false ||
+    animeItems.watchrooms === false
   ) {
     return next(
       new HttpError("Fetching anime items failed, please try again later", 500)
@@ -178,12 +199,13 @@ const getAllAnimeItems = async (req, res, next) => {
     animeItems.charcters.rowCount === 0 &&
     animeItems.genre.rowCount === 0 &&
     animeItems.personnel.rowCount === 0 &&
-    animeItems.studios.rowCount === 0
+    animeItems.studios.rowCount === 0 &&
+    animeItems.watchrooms.rowCount === 0
   ) {
     res.status(404).json({
       success: false,
       message:
-        "No characters, personnel, genre and studio data found for this anime.",
+        "No characters, personnel, genre, studio or watchroom data found for this anime.",
     });
   } else {
     res.status(200).json({
@@ -192,6 +214,7 @@ const getAllAnimeItems = async (req, res, next) => {
       genre: animeItems.genre.rows,
       personnel: animeItems.personnel.rows,
       studios: animeItems.studios.rows,
+      watchrooms: animeItems.watchrooms.rows,
     });
   }
 };

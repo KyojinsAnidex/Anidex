@@ -138,7 +138,7 @@ paths:
 
   "/anime/items/{aid}":
     get:
-      summary: get anime items
+      summary: get anime items ids
       tags:
         - anime
       parameters:
@@ -169,6 +169,10 @@ paths:
                     type: array
                     items:
                       type: string
+                  watchrooms:
+                    type: array
+                    items:
+                      type: integer
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -1400,9 +1404,9 @@ components:
           type: string
         age:
           type: string
-        dateofbirth:
-          type: integer
-          format: date
+        # dateofbirth:
+        #   type: integer
+        #   format: date
         role:
           type: string
         description:
@@ -1751,6 +1755,8 @@ components:
                 minimum: 1
               description:
                 type: string
+              duration:
+                type: integer
             required:
               - watchroomname
               - animeid

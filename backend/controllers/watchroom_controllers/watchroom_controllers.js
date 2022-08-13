@@ -66,7 +66,7 @@ const makeWatchroom = async (req, res, next) => {
     );
   }
 
-  const { watchroomname, animeid, description } = req.body;
+  const { watchroomname, animeid, description, duration } = req.body;
 
   let existingWatchroom;
 
@@ -104,12 +104,19 @@ const makeWatchroom = async (req, res, next) => {
     dbModels.watchroom.animeIDNOTNULL +
     ", " +
     dbModels.watchroom.description +
+    ", " +
+    dbModels.watchroom.starttimeNOTNULL +
+    ", " +
+    dbModels.watchroom.endtimeNOTNULL +
     " ) VALUES ( '" +
     watchroomname +
     "' , '" +
     animeid +
     "' , '" +
     description +
+    "', localtimestamp, localtimestamp + '" +
+    duration +
+    " days" +
     "' ) RETURNING * ;";
   try {
     createdWatchroom = await db.query(queryText);
@@ -138,7 +145,7 @@ const makeWatchroom = async (req, res, next) => {
 const getParticipants = async (req, res, next) => {
   let searchedWatchroom;
   const watchroomid = req.params.watchroomid;
-  
+
   try {
     searchedWatchroom = await db.query(
       "SELECT * FROM " +
