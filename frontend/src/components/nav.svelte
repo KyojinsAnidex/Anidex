@@ -1,5 +1,4 @@
 <script>
-	import { prevent_default, text } from 'svelte/internal';
 import {state, search, curruser } from '../stores/store.js';
 let searchdest;
 $:
@@ -16,9 +15,9 @@ $:
   {
     searchdest="/charactersearch";
   }
-  else
+  else if($search.type=='studio')
   {
-    searchdest="/basesearchresults";
+    searchdest="/studiosearch";
   }
 }
 
@@ -36,7 +35,7 @@ $:
     </div>
   
     <div class="sm:mb-0 self-center">
-      <!-- <div class="h-10" style="display: table-cell, vertical-align: middle;"> -->
+       
        {#if $state==0}
       <a href="/login" class="text-md no-underline text-black hover:text-blue-dark ml-2 px-1">Log in</a>
       {:else}
@@ -67,6 +66,7 @@ $:
               <option value="anime">Anime</option>
               <option value="user">User</option>
               <option value="character">Character</option>
+              <option value="studio">Studio</option>
             </select>
           </div>
           <a  href={searchdest}>
@@ -87,7 +87,7 @@ $:
               /></svg
             ></button
           >
-        </a>
+         </a>
         </form>
       </div>
       
