@@ -1926,42 +1926,42 @@ components:
   # Reusable responses, such as 401 Unauthorized or 400 Bad Request
   responses:
     400badrequest:
-      description: Please user the status code to check for failure, not success field. Failure in forming a proper API call
+      description: Please use the status code to check for failure, not success field. Failure in forming a proper API call
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     404NotFound:
-      description: Please user the status code to check for failure, not success field. Requested resource was not found.
+      description: Please use the status code to check for failure, not success field. Requested resource was not found.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     500ServerSideError:
-      description: Please user the status code to check for failure, not success field. Unknown server side error occurred, please try again later.
+      description: Please use the status code to check for failure, not success field. Unknown server side error occurred, please try again later.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     422InvalidInput:
-      description: Please user the status code to check for failure, not success field. Provided inputs are not valid, please check them.
+      description: Please use the status code to check for failure, not success field. Provided inputs are not valid, please check them.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     403Forbidden:
-      description: Please user the status code to check for failure, not success field. Failure in authenticating this API call by JWT
+      description: Please use the status code to check for failure, not success field. Failure in authenticating this API call by JWT
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/failedResponses"
 
     401AuthFailure:
-      description: Please user the status code to check for failure, not success field. Failure in authenticating this API call by JWT
+      description: Please use the status code to check for failure, not success field. Failure in authenticating this API call by JWT
       content:
         application/json:
           schema:
