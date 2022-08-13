@@ -56,7 +56,7 @@
      }
      
  async function fetchanimepic() {
-   for (let i = 0; i < animes.results.length/2; i++) {
+   for (let i = 0; i < animes.results.length; i++) {
      let nendpoint = endpoint + animes.results[i].animeid;
      
          let ntemp = await  proxyfetchanimepic(nendpoint);

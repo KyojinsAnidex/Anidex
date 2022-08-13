@@ -41,5 +41,5 @@
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
           Anime Rank: {anime.animerank}
          </h4>
-       <p class="text-blue-500 font-small">Anime Synopsis: {anime.synopsis}</p>
+       <p class="text-blue-500 text-center">Anime Synopsis: {anime.synopsis}</p>
        </div>

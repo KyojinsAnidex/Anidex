@@ -25,11 +25,15 @@
     {
        return await response.json();
     }
-    else
+    else if (response.status === 404)
     {
-      alert("An error Try Again");
+      alert("No user found, please try again");
+      throw new Error(response.statusText);     
+    }
+    else 
+    {
+      alert("An error happened, please try again");
       throw new Error(response.statusText);
-          
     }
   }
   async function fetchuserinfo() {
