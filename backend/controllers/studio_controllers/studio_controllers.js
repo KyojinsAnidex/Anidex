@@ -12,7 +12,8 @@ const getAllStudio = async (req, res, next) => {
 };
 
 const getSingleStudio = async (req, res, next) => {
-  let searchedStudio;
+  let searchedStudio = false,
+    animebystudio = false;
 
   const studioname = req.params.studioname;
 
@@ -43,9 +44,52 @@ const getSingleStudio = async (req, res, next) => {
       message: "No studio with provided studioname",
     });
   } else {
+    try {
+      animebystudio = await db.query(
+        "SELECT * FROM " +
+          dbModels.tables.animestudio +
+          " JOIN " +
+          dbModels.tables.anime +
+          " ON " +
+          dbModels.tables.animestudio +
+          "." +
+          dbModels.animestudio.animeIDNOTNULL +
+          " = " +
+          dbModels.tables.anime +
+          "." +
+          dbModels.anime.animeIDNOTNULL +
+          " WHERE " +
+          dbModels.tables.animestudio + 
+          "." +
+          dbModels.animestudio.studioIDNOTNULL + 
+          " = '" +
+          studioname +
+          "' ; "
+      );
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Fetching studio items failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
+
+    if (animebystudio === false) {
+      return next(
+        new HttpError(
+          "Fetching studio items failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
+
     res.status(200).json({
       success: true,
       studio: searchedStudio.rows[0],
+      animebystudio: animebystudio.rows,
     });
   }
 };

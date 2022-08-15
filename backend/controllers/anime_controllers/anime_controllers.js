@@ -12,7 +12,8 @@ const getAllAnime = async (req, res, next) => {
 };
 
 const getAnimeByID = async (req, res, next) => {
-  let searchedAnime;
+  let searchedAnime = false;
+  let animeGenres = false, animeStudios = false, animeGallery = false;
 
   const animeID = req.params.aid;
   let queryText =
@@ -42,10 +43,72 @@ const getAnimeByID = async (req, res, next) => {
       )
     );
   }
+
   if (searchedAnime.rowCount != 0) {
+    try {
+      animeGenres = await db.query(
+        "SELECT " +
+          dbModels.animeisofgenre.genreNameNOTNULL +
+          " FROM " +
+          dbModels.tables.animeisofgenre +
+          " WHERE " +
+          dbModels.animeisofgenre.animeIDNOTNULL +
+          " = " +
+          animeID +
+          "; "
+      );
+      animeGallery = await db.query(
+        "SELECT " +
+          dbModels.animepicture.pictureIDNOTNULL +
+          " FROM " +
+          dbModels.tables.animepicture +
+          " WHERE " +
+          dbModels.animepicture.animeIDNOTNULL +
+          " = " +
+          animeID +
+          " ;"
+      );
+      animeStudios = await db.query(
+        "SELECT " +
+          dbModels.animestudio.studioIDNOTNULL +
+          " FROM " +
+          dbModels.tables.animestudio +
+          " WHERE " +
+          dbModels.animestudio.animeIDNOTNULL +
+          " = " +
+          animeID +
+          " ;"
+      );
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Fetching anime genres, pictures and studios failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
+
+    if (
+      animeGenres === false ||
+      animeStudios === false ||
+      animeGallery === false
+    ) {
+      return next(
+        new HttpError(
+          "Fetching anime genres, pictures and studios failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
+
     res.status(200).json({
       success: true,
       anime: searchedAnime.rows[0],
+      animegenres: animeGenres.rows,
+      animestudio: animeStudios.rows,
+      animepicture: animeGallery.rows,
     });
   } else {
     res.status(404).json({
