@@ -72,9 +72,10 @@
 	async function handlelogin() {
 		let temp = {
 			success: false,
-			name: '',
+			userid: '',
 			email: '',
-			password: ''
+			token:'',
+			admin:false
 		};
 		temp = await proxyhandlelogin();
 		if (temp.success == false) {
@@ -87,6 +88,7 @@
 			state.set(1);
 			$curruser.name = user.name;
 			$curruser.mail = user.email;
+			$curruser.token=temp.token;
 			console.log($curruser);
 			console.log(user);
 			$curruser.image= await fetchuserinfo();
