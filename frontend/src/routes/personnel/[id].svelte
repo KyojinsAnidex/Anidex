@@ -9,7 +9,7 @@
 	export let id;
 	import { persearch, perpics } from '../../stores/store';
 
-	let per = $persearch.resultCharacter[id];
+	let per = $persearch.resultPersonnel[id];
 	let picture = $perpics[id];
 	//  console.log(anime);
 	// console.log(picture);
@@ -36,7 +36,7 @@
 	<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 		Address: {per.address};
 	</h4>
-	<a href={"htttp://"+ per.website} >
+	<a href={per.website} >
 	<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 		Website
 	</h4>

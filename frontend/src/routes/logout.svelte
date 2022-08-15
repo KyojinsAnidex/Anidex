@@ -8,6 +8,8 @@
     curruser.set({
       name: "",
       mail: "",
+      image:'',
+    token:''
     });
     search.set({
       txt: "",
@@ -31,13 +33,11 @@
       <p class="text-2xl md:text-3xl font-light leading-normal mb-8">
         We are sorry to see you log out
       </p>
-      <a href="/">
       <button
         on:click={handlelogout}
         class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
         >Log out</button
       >
-    </a>
     </div>
     <div class="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
       <img

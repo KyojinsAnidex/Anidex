@@ -58,7 +58,7 @@
 				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
 			</a>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					{animes.resultCharacter[i].firstname + ' ' + animes.resultCharacter[i].lastname}
+					{animes.resultPersonnel[i].firstname + ' ' + animes.resultPersonnel[i].lastname}
 				</h4>
 			</div>
 		{/each}
