@@ -3,7 +3,8 @@ export let curruser=writable('crruser',
 {
     name:'',
     mail:'',
-    image:''
+    image:'',
+    token:''
 })
 export let searchresult = writable('searchresult',{
     success: false,
