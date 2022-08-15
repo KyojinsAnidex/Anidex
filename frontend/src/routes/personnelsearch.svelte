@@ -1,0 +1,66 @@
+<script>
+	import { state, search,perpics,persearch } from '../stores/store';
+	let animes = {
+		success: false,
+		resultPersonnel: []
+	};
+	let perendpoint = 'http://localhost:5000/search/personnel';
+	let image = 'http://localhost:5000/uploads/images/';
+	let pictures = [];
+	async function proxyfetchperinfo() {
+		const response = await fetch(perendpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				searchString: $search.txt
+				// etc.
+			})
+		});
+		if (response.status === 200) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetchperinfo() {
+		let temp = await proxyfetchperinfo();
+
+		if (temp.success == false) {
+			alert('No Personnel Found');
+		} else {
+			animes = temp;
+//			console.log(animes);
+			addperpic();
+			$perpics=pictures;
+			$persearch=animes;
+		}
+
+	}
+
+	function addperpic() {
+		for (let i = 0; i < animes.resultPersonnel.length; i++) {
+			pictures[i] = image + animes.resultPersonnel[i].pictureid;
+		}
+	}
+</script>
+
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+	{#await fetchperinfo() then}
+		{#each animes.resultPersonnel as prop, i}
+			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+				<a href="/personnel/{i}">
+				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
+			</a>
+				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+					{animes.resultCharacter[i].firstname + ' ' + animes.resultCharacter[i].lastname}
+				</h4>
+			</div>
+		{/each}
+	{/await}
+</div>

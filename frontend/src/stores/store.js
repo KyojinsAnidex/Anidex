@@ -27,3 +27,6 @@ export let studiosearch=writable('studiosearch',{success: false,
 export let studioresanimes=writable('studioresanimes',[]);
 export let studiorespics=writable('studiorespics',[]);
 export let searchdest=writable('searchdest','/');
+export let persearch= writable('charsearch',{success: false,
+    resultCharacter: []});
+export let perpics=  writable('picturelinks',[]);
