@@ -14,7 +14,9 @@
 	//  console.log(anime);
 	// console.log(picture);
 </script>
-
+<svelte:head>
+<title>{char.firstname}</title>
+</svelte:head>
 <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 	<img class="h-52 rounded-full mb-4" src={picture} alt="Char Pic" />
 

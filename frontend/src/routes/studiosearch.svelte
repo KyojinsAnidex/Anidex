@@ -57,7 +57,7 @@
 					Website : {animes.resultStudio[i].website}
 				</h4>
             </a>
-            <a class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700" href="/studio/{animes.resultStudio[i].studioname}">More Info</a>
+            <a class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700" href="/studio/{animes.resultStudio[i].studioname}">Produced Animes</a>
 			</div>
 		{/each}
 	{/await}

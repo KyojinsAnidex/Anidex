@@ -26,3 +26,4 @@ export let studiosearch=writable('studiosearch',{success: false,
     resultAnime: [],}) 
 export let studioresanimes=writable('studioresanimes',[]);
 export let studiorespics=writable('studiorespics',[]);
+export let searchdest=writable('searchdest','/');

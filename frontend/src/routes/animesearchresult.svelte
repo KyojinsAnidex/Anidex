@@ -1,5 +1,5 @@
 <script>
-    import {state,animesearch,animepics,search} from "../stores/store";
+    import {state,animesearch,animepics,search,searchdest} from "../stores/store";
   let animes = {
     success: false,
     resultAnime: [],
@@ -43,8 +43,7 @@
           animes = temp;
         //  console.log(animes);
           fetchanimepic();
-          $animesearch=animes;
-          
+          $animesearch=animes;         
         }
       }
       async function proxyfetchanimepic(source)

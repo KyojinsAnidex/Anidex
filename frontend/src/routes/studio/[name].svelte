@@ -99,7 +99,7 @@
    {#each animeresults as prop,i}
      <div
        class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
-     > <a href="/{i}">
+     > <a href="/studioanime/{i}">
        <img
          class="h-52 rounded-full mb-4"
          src={pictures[i]}
