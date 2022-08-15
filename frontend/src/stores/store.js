@@ -2,7 +2,8 @@ import { writable } from 'svelte-local-storage-store';
 export let curruser=writable('crruser',
 {
     name:'',
-    mail:''
+    mail:'',
+    image:''
 })
 export let searchresult = writable('searchresult',{
     success: false,
@@ -23,3 +24,5 @@ export let animesearch=writable('animesearch',{success: false,
 export let animepics=writable('animepics',[]);
 export let studiosearch=writable('studiosearch',{success: false,
     resultAnime: [],}) 
+export let studioresanimes=writable('studioresanimes',[]);
+export let studiorespics=writable('studiorespics',[]);

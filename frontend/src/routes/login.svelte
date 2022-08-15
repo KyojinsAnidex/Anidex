@@ -5,6 +5,44 @@
 		email: '',
 		password: ''
 	};
+  let image = "http://localhost:5000/uploads/images/";
+  let res = {
+    success: false,
+    user: 
+    {userid: "",
+    email: "",
+    biography: "",
+    pictureid: "",
+    admin: ""}
+  };
+  async function proxyfetchuserinfo()
+  { 
+	let endpoint = "http://localhost:5000/users/" + user.name;
+    const response = await fetch(endpoint);
+    if(response.status === 200 )
+    {
+       return await response.json();
+    }
+    else
+    {
+      alert("An error occured Try Again");
+      throw new Error(response.statusText);
+    }
+
+  }
+
+  async function fetchuserinfo() {
+      
+        let temp = await proxyfetchuserinfo();
+
+        if (temp.success == false) {
+          alert("User Not Found");
+        } else {
+          res = temp;
+          image = image + res.user.pictureid;
+        }
+		return image;
+      }
 	async function proxyhandlelogin() {
 		const response = await fetch('http://localhost:5000/users/login', {
 			method: 'POST',
@@ -32,9 +70,6 @@
 		}
 	}
 	async function handlelogin() {
-		console.log(user.name);
-		console.log(user.email);
-		console.log(user.password);
 		let temp = {
 			success: false,
 			name: '',
@@ -54,9 +89,8 @@
 			$curruser.mail = user.email;
 			console.log($curruser);
 			console.log(user);
-			user.name = '';
-			user.email = '';
-			user.password = '';
+			$curruser.image= await fetchuserinfo();
+			console.log($curruser.image);
 		}
 	}
 </script>

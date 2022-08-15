@@ -1,7 +1,12 @@
-<script>import Nav from "../components/nav.svelte"
+<script>
+import Altnav from "../components/altnav.svelte";
+import Foot from "../components/foot.svelte";
+import Nav from "../components/nav.svelte"
 </script>
-<Nav/>
+<!--<Nav/>-->
+<Altnav/>
 <slot></slot>
+<Foot/>
 <style>
 @tailwind base;
 @tailwind components;

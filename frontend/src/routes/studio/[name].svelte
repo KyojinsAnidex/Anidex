@@ -1,4 +1,5 @@
 <script context="module">
+	
 	export async function load({ fetch, params }) {
 		let name = params.name;
 		//  console.log(name);
@@ -82,10 +83,15 @@
 </script>
 
 <script>
+	import { studioresanimes, studiorespics } from './../../stores/store.js';
 	export let animeresults;
 	export let pictures;
+	$studioresanimes=animeresults;
+	$studiorespics=pictures;
 	console.log(animeresults);
 	console.log(pictures);
+	console.log($studioresanimes);
+	console.log($studiorespics);
 </script>
 <div
  class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
@@ -93,12 +99,13 @@
    {#each animeresults as prop,i}
      <div
        class="flex flex-col items-center justify-center w-full max-w-lg mx-auto"
-     >
+     > <a href="/{i}">
        <img
          class="h-52 rounded-full mb-4"
          src={pictures[i]}
          alt="Anime Pic"
        />
+	</a>
        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
          {animeresults[i].title}
        </h4>
