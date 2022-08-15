@@ -55,6 +55,17 @@ paths:
                     type: boolean
                   results:
                     $ref: "#/components/schemas/AnimeAll"
+                  animegenres:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          animeid:
+                            type: integer
+                          genrename:
+                            type: string
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
