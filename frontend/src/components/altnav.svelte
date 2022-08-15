@@ -43,6 +43,10 @@
   {
     $searchdest="/studiosearch";
   }
+  else if($search.type=='personnel')
+  {
+    $searchdest="/personnelsearch";
+  }
 	}
 </script>
 
@@ -74,6 +78,9 @@
 			  </DropdownItem>
 			  <DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 				<Radio bind:group={$search.type} value={"studio"}>Studio</Radio>
+			  </DropdownItem>
+			  <DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={"personnel"}>Personnel</Radio>
 			  </DropdownItem>
 			</ul>
 		  </Dropdown>
