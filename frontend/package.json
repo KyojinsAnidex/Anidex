@@ -29,6 +29,7 @@
 	"dependencies": {
 		"flowbite": "^1.5.2",
 		"svelte-heros": "^2.3.3",
+		"svelte-hmr": "^0.14.12",
 		"svelte-local-storage-store": "^0.2.6"
 	}
 }
