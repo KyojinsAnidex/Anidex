@@ -237,7 +237,7 @@ const getEpisodeByName = async (req, res, next) => {
     "SELECT * FROM " +
     dbModels.tables.episode +
     " WHERE " +
-    dbModels.episode.titleNOTNULL +
+    dbModels.episode.title +
     " ILIKE '%" +
     searchString +
     "%'";
