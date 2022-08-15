@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   - url: "http://localhost:5000"
-    description: only working server for now
+    description: hosted locally, for now
 
 tags:
   - name: anime
@@ -106,6 +106,27 @@ paths:
                     type: boolean
                   anime:
                     $ref: "#/components/schemas/AnimeCommon"
+                  animegenres:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        genrename:
+                          type: string
+                  animestudios:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        studioname:
+                          type: string
+                  animepicture: 
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pictureid:
+                          type: string
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -1077,6 +1098,8 @@ paths:
                     type: boolean
                   studio:
                     $ref: "#/components/schemas/studioSingle"
+                  animebystudio:
+                    $ref: "#/components/schemas/AnimeAll"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
