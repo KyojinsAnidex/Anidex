@@ -44,7 +44,7 @@
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
             Anime Genre: 
             {#each $wlanimes[id].animegenres as genre}
-            {genre.genrename}
+            {genre.genrename}, 
             {/each}
            </h4>
            <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">

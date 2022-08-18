@@ -2,7 +2,7 @@
   <title>Log out</title>
 </svelte:head>
 <script>
-  import { state, search, curruser, searchresult } from "../stores/store";
+  import { state, search, curruser,} from "../stores/store";
   function handlelogout() {
     state.set(0);
     curruser.set({
@@ -14,10 +14,6 @@
     search.set({
       txt: "",
       type: "",
-    });
-    searchresult.set({
-      success: false,
-      results: [],
     });
   }
 </script>

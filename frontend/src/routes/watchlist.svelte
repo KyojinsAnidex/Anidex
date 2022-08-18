@@ -33,7 +33,6 @@
 	let anime;
 
 	let image = 'http://localhost:5000/uploads/images/';
-	let pictures = [];
 	async function proxyfetchanimeinfo(src) {
 		const response = await fetch(src);
 		if (response.status === 200) {

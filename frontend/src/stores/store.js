@@ -6,11 +6,7 @@ export let curruser=writable('curruser',
     image:'',
     token:''
 })
-export let searchresult = writable('searchresult',{
-    success: false,
-    results: [],
-  });
-export let picturelinks= writable('picturelinks',[]);
+export let allanimes=writable('allanimes',[]);
 export let search=writable('search',{
     txt:'',
     type:''
