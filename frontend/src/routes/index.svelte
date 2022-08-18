@@ -2,7 +2,7 @@
    <title> Anidex Home Page </title>
 </svelte:head>
 <script>
-	import { picturelinks } from './../stores/store.js';
+	import { picturelinks, curruser } from './../stores/store.js';
    import {state,searchresult,search} from "../stores/store";
  let animes = {
    success: false,
@@ -71,7 +71,6 @@
        $picturelinks=pictures;
        
    }
- 
 </script>
 
 <div

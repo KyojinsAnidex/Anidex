@@ -1,5 +1,5 @@
 import { writable } from 'svelte-local-storage-store';
-export let curruser=writable('crruser',
+export let curruser=writable('curruser',
 {
     name:'',
     mail:'',
@@ -31,3 +31,4 @@ export let searchdest=writable('searchdest','/');
 export let persearch= writable('charsearch',{success: false,
     resultPersonnel: []});
 export let perpics=  writable('picturelinks',[]);
+export let wlanimes= writable('wlanimes',[]);

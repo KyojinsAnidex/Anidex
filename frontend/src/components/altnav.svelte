@@ -27,7 +27,9 @@
 	{
 		console.log($search.txt);
 		console.log($search.type);
+		console.log($curruser);
 		if($search.type=='anime')
+	
   {
     $searchdest="/animesearchresult";
   }
@@ -102,7 +104,9 @@
 					<span class="block text-sm"> {$curruser.name} </span>
 					<span class="block truncate text-sm font-medium"> {$curruser.mail} </span>
 				</DropdownHeader>
+				<a href="/watchlist">
 				<DropdownItem>Watchlist</DropdownItem>
+			</a>
 				<DropdownItem>WatchRoom</DropdownItem>
 				<DropdownItem>Earnings</DropdownItem>
 				<DropdownDivider />

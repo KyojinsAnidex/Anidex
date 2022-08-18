@@ -86,12 +86,12 @@
 		} else if (temp.success == true) {
 			alert('Logged in');
 			state.set(1);
-			$curruser.name = user.name;
-			$curruser.mail = user.email;
+			$curruser.name=temp.userid;
+			$curruser.mail=temp.email;
 			$curruser.token=temp.token;
 			console.log($curruser);
-			console.log(user);
-			$curruser.image= await fetchuserinfo();
+			//console.log(user);
+			$curruser.image = await fetchuserinfo();
 			console.log($curruser.image);
 		}
 	}
