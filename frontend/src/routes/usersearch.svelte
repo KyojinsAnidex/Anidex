@@ -1,4 +1,6 @@
 <script>
+import { Spinner } from "flowbite-svelte";
+
     import {state,search} from "../stores/store";
   let animes = {
     success: false,
@@ -49,7 +51,9 @@
       
 </script>
 
-{#await fetchuserinfo() then}
+{#await fetchuserinfo()}
+<div class="text-center" ><Spinner size="10" color="red"/></div>
+{:then}
   <div class="container min-w-full">
     <div class="grid grid-cols-1 md:grid-cols-2">
       <div class="mt-10">

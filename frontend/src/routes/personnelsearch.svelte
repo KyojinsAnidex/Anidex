@@ -1,4 +1,5 @@
 <script>
+	import { Spinner } from 'flowbite-svelte';
 	import { state, search,perpics,persearch } from '../stores/store';
 	let animes = {
 		success: false,
@@ -51,7 +52,9 @@
 </script>
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-	{#await fetchperinfo() then}
+	{#await fetchperinfo()}
+	<div class="text-center" ><Spinner size="10" color="red"/></div>
+	{:then}
 		{#each animes.resultPersonnel as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<a href="/personnel/{i}">

@@ -34,10 +34,10 @@
 		}
 	}
 	async function handlesignup() {
-		console.log(user.name);
-		console.log(user.email);
-		console.log(user.password);
-		console.log(user.bio);
+		//console.log(user.name);
+		//console.log(user.email);
+		//console.log(user.password);
+		//console.log(user.bio);
 		let temp = {
 			success: false,
 			name: '',

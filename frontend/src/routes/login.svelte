@@ -89,10 +89,10 @@
 			$curruser.name=temp.userid;
 			$curruser.mail=temp.email;
 			$curruser.token=temp.token;
-			console.log($curruser);
+			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();
-			console.log($curruser.image);
+			//console.log($curruser.image);
 		}
 	}
 </script>

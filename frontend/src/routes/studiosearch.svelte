@@ -1,4 +1,5 @@
 <script>
+	import { Spinner } from 'flowbite-svelte';
 	import { state, search,studiosearch } from '../stores/store';
 	let animes = {
 		success: false,
@@ -40,7 +41,9 @@
 </script>
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-	{#await fetchstudioinfo() then}
+	{#await fetchstudioinfo()}
+	<div class="text-center" ><Spinner size="10" color="red"/></div>
+	{:then}
 		{#each animes.resultStudio as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">

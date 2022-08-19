@@ -3,6 +3,7 @@
 </svelte:head>
 <script>
    import {state,allanimes} from "../stores/store";
+   import { Spinner } from 'flowbite-svelte';
    let animes;
  let endpoint="http://localhost:5000/anime";
  let image = "http://localhost:5000/uploads/images/";
@@ -27,7 +28,7 @@
        if (temp.success == false) {
          console.log("No anime Found");
        } else {
-        console.log(temp);
+       // console.log(temp);
         return temp;
               
        }
@@ -53,16 +54,18 @@
 				console.log('No anime Found');
 			} else {
 				resanimes.push(anime);
-				console.log(anime);
+			//	console.log(anime);
 			}
 		}
-		console.log(resanimes);
+		//console.log(resanimes);
 		$allanimes = resanimes;
-		console.log($allanimes);
+		//console.log($allanimes);
 	}
 </script>
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-	{#await fetchanimeinfo() then}
+	{#await fetchanimeinfo() }
+	<div class="text-center" ><Spinner size="10" color="red"/></div>
+	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<a href="/animes/{i}">

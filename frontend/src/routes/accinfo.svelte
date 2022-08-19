@@ -2,6 +2,7 @@
   <title>Account Info</title>
 </svelte:head>
 <script>
+	import { Spinner } from 'flowbite-svelte';
   import { curruser ,state} from "../stores/store";
   let endpoint = "http://localhost:5000/users/" + $curruser.name;
   let image = "http://localhost:5000/uploads/images/";
@@ -42,7 +43,9 @@
       }
 </script>
 
-{#await fetchuserinfo() then}
+{#await fetchuserinfo()}
+<div class="text-center" ><Spinner size="10" color="red"/></div>
+{:then}
   <div class="container min-w-full">
     <div class="grid grid-cols-1 md:grid-cols-2">
       <div class="mt-10">

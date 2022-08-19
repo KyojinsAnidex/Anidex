@@ -17,7 +17,7 @@
 	} from 'flowbite-svelte';
 	import { ArrowRight } from 'svelte-heros';
 	let avatar = {
-		src: '../../static/anidex.png',
+		src: '../../static/anidexp.webp',
 		alt: 'My avatar',
 		size: 12,
 		border: true,
@@ -25,9 +25,9 @@
 	};
 	$:
 	{
-		console.log($search.txt);
-		console.log($search.type);
-		console.log($curruser);
+	//	console.log($search.txt);
+	//	console.log($search.type);
+	//	console.log($curruser);
 		if($search.type=='anime')
 	
   {
