@@ -16,13 +16,6 @@
 		Button,
 	} from 'flowbite-svelte';
 	import { ArrowRight } from 'svelte-heros';
-	let avatar = {
-		src: '../../static/anidexp.webp',
-		alt: 'My avatar',
-		size: 12,
-		border: true,
-		round: true
-	};
 	$:
 	{
 	//	console.log($search.txt);
@@ -98,7 +91,7 @@
 	</NavUl>
 	<div class="flex md:order-2">
 		<Dropdown arrowIcon={false} inline={true}>
-			<Avatar {avatar} slot="label" />
+			<Avatar src={$curruser.image} slot="label" />
 			{#if $state == 1}
 				<DropdownHeader>
 					<span class="block text-sm"> {$curruser.name} </span>
@@ -108,7 +101,9 @@
 				<DropdownItem>Watchlist</DropdownItem>
 			</a>
 				<DropdownItem>WatchRoom</DropdownItem>
-				<DropdownItem>Earnings</DropdownItem>
+				<a href="/accinfo">
+				<DropdownItem>More Info</DropdownItem>
+			</a>
 				<DropdownDivider />
 				<a href="/logout">
 					<DropdownItem>Log out</DropdownItem>
