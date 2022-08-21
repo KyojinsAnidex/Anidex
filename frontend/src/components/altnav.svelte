@@ -86,8 +86,9 @@
 	</div>
 	<NavUl {hidden}>
 		<NavLi href="/" active={true}>Home</NavLi>
+		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
-		<NavLi href="/services">Services</NavLi>
+		
 	</NavUl>
 	<div class="flex md:order-2">
 		<Dropdown arrowIcon={false} inline={true}>

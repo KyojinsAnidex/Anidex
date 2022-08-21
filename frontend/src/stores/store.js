@@ -7,6 +7,7 @@ export let curruser=writable('curruser',
     token:''
 })
 export let allanimes=writable('allanimes',[]);
+export let topanimes=writable('topanimes',[]);
 export let search=writable('search',{
     txt:'',
     type:''
