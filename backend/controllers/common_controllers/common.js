@@ -11,7 +11,12 @@ const getAllFromTable = async (
 ) => {
   let allRes;
 
-  let queryText = "SELECT * FROM " + searchingTable + ";";
+  let queryText;
+  queryText = "SELECT * FROM " + searchingTable;
+  if (searchingName === "anime") {
+    queryText += " ORDER BY " + dbModel.anime.animerank + " ASC ";
+  }
+  queryText += " ;";
 
   try {
     allRes = await db.query(queryText);
