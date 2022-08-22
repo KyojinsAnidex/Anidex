@@ -18,7 +18,8 @@ const getAllPerson = async (req, res, next) => {
 
 const getSinglePerson = async (req, res, next) => {
   let searchedPerson;
-
+  let workedOnAnime = false;
+  
   const personID = req.params.pid;
 
   try {
@@ -42,9 +43,38 @@ const getSinglePerson = async (req, res, next) => {
       message: "No person with provided personnel id",
     });
   } else {
+    try {
+      workedOnAnime = await db.query(
+        "SELECT * FROM " +
+          dbModels.tables.animestaff +
+          " WHERE " +
+          dbModels.animestaff.personnelID +
+          " = " +
+          searchedPerson.rows[0].personnelid +
+          "; "
+      );
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Fetching person failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
+    if (workedOnAnime === false) {
+      return next(
+        new HttpError(
+          "Fetching person failed, please try again later.",
+          500,
+          false
+        )
+      );
+    }
     res.status(200).json({
       success: true,
       person: searchedPerson.rows[0],
+      workedOnAnime: workedOnAnime.rows,
     });
   }
 };

@@ -36,19 +36,7 @@ const getAllFromTable = async (
       )
     );
   }
-  if (searchingName != "anime") {
-    if (allRes.rowCount === 0) {
-      res.status(404).json({
-        success: false,
-        message: "No " + searchingName + " found",
-      });
-    } else {
-      res.status(200).json({
-        success: true,
-        results: allRes.rows,
-      });
-    }
-  } else {
+  if (searchingName === "anime") {
     let allAnimeGenres = [];
     let totalAnime = allRes.rows.length;
     //for each anime find its genre, add to allAnimeGenres
@@ -88,6 +76,61 @@ const getAllFromTable = async (
         success: true,
         results: allRes.rows,
         animegenres: allAnimeGenres,
+      });
+    }
+  } else if (searchingName === "personnel") {
+    let allAnimeStaffWork = [];
+    let totalPerson = allRes.rows.length;
+    //for each person find her/his anime, add to allAnimeStaffWork
+    for (let i = 0; i < totalPerson; i++) {
+      let thisPersonAnime = false;
+      try {
+        thisPersonAnime = await db.query(
+          "SELECT * " +
+            // dbModel.animeisofgenre.genreNameNOTNULL +
+            " FROM " +
+            dbModel.tables.animestaff +
+            " WHERE " +
+            dbModel.animestaff.personnelID +
+            " = " +
+            allRes.rows[i].personnelid +
+            "; "
+        );
+      } catch (err) {
+        return next(
+          new HttpError(
+            "Failed to get anime for person, please try again later",
+            500,
+            false
+          )
+        );
+      }
+
+      allAnimeStaffWork.push(thisPersonAnime.rows);
+    }
+
+    if (allRes.rowCount === 0 || allAnimeStaffWork.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "No personnel found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        pesonnels: allRes.rows,
+        allAnimeStaffWork: allAnimeStaffWork,
+      });
+    }
+  } else {
+    if (allRes.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "No " + searchingName + " found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: allRes.rows,
       });
     }
   }

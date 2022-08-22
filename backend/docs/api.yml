@@ -697,10 +697,16 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  results:
+                  personnels:
                     type: array
                     items:
                       $ref: "#/components/schemas/personnel"
+                  allAnimeStaffWorks:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/animeStaffData"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -753,6 +759,8 @@ paths:
                     type: boolean
                   person:
                     $ref: "#/components/schemas/personnel"
+                  workedOnAnime:
+                   $ref: "#/components/schemas/animeStaffData"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -1705,6 +1713,17 @@ components:
       items:
         $ref: "#/components/schemas/episodeRatingSingle"
 
+    animeStaffData:
+      type: object
+      properties:
+        personnelid:
+          type: integer
+          minimum: 1
+        animeid:
+          type: integer
+          minimum: 1
+        role:
+          type: string
 
   requestBodies:
     searchItem:
