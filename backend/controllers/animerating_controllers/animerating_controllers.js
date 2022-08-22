@@ -132,11 +132,10 @@ const addRatingByUser = async (req, res, next) => {
       )
     );
   }
-
+  let createdAnimeRating = false,
+    queryText2 = false;
   if (existingEntry.rowCount != 0) {
-    let updatedAnimeRating;
-    let queryText;
-    queryText =
+    queryText2 =
       "UPDATE " +
       dbModels.tables.animestars +
       " SET " +
@@ -152,66 +151,8 @@ const addRatingByUser = async (req, res, next) => {
       " = '" +
       userid +
       "' RETURNING * ;";
-    try {
-      updatedAnimeRating = await db.query(queryText);
-    } catch (err) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (updatedAnimeRating === false) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (updatedAnimeRating.rowCount === 0) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500
-        )
-      );
-    }
-    //update all ratings now
-    let updatedState = true;
-    try {
-      updatedState = await db.query("CALL update_animerank();");
-    } catch (error) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-
-    if (updatedState === false) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-
-    res.status(201).json({
-      success: true,
-      newRating: updatedAnimeRating.rows[0],
-    });
   } else {
-    let createdAnimeRating;
-    let queryText;
-    queryText =
+    queryText2 =
       "INSERT INTO " +
       dbModels.tables.animestars +
       " VALUES ( '" +
@@ -221,63 +162,63 @@ const addRatingByUser = async (req, res, next) => {
       ", " +
       starcount +
       " ) RETURNING * ;";
-    try {
-      createdAnimeRating = await db.query(queryText);
-    } catch (err) {
-      return next(
-        new HttpError(
-          "Adding rating to anime failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (createdAnimeRating === false) {
-      return next(
-        new HttpError(
-          "Adding rating to anime failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (createdAnimeRating.rowCount === 0) {
-      return next(
-        new HttpError(
-          "Adding rating to anime failed, please try again later",
-          500
-        )
-      );
-    }
-    //update all ratings now
-    let updatedState = true;
-    try {
-      updatedState = await db.query("CALL update_animerank();");
-    } catch (error) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-
-    if (updatedState === false) {
-      return next(
-        new HttpError(
-          "Updating rating of anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-
-    res.status(201).json({
-      success: true,
-      newRating: createdAnimeRating.rows[0],
-    });
   }
+  try {
+    createdAnimeRating = await db.query(queryText2);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later",
+        500
+      )
+    );
+  }
+
+  if (createdAnimeRating === false) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later",
+        500
+      )
+    );
+  }
+
+  if (createdAnimeRating.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later",
+        500
+      )
+    );
+  }
+  //update all ratings now
+  let updatedState = true;
+  try {
+    updatedState = await db.query("CALL update_animerank();");
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Updating rating of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
+  if (updatedState === false) {
+    return next(
+      new HttpError(
+        "Updating rating of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    newRating: createdAnimeRating.rows[0],
+  });
 };
 
 module.exports = {

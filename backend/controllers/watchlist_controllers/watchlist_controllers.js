@@ -5,12 +5,13 @@ const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const common = require("../common_controllers/common");
 
-const { tables, anime, watchlist, users } = require("../../models/db_models");
+const { tables, anime, watchlist, users, animestars } = require("../../models/db_models");
 
 const getWatchlistOfUser = async (req, res, next) => {
   const userID = req.params.uid;
 
-  let userWatchlist;
+  let userWatchlist = false,
+    userFavouriteWatchlist = false;
 
   let queryText =
     "SELECT " +
@@ -22,16 +23,28 @@ const getWatchlistOfUser = async (req, res, next) => {
     " WHERE " +
     watchlist.userIDNOTNULL +
     " = $1 ;";
-
+  let queryText2 =
+    "SELECT " +
+    watchlist.animeIDNOTNULL +
+    ", " +
+    watchlist.favouriteNOTNULL +
+    " FROM " +
+    tables.watchlist +
+    " WHERE " +
+    watchlist.userIDNOTNULL +
+    " = $1 AND " +
+    watchlist.favouriteNOTNULL +
+    " = true ;";
   try {
     userWatchlist = await db.query(queryText, [userID]);
+    userFavouriteWatchlist = await db.query(queryText2, [userID]);
   } catch (err) {
     return next(
       new HttpError("Fetching watchlist failed, please try again later.", 500)
     );
   }
 
-  if (userWatchlist === false) {
+  if (userWatchlist === false || userFavouriteWatchlist === false) {
     return next(
       new HttpError("Fetching watchlist failed, please try again later.", 500)
     );
@@ -41,6 +54,7 @@ const getWatchlistOfUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       watchlist_anime: userWatchlist.rows,
+      watchlist_favourite: userFavouriteWatchlist.rows,
     });
   } else {
     res.status(404).json({
@@ -58,7 +72,114 @@ const addAnimeToWatchlist = async (req, res, next) => {
     );
   }
   const userid = req.params.uid;
-  const { animeid, favourite } = req.body;
+  const { animeid, favourite, rating } = req.body;
+
+  let existingEntry1 = false,
+    createdAnimeRating = false;
+
+  try {
+    existingEntry1 = await db.query(
+      "SELECT * FROM " +
+        tables.animestars +
+        " WHERE " +
+        animestars.animeIDNOTNULL +
+        " = $1 AND " +
+        animestars.userIDNOTNULL +
+        " = $2 ;",
+      [animeid, userid]
+    );
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later 1",
+        500
+      )
+    );
+  }
+  if (existingEntry1 === false) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later 2",
+        500
+      )
+    );
+  }
+
+  let queryText2;
+
+  if (existingEntry1.rowCount != 0) {
+    queryText2 =
+      "UPDATE " +
+      tables.animestars +
+      " SET " +
+      animestars.starcountNOTNULL +
+      " = " +
+      rating +
+      " WHERE " +
+      animestars.animeIDNOTNULL +
+      " = " +
+      animeid +
+      " AND " +
+      animestars.userIDNOTNULL +
+      " = '" +
+      userid +
+      "' RETURNING * ;";
+  } else {
+    queryText2 =
+      "INSERT INTO " +
+      tables.animestars +
+      " VALUES ( '" +
+      userid +
+      "', " +
+      animeid +
+      ", " +
+      rating +
+      " ) RETURNING * ;";
+  }
+
+  try {
+    createdAnimeRating = await db.query(queryText2);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later 3",
+        500
+      )
+    );
+  }
+
+  if (createdAnimeRating === false || createdAnimeRating.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later 3",
+        500
+      )
+    );
+  }
+
+  //update all ratings now
+  let updatedState = true;
+  try {
+    updatedState = await db.query("CALL update_animerank();");
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Updating rating of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
+  if (updatedState === false) {
+    return next(
+      new HttpError(
+        "Updating rating of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
 
   let existingEntry;
   try {
@@ -89,24 +210,41 @@ const addAnimeToWatchlist = async (req, res, next) => {
     );
   }
 
-  if (existingEntry.rowCount != 0) {
-    return next(new HttpError("Anime already in your watchlist!", 422));
-  }
+  let queryText3;
 
+  if (existingEntry.rowCount != 0) {
+    queryText3 =
+      "UPDATE " +
+      tables.watchlist +
+      " SET " +
+      watchlist.favouriteNOTNULL +
+      " = " +
+      favourite +
+      " WHERE " +
+      watchlist.animeIDNOTNULL +
+      " = " +
+      animeid +
+      " AND " +
+      watchlist.userIDNOTNULL +
+      " = '" +
+      userid +
+      "' RETURNING * ;";
+  } else {
+    queryText3 =
+      "INSERT INTO " +
+      tables.watchlist +
+      " VALUES ( '" +
+      userid +
+      "', " +
+      favourite +
+      ", " +
+      animeid +
+      " ) RETURNING * ;";
+  }
   let createdEntry;
-  let queryText;
-  queryText =
-    "INSERT INTO " +
-    tables.watchlist +
-    " VALUES ( '" +
-    userid +
-    "', " +
-    favourite +
-    ", " +
-    animeid +
-    " ) RETURNING * ;";
+
   try {
-    createdEntry = await db.query(queryText);
+    createdEntry = await db.query(queryText3);
   } catch (err) {
     return next(
       new HttpError(
@@ -116,16 +254,7 @@ const addAnimeToWatchlist = async (req, res, next) => {
     );
   }
 
-  if (createdEntry === false) {
-    return next(
-      new HttpError(
-        "Adding entry to watchlist failed, please try again later",
-        500
-      )
-    );
-  }
-
-  if (createdEntry.rowCount === 0) {
+  if (createdEntry === false || createdEntry.rowCount === 0) {
     return next(
       new HttpError(
         "Adding entry to watchlist failed, please try again later",
@@ -137,6 +266,7 @@ const addAnimeToWatchlist = async (req, res, next) => {
   res.status(201).json({
     success: true,
     watchlistEntry: createdEntry.rows[0],
+    animeRating: createdAnimeRating.rows[0],
   });
 };
 
