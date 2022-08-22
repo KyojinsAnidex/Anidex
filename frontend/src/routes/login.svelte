@@ -1,48 +1,38 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { curruser, state } from '../stores/store';
 	let user = {
 		name: '',
 		email: '',
 		password: ''
 	};
-  let image = "http://localhost:5000/uploads/images/";
-  let res = {
-    success: false,
-    user: 
-    {userid: "",
-    email: "",
-    biography: "",
-    pictureid: "",
-    admin: ""}
-  };
-  async function proxyfetchuserinfo()
-  { 
-	let endpoint = "http://localhost:5000/users/" + user.name;
-    const response = await fetch(endpoint);
-    if(response.status === 200 )
-    {
-       return await response.json();
-    }
-    else
-    {
-      alert("An error occured Try Again");
-      throw new Error(response.statusText);
-    }
+	let image = 'http://localhost:5000/uploads/images/';
+	let res = {
+		success: false,
+		user: { userid: '', email: '', biography: '', pictureid: '', admin: '' }
+	};
+	async function proxyfetchuserinfo() {
+		let endpoint = 'http://localhost:5000/users/' + user.name;
+		const response = await fetch(endpoint);
+		if (response.status === 200) {
+			return await response.json();
+		} else {
+			alert('An error occured Try Again');
+			throw new Error(response.statusText);
+		}
+	}
 
-  }
+	async function fetchuserinfo() {
+		let temp = await proxyfetchuserinfo();
 
-  async function fetchuserinfo() {
-      
-        let temp = await proxyfetchuserinfo();
-
-        if (temp.success == false) {
-          alert("User Not Found");
-        } else {
-          res = temp;
-          image = image + res.user.pictureid;
-        }
+		if (temp.success == false) {
+			alert('User Not Found');
+		} else {
+			res = temp;
+			image = image + res.user.pictureid;
+		}
 		return image;
-      }
+	}
 	async function proxyhandlelogin() {
 		const response = await fetch('http://localhost:5000/users/login', {
 			method: 'POST',
@@ -74,25 +64,26 @@
 			success: false,
 			userid: '',
 			email: '',
-			token:'',
-			admin:false
+			token: '',
+			admin: false
 		};
 		temp = await proxyhandlelogin();
 		if (temp.success == false) {
-			alert('Could Not log up Try Again');
+			alert('Could not log in. Try Again');
 			user.name = '';
 			user.email = '';
 			user.password = '';
 		} else if (temp.success == true) {
 			alert('Logged in');
 			state.set(1);
-			$curruser.name=temp.userid;
-			$curruser.mail=temp.email;
-			$curruser.token=temp.token;
+			$curruser.name = temp.userid;
+			$curruser.mail = temp.email;
+			$curruser.token = temp.token;
 			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();
 			//console.log($curruser.image);
+			goto('/');
 		}
 	}
 </script>
@@ -151,6 +142,10 @@
 		</div>
 	</div>
 	<div class="h-screen w-1/2 bg-blue-600">
-		<img src="http://localhost:5000/uploads/images/login.jpg" class="object-cover h-full w-full" alt="logo" />
+		<img
+			src="http://localhost:5000/uploads/images/login.jpg"
+			class="object-cover h-full w-full"
+			alt="logo"
+		/>
 	</div>
 </div>

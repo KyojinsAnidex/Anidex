@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search,perpics,persearch } from '../stores/store';
+	import { state, search, perpics, persearch } from '../stores/store';
 	let animes = {
 		success: false,
 		resultPersonnel: []
@@ -36,12 +36,11 @@
 			alert('No Personnel Found');
 		} else {
 			animes = temp;
-//			console.log(animes);
+			//			console.log(animes);
 			addperpic();
-			$perpics=pictures;
-			$persearch=animes;
+			$perpics = pictures;
+			$persearch = animes;
 		}
-
 	}
 
 	function addperpic() {
@@ -53,13 +52,13 @@
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 	{#await fetchperinfo()}
-	<div class="text-center" ><Spinner size="10" color="red"/></div>
+		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
 		{#each animes.resultPersonnel as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<a href="/personnel/{i}">
-				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
-			</a>
+					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
+				</a>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 					{animes.resultPersonnel[i].firstname + ' ' + animes.resultPersonnel[i].lastname}
 				</h4>

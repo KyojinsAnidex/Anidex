@@ -14,7 +14,7 @@
 		Radio,
 		Input,
 		Button,
-SimpleSearch
+		SimpleSearch
 	} from 'flowbite-svelte';
 	import { ArrowRight } from 'svelte-heros';
 	import { SearchCircle } from 'svelte-heros';
@@ -80,8 +80,8 @@ SimpleSearch
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
 	</NavUl>
-	<div class="flex md:order-2" >
-		<Dropdown arrowIcon={false} inline={true} >
+	<div class="flex md:order-2">
+		<Dropdown arrowIcon={false} inline={true}>
 			<Avatar src={$curruser.image} slot="label" />
 			{#if $state == 1}
 				<DropdownHeader>

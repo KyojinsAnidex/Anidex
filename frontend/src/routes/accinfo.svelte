@@ -46,8 +46,8 @@
 {#await fetchuserinfo()}
 <div class="text-center" ><Spinner size="10" color="red"/></div>
 {:then}
-  <div class="container min-w-full">
-    <div class="grid grid-cols-1 md:grid-cols-2">
+  <div class="container min-w-full text-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 text-center">
       <div class="mt-10">
         <div class="flex justify-center">
           <img class="h-52 rounded-full mb-4" src={image} alt="person pic" />
