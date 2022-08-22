@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
+const check_animeid = require("../../middlewares/check_animeid");
+const check_userid = require("../../middlewares/check_userid");
 
 const common = require("../common_controllers/common");
 
@@ -103,6 +105,22 @@ const addRatingByUser = async (req, res, next) => {
   }
   const userid = req.params.uid;
   const { animeid, starcount } = req.body;
+
+  let animeidState = await check_animeid(animeid);
+  let useridState = await check_userid(userid);
+
+  if (animeidState === 0 || useridState === 0) {
+    return next(
+      new HttpError("Invalid animeid or userid inputs provided, please check your inputs", 422)
+    );
+  } else if (animeidState === 2 || useridState === 2) {
+    return next(
+      new HttpError(
+        "Adding rating to anime failed, please try again later",
+        500
+      )
+    );
+  }
 
   let existingEntry;
   try {
