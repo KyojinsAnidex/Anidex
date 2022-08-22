@@ -15,9 +15,7 @@ router.use(check_auth);
 
 router.post("/:aid", 
 [
-    check("episode").not().isEmpty(),
-    check("season").not().isEmpty(),
-    check("animeid").not().isEmpty(),
+    check(["episode", "season", "animeid"]).not().isEmpty(),
     check(["episode", "season", "animeid"]).isNumeric(),
 ],
 episodesControllers.addEpisode);

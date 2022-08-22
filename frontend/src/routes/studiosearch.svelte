@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search,studiosearch } from '../stores/store';
+	import { state, search, studiosearch } from '../stores/store';
 	let animes = {
 		success: false,
 		resultStudio: []
@@ -34,33 +34,35 @@
 			alert('No Character Found');
 		} else {
 			animes = temp;
-            $studiosearch=animes;
+			$studiosearch = animes;
 		}
-
 	}
 </script>
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 	{#await fetchstudioinfo()}
-	<div class="text-center" ><Spinner size="10" color="red"/></div>
+		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
 		{#each animes.resultStudio as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Studio Name: {animes.resultStudio[i].studioname}
+				<h2 class="mt-2 text-lg font-medium text-center text-black dark:text-red-700">
+					{animes.resultStudio[i].studioname}
+				</h2>
+				<h4 class="mt-2 text-lg font-medium text-center text-gray-700 dark:text-red-700">
+					Founding Year: {animes.resultStudio[i].foundingdate.slice(0, 4)}
 				</h4>
-                <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Founding Date: {animes.resultStudio[i].foundingdate.slice(0, 10)}
-				</h4>
-                <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium text-center  text-gray-700 dark:text-red-700">
 					Office Address: {animes.resultStudio[i].office_address}
 				</h4>
-                <a href={"http://"+animes.resultStudio[i].website}>
-                <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Website : {animes.resultStudio[i].website}
-				</h4>
-            </a>
-            <a class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700" href="/studio/{animes.resultStudio[i].studioname}">Produced Animes</a>
+				<a href={'http://' + animes.resultStudio[i].website}>
+					<h4 class="mt-2 text-lg text-center font-medium text-blue-700 dark:text-red-700">
+						Website
+					</h4>
+				</a>
+				<a
+					class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700"
+					href="/studio/{animes.resultStudio[i].studioname}">Produced Anime</a
+				>
 			</div>
 		{/each}
 	{/await}

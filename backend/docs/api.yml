@@ -320,8 +320,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WatchlistWhole"
-
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  watchlist_anime:
+                    $ref: "#/components/schemas/WatchlistWhole"
+                  watchlist_favourite:
+                    $ref: "#/components/schemas/WatchlistWhole"                    
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -347,8 +353,12 @@ paths:
                 properties:
                   success:
                     type: boolean
+                  rated: 
+                    type: boolean
                   WatchlistEntry:
                     $ref: "#/components/schemas/WatchlistEntry"
+                  animeRating: 
+                    $ref: "#/components/schemas/animeRatingSingle"
         "401":
           $ref: "#/components/responses/401AuthFailure"
         "422":
@@ -1759,6 +1769,10 @@ components:
                 type: integer
               favourite:
                 type: boolean
+              rating: 
+                type: integer
+                minimum: 0
+                maximum: 10
             required:
               - animeid
               - favourite

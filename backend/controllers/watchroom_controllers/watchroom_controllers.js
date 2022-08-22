@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
+const check_animeid = require("../../middlewares/check_animeid");
+const check_userid = require("../../middlewares/check_userid");
 
 const common = require("../common_controllers/common");
 
@@ -67,7 +69,20 @@ const makeWatchroom = async (req, res, next) => {
   }
 
   const { watchroomname, animeid, description, duration } = req.body;
-
+  let animeidState = await check_animeid(animeid);
+  if (animeidState === 0) {
+    return next(
+      new HttpError(
+        "Invalid animeid inputs for watchroom were provided, please check your inputs",
+        422
+      )
+    );
+  } else if (animeidState === 2) {
+    return next(
+      new HttpError("Adding new watchroom failed, please try again later", 500)
+    );
+  }
+  
   let existingWatchroom;
 
   try {

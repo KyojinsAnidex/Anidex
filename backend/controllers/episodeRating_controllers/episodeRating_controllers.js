@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
+const check_userid = require("../../middlewares/check_userid");
+const check_episodeid = require("../../middlewares/check_episodeid");
 
 const common = require("../common_controllers/common");
 
@@ -104,6 +106,27 @@ const addRatingByUser = async (req, res, next) => {
   const userid = req.params.uid;
   const { episodeid, rating } = req.body;
 
+  let useridState = await check_userid(userid);
+  let episodeidState = await check_episodeid(episodeid);
+
+  if (episodeidState === 0 || useridState === 0) {
+    return next(
+      new HttpError(
+        "Invalid episodeid or userid inputs provided, please check your inputs",
+        422,
+        false
+      )
+    );
+  } else if (episodeidState === 2 || useridState === 2) {
+    return next(
+      new HttpError(
+        "Adding rating to episode failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
   let existingEntry;
   try {
     existingEntry = await db.query(
@@ -132,10 +155,10 @@ const addRatingByUser = async (req, res, next) => {
       )
     );
   }
+  let createdEpisodeRating = false,
+    queryText = "";
 
   if (existingEntry.rowCount != 0) {
-    let updatedEpisodeRating;
-    let queryText;
     queryText =
       "UPDATE " +
       dbModels.tables.episoderates +
@@ -152,42 +175,7 @@ const addRatingByUser = async (req, res, next) => {
       " = '" +
       userid +
       "' RETURNING * ;";
-    try {
-      updatedEpisodeRating = await db.query(queryText);
-    } catch (err) {
-      return next(
-        new HttpError(
-          "Updating rating of episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (updatedEpisodeRating === false) {
-      return next(
-        new HttpError(
-          "Updating rating of episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (updatedEpisodeRating.rowCount === 0) {
-      return next(
-        new HttpError(
-          "Updating rating of episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    res.status(201).json({
-      success: true,
-      newRating: updatedEpisodeRating.rows[0],
-    });
   } else {
-    let createdEpisodeRating;
-    let queryText;
     queryText =
       "INSERT INTO " +
       dbModels.tables.episoderates +
@@ -198,40 +186,31 @@ const addRatingByUser = async (req, res, next) => {
       ", " +
       rating +
       " ) RETURNING * ;";
-    try {
-      createdEpisodeRating = await db.query(queryText);
-    } catch (err) {
-      return next(
-        new HttpError(
-          "Adding rating to episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (createdEpisodeRating === false) {
-      return next(
-        new HttpError(
-          "Adding rating to episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    if (createdEpisodeRating.rowCount === 0) {
-      return next(
-        new HttpError(
-          "Adding rating to episode failed, please try again later",
-          500
-        )
-      );
-    }
-
-    res.status(201).json({
-      success: true,
-      newRating: createdEpisodeRating.rows[0],
-    });
   }
+  try {
+    createdEpisodeRating = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Adding rating to episode failed, please try again later",
+        500
+      )
+    );
+  }
+
+  if (createdEpisodeRating === false || createdEpisodeRating.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Adding rating to episode failed, please try again later",
+        500
+      )
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    newRating: createdEpisodeRating.rows[0],
+  });
 };
 
 module.exports = {
