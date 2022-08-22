@@ -18,8 +18,8 @@ router.use(check_auth);
 router.post(
   "/:uid",
   [
-    check(["animeid", "favourite", "rating"]).not().isEmpty(),
-    check(["animeid", "rating"]).isNumeric(),
+    check(["animeid", "favourite"]).not().isEmpty(),
+    check(["animeid"]).isNumeric(),
     // check("favourite").not().isEmpty()
   ],
   watchlistControllers.addAnimeToWatchlist

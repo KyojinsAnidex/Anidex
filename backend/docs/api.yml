@@ -353,6 +353,8 @@ paths:
                 properties:
                   success:
                     type: boolean
+                  rated: 
+                    type: boolean
                   WatchlistEntry:
                     $ref: "#/components/schemas/WatchlistEntry"
                   animeRating: 
@@ -1767,6 +1769,10 @@ components:
                 type: integer
               favourite:
                 type: boolean
+              rating: 
+                type: integer
+                minimum: 0
+                maximum: 10
             required:
               - animeid
               - favourite
