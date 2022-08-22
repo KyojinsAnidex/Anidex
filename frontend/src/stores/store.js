@@ -29,3 +29,4 @@ export let persearch= writable('charsearch',{success: false,
     resultPersonnel: []});
 export let perpics=  writable('picturelinks',[]);
 export let wlanimes= writable('wlanimes',[]);
+export let animeofinterest= writable('animeofinterest',[]);

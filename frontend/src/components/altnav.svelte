@@ -91,7 +91,7 @@
 		
 	</NavUl>
 	<div class="flex md:order-2">
-		<Dropdown arrowIcon={false} inline={true}>
+		<Dropdown arrowIcon={false} inline={true} class="bg-slate-600">
 			<Avatar src={$curruser.image} slot="label" />
 			{#if $state == 1}
 				<DropdownHeader>

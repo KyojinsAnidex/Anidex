@@ -2,7 +2,7 @@
    <title> Anidex Home Page </title>
 </svelte:head>
 <script>
-   import {state,allanimes} from "../stores/store";
+   import {state,allanimes,animeofinterest} from "../stores/store";
    import { Spinner } from 'flowbite-svelte';
    let animes;
  let endpoint="http://localhost:5000/anime";
@@ -80,6 +80,7 @@
 		$allanimes = resanimes;
 		//console.log($allanimes);
 	}
+	
 </script>
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 	{#await fetchanimeinfo() }
@@ -103,6 +104,7 @@
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 					{resanimes[i].anime.releasedate.slice(0, 4)}
 				</h4>
+				
 	
 			</div>
 		{/each}
