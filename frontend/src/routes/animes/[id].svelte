@@ -6,12 +6,16 @@
 </script>
 <script>
   export let id;
-  import { allanimes } from "../../stores/store";
+  import { allanimes,animeofinterest, state } from "../../stores/store";
   let anime= $allanimes[id].anime;
   let picture="http://localhost:5000/uploads/images/"+$allanimes[id].animepicture[0].pictureid;
 //   console.log(anime);
 //  console.log(picture);
-
+function addtowatchlist()
+{
+$animeofinterest[0]=anime;
+$animeofinterest[1]=picture;
+}
 </script>
 
 <svelte:head>
@@ -54,6 +58,15 @@
           {/each}
          </h4>
      <p class="text-blue-500 text-center ">{anime.synopsis}</p>
+     {#if $state==1}
+     <a href="/addwatchlist">
+     <button
+				on:click={addtowatchlist}
+				class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+				>Add To Watchlist</button
+			>
+    </a>
+      {/if}
      
 
      </div>

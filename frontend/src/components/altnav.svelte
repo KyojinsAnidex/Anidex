@@ -13,10 +13,8 @@
 		DropdownDivider,
 		Radio,
 		Input,
-		Button,
-		SimpleSearch
+		Tooltip
 	} from 'flowbite-svelte';
-	import { ArrowRight } from 'svelte-heros';
 	import { SearchCircle } from 'svelte-heros';
 	$: {
 		//	console.log($search.txt);
@@ -82,7 +80,8 @@
 	</NavUl>
 	<div class="flex md:order-2">
 		<Dropdown arrowIcon={false} inline={true} class="bg-slate-600">
-			<Avatar src={$curruser.image} slot="label" />
+			
+			<Avatar src={$curruser.image} slot="label" border class="ring-red-400 dark:ring-red-300" />
 			{#if $state == 1}
 				<DropdownHeader>
 					<span class="block text-sm"> {$curruser.name} </span>

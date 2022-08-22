@@ -4,6 +4,7 @@
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
 	let image = 'http://localhost:5000/uploads/images/';
+	let search=6;
 	async function proxyfetchanimeid() {
 		const response = await fetch(endpoint);
 		if (response.status === 200) {
@@ -51,6 +52,10 @@
 		$topanimes = resanimes;
 		//console.log($allanimes);
 	}
+	function showmore()
+	{
+		search=search*2;
+	}
 </script>
 
 <svelte:head>
@@ -61,7 +66,7 @@
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
 		{#each resanimes as prop, i}
-			{#if i <= 6}
+			{#if i <= search}
 				<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 					<a href="/ranimes/{i}">
 						<img
@@ -82,5 +87,14 @@
 				</div>
 			{/if}
 		{/each}
+		{#if resanimes.length>search}
+		<button
+				on:click={showmore}
+				class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-slate-600 active:bg-red-600 hover:bg-red-700"
+				>Show More</button
+			>
+			{/if}
+		
 	{/await}
 </div>
+
