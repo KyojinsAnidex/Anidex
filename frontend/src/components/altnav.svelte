@@ -13,9 +13,10 @@
 		DropdownDivider,
 		Radio,
 		Input,
-		Tooltip
+		Button,
+		Iconinput
 	} from 'flowbite-svelte';
-	import { SearchCircle } from 'svelte-heros';
+	
 	$: {
 		//	console.log($search.txt);
 		//	console.log($search.type);
@@ -46,9 +47,6 @@
 		</span>
 	</NavBrand>
 	<div class="flex md:order-2">
-		<div class="hidden relative md:block">
-			<Input bind:value={$search.txt} id="search-navbar" class="pl-10" placeholder="Search..." />
-		</div>
 		<Dropdown label={$search.type} class="w-48">
 			<ul slot="content" class="p-3 space-y-1">
 				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -68,9 +66,14 @@
 				</DropdownItem>
 			</ul>
 		</Dropdown>
-		<a href={$searchdest}>
-			<SearchCircle class="w-10 h-10" />
+		<form>
+			<div class="relative">
+			<Iconinput bind:value={$search.txt} noBorder id="search" iconClass="h-5 w-5 mr-2 dark:text-green-500 flex md:order-2" placeholder="Search" class="p-4 flex md:order-2" />
+			<a href={$searchdest}>
+			<Button textSize="text-sm" class="text-white absolute right-2.5 bottom-2 flex md:order-2" type="submit">Search</Button>
 		</a>
+			</div>
+		  </form>
 		<NavHamburger on:click={toggle} />
 	</div>
 	<NavUl {hidden}>
