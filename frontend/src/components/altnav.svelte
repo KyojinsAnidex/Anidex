@@ -12,9 +12,8 @@
 		DropdownItem,
 		DropdownDivider,
 		Radio,
-		Input,
 		Button,
-		Iconinput
+		Iconinput,
 	} from 'flowbite-svelte';
 	
 	$: {
@@ -46,36 +45,35 @@
 			Anidex
 		</span>
 	</NavBrand>
-	<div class="flex md:order-2">
-		<Dropdown label={$search.type} class="w-48">
-			<ul slot="content" class="p-3 space-y-1">
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'character'}>Character</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'user'}>User</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
-				</DropdownItem>
-			</ul>
-		</Dropdown>
-		<form>
-			<div class="relative">
-			<Iconinput bind:value={$search.txt} noBorder id="search" iconClass="h-5 w-5 mr-2 dark:text-green-500 flex md:order-2" placeholder="Search" class="p-4 flex md:order-2" />
-			<a href={$searchdest}>
-			<Button textSize="text-sm" class="text-white absolute right-2.5 bottom-2 flex md:order-2" type="submit">Search</Button>
-		</a>
-			</div>
-		  </form>
-		<NavHamburger on:click={toggle} />
-	</div>
+	<NavUl>
+	  <Dropdown label={$search.type} class="w-48">
+		<ul slot="content" class="p-3 space-y-1">
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'character'}>Character</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'user'}>User</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
+			</DropdownItem>
+		</ul>
+	</Dropdown>
+	<form>
+		<div class="flex relative">
+		<Iconinput  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
+		<a href={$searchdest}>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+		</div>
+	  </form>
+	</NavUl>
 	<NavUl {hidden}>
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/ratedanime">Top Rated</NavLi>

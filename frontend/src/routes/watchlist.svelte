@@ -4,7 +4,8 @@
 
 	let watchlist = {
 		success: false,
-		watchlist_anime: []
+		watchlist_anime: [],
+		watchlist_favourite:[]
 	};
 	let resanimes = [];
 	//console.log($curruser);
@@ -28,8 +29,9 @@
 			console.log('No Watchlist Found');
 		} else {
 			console.log(temp);
+			//console.log(watchlist);
 			return temp;
-			//  console.log(watchlist);
+		    
 		}
 	}
 	let anime;
@@ -63,6 +65,10 @@
 		//console.log($wlanimes);
 	}
 	//fetchanimeinfo();
+	function check_favourite()
+	{
+		
+	}
 </script>
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
