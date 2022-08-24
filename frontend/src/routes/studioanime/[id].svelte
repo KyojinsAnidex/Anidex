@@ -8,7 +8,7 @@
 <script>
 	export let id;
 	import { studioresanimes, studiorespics,state,curruser } from '../../stores/store';
-	import { Range, Label, Radio } from 'flowbite-svelte';
+	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
 
 	let anime = $studioresanimes[id];
 	let picture = $studiorespics[id];
@@ -74,9 +74,16 @@
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Release Date: {anime.releasedate.slice(0, 10)}
 			</h4>
-			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Average Rating: {anime.averagerating}
-			</h4>
+			
+				<Rating count rating={anime.averagerating}  >
+					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+					<a
+						href="/"
+						class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
+						>69 reviews</a
+					>
+				</Rating>
+			
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Anime Rank: {anime.animerank}
 			</h4>
@@ -85,27 +92,27 @@
 	</div>
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-			<p class="text-blue-500 text-center ">Synopsis: {anime.synopsis}</p>
+			<AccordionFlush id="1" >
+				<h2 slot="header">Synopsis</h2>
+				<div slot="body">
+				  <p class=" text-center ">{anime.synopsis}</p>
+				</div>
+			  </AccordionFlush>
 			{#if $state == 1}
-				{#if addlist == false}
-					<button
-						on:click={addtowatchlist}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Add To Watchlist</button
-					>
-				{:else}
-  
-					<Label>Rate the Folowing:</Label>
-					<Radio bind:group={favourite} value="true">Favourite</Radio>
-          <Radio bind:group={favourite} value="false">Not Favourite</Radio>
-					<Range min="0" max="10" bind:value={rating} step="1" />
-					<p>Rating: {rating}</p>
-					<button
-						on:click={rate}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Submit</button
-					>
-      	{/if}
+			<AccordionFlush id="2" >
+				<h2 slot="header">Add To Watchlist</h2>
+				<div slot="body">
+							<Radio bind:group={favourite} value="true">Favourite</Radio>
+				  <Radio bind:group={favourite} value="false">Not Favourite</Radio>
+							<Range min="0" max="10" bind:value={rating} step="1" />
+							<p>Rating: {rating}</p>
+							<button
+								on:click={rate}
+								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								>Submit</button
+							>
+				</div>
+			  </AccordionFlush>
 			{/if}
 		</div>
 	</div>
