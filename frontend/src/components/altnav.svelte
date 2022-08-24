@@ -91,6 +91,9 @@
 				<a href="/watchlist">
 					<DropdownItem>Watchlist</DropdownItem>
 				</a>
+				<a href="/favourites">
+					<DropdownItem>Favourites</DropdownItem>
+				</a>
 				<DropdownItem>WatchRoom</DropdownItem>
 				<a href="/accinfo">
 					<DropdownItem>More Info</DropdownItem>

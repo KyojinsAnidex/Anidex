@@ -63,10 +63,34 @@
 		//console.log(resanimes);
 		$wlanimes = resanimes;
 		//console.log($wlanimes);
-		
+		check_favourite();
 	}
 	//fetchanimeinfo();
+	let fav=[];
 	
+	function check_favourite()
+	{  
+		for(let i=0;i<watchlist.watchlist_anime.length;i++)
+		{    let flag=0;
+			for(let j=0;j<watchlist.watchlist_favourite.length;j++)
+			{
+				if(watchlist.watchlist_anime[i].animeid==watchlist.watchlist_favourite[j].animeid)
+				{
+					flag=1;
+				}
+			}
+			if(flag==0)
+			{
+				fav.push(false);
+			}
+			else
+			{
+				fav.push(true);
+			}
+		}
+
+
+	}
 </script>
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 	{#await fetchanimeinfo()}
@@ -74,6 +98,7 @@
 	{:then}
 	
 		{#each resanimes as prop, i}
+		{#if fav[i]==true } 
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<a href="/wlanime/{i}">
 					<img
@@ -92,7 +117,7 @@
 					{resanimes[i].anime.releasedate.slice(0, 4)}
 				</h4>
 			</div>
-			
+			{/if}
 		{/each}
 	{/await}
 </div>
