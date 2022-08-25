@@ -294,7 +294,8 @@ const addAnime = async (req, res, next) => {
 
   const { title, releasedate, releaseseason, synopsis } = req.body;
   const filepath = req.file.path;
-
+  console.log("filepath" + filepath);
+  console.log("request body" + req.body);
   let existingAnime;
   try {
     existingAnime = await db.query(
