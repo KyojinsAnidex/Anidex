@@ -27,9 +27,9 @@ router.post(
       .isEmpty(),
     // check(["releaseseason"]).isDate(),
   ],
-  // (req, res, next) => {
-  //   console.log(req.body);
-  // },
+  async (req, res, next) => {
+    console.log(req.body);
+  },
   animeControllers.addAnime
 );
 
