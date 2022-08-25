@@ -14,16 +14,17 @@
 	let picture = $animepics[id];
 	//  console.log(anime);
 	// console.log(picture);
-	let addlist = false;
+	let giverating = false;
 	let rating = 0;
 	let favourite = false;
 	let endpoint = 'http://localhost:5000/watchlist/' + $curruser.name;
 	console.log($curruser);
 	async function proxyrate() {
+		let response;
 		
-		if(rating!=0)
+		if(giverating!=0)
 		{
-		const response = await fetch(endpoint, {
+		response = await fetch(endpoint, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -42,7 +43,7 @@
 	}
 	else
 	{
-		const response = await fetch(endpoint, {
+		response = await fetch(endpoint, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -75,6 +76,10 @@
 		} else {
 			console.log(temp);
 		}
+	}
+	function checkrate()
+	{
+        giverating=!giverating;
 	}
 </script>
 
@@ -119,32 +124,32 @@
 			  </AccordionFlush>
 			{#if $state == 1}
 			<AccordionFlush id="2" >
-				<h2 slot="header">Add to watchlist</h2>
+				<h2 slot="header">Add To Watchlist</h2>
 				<div slot="body">
 							<Radio bind:group={favourite} value="true">Favourite</Radio>
-				  <Radio bind:group={favourite} value="false">Not Favourite</Radio>
+				  {#if giverating==false}
+				  <button
+								on:click={checkrate}
+								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								>Rate</button
+							>
+							{/if}
+						{#if giverating==true}
+						<AccordionFlush id="2">
+							<h2 slot="header">Give Rating</h2>
+							<div slot="body">
+							<Range min="0" max="10" bind:value={rating} step="1" />
+							<p>Rating : {rating}</p>
 							<button
 								on:click={rate}
 								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 								>Submit</button
 							>
+						</div>
+						</AccordionFlush>
+						{/if}
 				</div>
 			  </AccordionFlush>	
-			
-      <AccordionFlush id="3" >
-        <h2 slot="header">Rate and Add To Watchlist</h2>
-        <div slot="body">
-					<Radio bind:group={favourite} value="true">Favourite</Radio>
-          <Radio bind:group={favourite} value="false">Not Favourite</Radio>
-					<Range min="0" max="10" bind:value={rating} step="1" />
-					<p>Rating: {rating}</p>
-					<button
-						on:click={rate}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Submit</button
-					>
-        </div>
-      </AccordionFlush>	
 			{/if}
 		</div>
 	</div>
