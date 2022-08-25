@@ -146,9 +146,15 @@
       <AccordionFlush id="2" >
         <h2 slot="header">Change Rating</h2>
         <div slot="body">
+			<br>
 					<Radio bind:group={favourite} value="true">Favourite</Radio>
+					<br>
           <Radio bind:group={favourite} value="false">Not Favourite</Radio>
+		  <br>
+		  <p>Rating Bar:</p>
+		  <br>
 					<Range min="0" max="10" bind:value={rating} step="1" />
+					<br>
 					<p>Rating: {rating}</p>
 					<button
 						on:click={rate}
@@ -157,16 +163,12 @@
 					>
         </div>
       </AccordionFlush>	
-	  <AccordionFlush id="3" >
-        <h2 slot="header">Remove From List</h2>
-        <div slot="body">
+       
 			<button
 			on:click={removeanime}
 			class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-			>Remove</button
+			>Remove Anime From List</button
 		>
-        </div>
-      </AccordionFlush>	
 			{/if}
 		</div>
 	</div>

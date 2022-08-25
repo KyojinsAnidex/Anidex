@@ -127,7 +127,9 @@
 				<h2 slot="header">Add To Watchlist</h2>
 				<div slot="body">
 							<Radio bind:group={favourite} value="true">Favourite</Radio>
+							<Radio bind:group={favourite} value="false">Not Favourite</Radio>
 				  {#if giverating==false}
+				  <br>
 				  <button
 								on:click={checkrate}
 								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
@@ -135,19 +137,17 @@
 							>
 							{/if}
 						{#if giverating==true}
-						<AccordionFlush id="2">
-							<h2 slot="header">Give Rating</h2>
-							<div slot="body">
-							<Range min="0" max="10" bind:value={rating} step="1" />
-							<p>Rating : {rating}</p>
-							<button
+						<br>
+						<p>Rating Bar:</p>
+						<Range min="0" max="10" bind:value={rating} step="1" />
+						<br>
+						<p>Rating : {rating}</p>
+						{/if}
+						<button
 								on:click={rate}
 								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 								>Submit</button
 							>
-						</div>
-						</AccordionFlush>
-						{/if}
 				</div>
 			  </AccordionFlush>	
 			{/if}
