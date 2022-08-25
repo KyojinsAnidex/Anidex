@@ -6,6 +6,8 @@ const check_auth = require("../../middlewares/check_auth");
 
 const router = express.Router();
 
+// router.get("/anime/:aid", watchlistControllers.isAnimeInWatchlist);
+
 router.get(
   "/:uid",
 
@@ -25,6 +27,10 @@ router.post(
   watchlistControllers.addAnimeToWatchlist
 );
 
-// router.delete('/:uid', watchlistControllers.deleteAnimeFromWatchlist);
+router.delete(
+  "/:uid",
+  [check(["animeid"]).not().isEmpty(), check("animeid").isNumeric()],
+  watchlistControllers.deleteAnimeFromWatchlist
+);
 
 module.exports = router;

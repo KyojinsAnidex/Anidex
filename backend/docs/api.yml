@@ -131,7 +131,7 @@ paths:
                       properties:
                         studioname:
                           type: string
-                  animepicture: 
+                  animepicture:
                     type: array
                     items:
                       type: object
@@ -322,12 +322,12 @@ paths:
               schema:
                 type: object
                 properties:
-                  success: 
+                  success:
                     type: boolean
                   watchlist_anime:
                     $ref: "#/components/schemas/WatchlistWhole"
                   watchlist_favourite:
-                    $ref: "#/components/schemas/WatchlistWhole"                    
+                    $ref: "#/components/schemas/WatchlistWhole"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -353,14 +353,53 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  rated: 
+                  rated:
                     type: boolean
                   WatchlistEntry:
                     $ref: "#/components/schemas/WatchlistEntry"
-                  animeRating: 
+                  animeRating:
                     $ref: "#/components/schemas/animeRatingSingle"
         "401":
           $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+    delete:
+      summary: Deleting anime from user watchlist
+      tags:
+        - watchlist
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                animeid:
+                  type: integer
+                  minimum: 1
+              required:
+                - animeid
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  deletedEntry:
+                    $ref: "#/components/schemas/WatchlistEntry"              
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "404":
+          $ref: "#/components/responses/404NotFound"
         "422":
           $ref: "#/components/responses/422InvalidInput"
         "500":
@@ -770,7 +809,7 @@ paths:
                   person:
                     $ref: "#/components/schemas/personnel"
                   workedOnAnime:
-                   $ref: "#/components/schemas/animeStaffData"
+                    $ref: "#/components/schemas/animeStaffData"
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -1769,7 +1808,7 @@ components:
                 type: integer
               favourite:
                 type: boolean
-              rating: 
+              rating:
                 type: integer
                 minimum: 0
                 maximum: 10

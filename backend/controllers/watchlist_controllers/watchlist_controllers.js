@@ -308,10 +308,121 @@ const addAnimeToWatchlist = async (req, res, next) => {
   }
 };
 
-const deleteAnimeFromWatchlist = (req, res, next) => {};
+const isAnimeInWatchlist = (req, res, next) => {};
+
+const animeRevereseWatchlist = (req, res, next) => {};
+
+const deleteAnimeFromWatchlist = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs provided, please check your inputs", 422)
+    );
+  }
+  const userid = req.params.uid;
+  const { animeid } = req.body;
+
+  let animeidState = await check_animeid(animeid);
+  let useridState = await check_userid(userid);
+
+  if (animeidState === 0 || useridState === 0) {
+    return next(
+      new HttpError(
+        "Invalid animeid or userid inputs provided, please check your inputs",
+        422
+      )
+    );
+  } else if (animeidState === 2 || useridState === 2) {
+    return next(
+      new HttpError(
+        "Deleting anime from watchlist failed, please try again later",
+        500
+      )
+    );
+  }
+
+  let existingEntry = false;
+  try {
+    existingEntry = await db.query(
+      "SELECT * FROM " +
+        tables.watchlist +
+        " WHERE " +
+        watchlist.animeIDNOTNULL +
+        " = $1 AND " +
+        watchlist.userIDNOTNULL +
+        " = $2 ;",
+      [animeid, userid]
+    );
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Deleting anime from watchlist failed, please try again later",
+        500
+      )
+    );
+  }
+  if (existingEntry === false) {
+    return next(
+      new HttpError(
+        "Deleting anime from watchlist failed, please try again later",
+        500
+      )
+    );
+  }
+
+  if (existingEntry.rowCount != 0) {
+    let queryText3 =
+      "DELETE FROM " +
+      tables.watchlist +
+      " WHERE " +
+      watchlist.animeIDNOTNULL +
+      " = " +
+      animeid +
+      " AND " +
+      watchlist.userIDNOTNULL +
+      " = '" +
+      userid +
+      "' RETURNING * ;";
+
+    let deletedEntry;
+
+    try {
+      deletedEntry = await db.query(queryText3);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Deleting anime from watchlist failed, please try again later",
+          500
+        )
+      );
+    }
+
+    if (deletedEntry === false || deletedEntry.rowCount === 0) {
+      return next(
+        new HttpError(
+          "Deleting anime from watchlist failed, please try again later",
+          500
+        )
+      );
+    }
+    
+    res.status(201).json({
+      success: true,
+      deletedEntry: deletedEntry.rows[0],
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message:
+        "There was no entry for this anime in user's watchlist, nothing to delete",
+    });
+  }
+};
 
 module.exports = {
   getWatchlistOfUser,
   addAnimeToWatchlist,
   deleteAnimeFromWatchlist,
+  isAnimeInWatchlist,
+  animeRevereseWatchlist,
 };
