@@ -94,6 +94,9 @@
 				<a href="/favourites">
 					<DropdownItem>Favourites</DropdownItem>
 				</a>
+				<a href="/addanime">
+					<DropdownItem>Add Anime</DropdownItem>
+				</a>
 				<DropdownItem>WatchRoom</DropdownItem>
 				<a href="/accinfo">
 					<DropdownItem>More Info</DropdownItem>
