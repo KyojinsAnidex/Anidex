@@ -1,6 +1,6 @@
 <script>
 	import { state, topanimes } from '../stores/store';
-	import { Spinner } from 'flowbite-svelte';
+	import { Spinner,Rating } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
 	let image = 'http://localhost:5000/uploads/images/';
@@ -84,6 +84,9 @@
 					<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 						{resanimes[i].anime.releasedate.slice(0, 4)}
 					</h4>
+					<Rating count rating={resanimes[i].anime.averagerating}  >
+						<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+					</Rating>
 				</div>
 			{/if}
 		{/each}

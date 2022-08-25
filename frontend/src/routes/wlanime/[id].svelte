@@ -15,11 +15,44 @@
 	//  console.log(picture);
 	let rating = 0;
 	let favourite = false;
-	function addtowatchlist() {
-		addlist = true;
-	}
 	let endpoint = 'http://localhost:5000/watchlist/' + $curruser.name;
-	console.log($curruser);
+	async function proxyremove()
+	{
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				animeid: anime.animeid,
+				// etc.
+			})
+		});
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+
+	}
+	async function removeanime()
+	{
+		let temp = await proxyremove();
+
+		if (temp.success == false) {
+			alert('Could not Add');
+		} else {
+			console.log(temp);
+		}
+
+	}
+	
+	//console.log($curruser);
 	async function proxyrate() {
 		const response = await fetch(endpoint, {
 			method: 'POST',
@@ -123,7 +156,17 @@
 						>Submit</button
 					>
         </div>
-      </AccordionFlush>		
+      </AccordionFlush>	
+	  <AccordionFlush id="3" >
+        <h2 slot="header">Remove From List</h2>
+        <div slot="body">
+			<button
+			on:click={removeanime}
+			class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+			>Remove</button
+		>
+        </div>
+      </AccordionFlush>	
 			{/if}
 		</div>
 	</div>
