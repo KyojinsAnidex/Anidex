@@ -366,7 +366,7 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
     delete:
-      summary: Deleting anime from user watchlist
+      summary: Deleting anime from user watchlist, also deletes rating if exists
       tags:
         - watchlist
       parameters:
