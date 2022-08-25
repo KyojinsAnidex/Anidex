@@ -20,11 +20,16 @@ router.use(check_auth);
 //protected
 router.post(
   "/",
+  fileUpload.single("image"),
   [
-    check("title").not().isEmpty(),
-    check("releasedate").not().isEmpty(),
-    check("synopsis").not().isEmpty(),
+    check(["title", "releasedate", "releaseseason", "synopsis"])
+      .not()
+      .isEmpty(),
+    // check(["releaseseason"]).isDate(),
   ],
+  // (req, res, next) => {
+  //   console.log(req.body);
+  // },
   animeControllers.addAnime
 );
 

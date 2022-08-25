@@ -1631,10 +1631,14 @@ components:
           format: date
         synopsis:
           type: string
+        releaseseason:
+          type: string
+          enum: ["Spring", "Summer", "Winter", "Fall"]  
       required:
         - title
         - releasedate
         - synopsis
+        - releaseseason
 
     PersonInput:
       type: object
@@ -1792,10 +1796,33 @@ components:
       description: anime data to add
       required: true
       content:
-        application/json:
+        multipart/form-data:
           schema:
-            $ref: "#/components/schemas/AnimeInput"
-
+            type: object
+            properties:
+              title:
+                type: string
+              releasedate:
+                type: string
+                format: date
+              synopsis:
+                type: string
+              releaseseason:
+                type: string
+                enum: ["Spring", "Summer", "Winter", "Fall"]  
+              image:
+                type: string
+                format: binary
+            required:
+              - title
+              - releasedate
+              - synopsis
+              - releaseseason
+              - image
+          encoding:
+            image:
+              contentType: image/png, image/jpeg, image/jpg
+  
     watchlistInput:
       description: watchlist entry to add
       required: true

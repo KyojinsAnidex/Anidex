@@ -341,98 +341,6 @@ const deleteAnimeFromWatchlist = async (req, res, next) => {
     );
   }
 
-  //rating o delete korte hobe
-  let existingEntry1 = false,
-    deletedAnimeRating = false;
-
-  try {
-    existingEntry1 = await db.query(
-      "SELECT * FROM " +
-        tables.animestars +
-        " WHERE " +
-        animestars.animeIDNOTNULL +
-        " = $1 AND " +
-        animestars.userIDNOTNULL +
-        " = $2 ;",
-      [animeid, userid]
-    );
-  } catch (err) {
-    return next(
-      new HttpError(
-        "deleting rating to anime failed, please try again later 1",
-        500
-      )
-    );
-  }
-  if (existingEntry1 === false) {
-    return next(
-      new HttpError(
-        "deleting rating to anime failed, please try again later 2",
-        500
-      )
-    );
-  }
-
-  let queryText2;
-  if (existingEntry1.rowCount != 0) {
-    queryText2 =
-      "DELETE FROM " +
-      tables.animestars +
-      " WHERE " +
-      animestars.animeIDNOTNULL +
-      " = " +
-      animeid +
-      " AND " +
-      animestars.userIDNOTNULL +
-      " = '" +
-      userid +
-      "' RETURNING * ;";
-
-    try {
-      deletedAnimeRating = await db.query(queryText2);
-    } catch (err) {
-      return next(
-        new HttpError(
-          "deleting rating to anime failed, please try again later 3",
-          500
-        )
-      );
-    }
-
-    if (deletedAnimeRating === false || deletedAnimeRating.rowCount === 0) {
-      return next(
-        new HttpError(
-          "deleting rating to anime failed, please try again later 3",
-          500
-        )
-      );
-    }
-
-    //update all ratings now
-    let updatedState = false;
-    try {
-      updatedState = await db.query("CALL update_animerank();");
-    } catch (error) {
-      return next(
-        new HttpError(
-          "updating rating of all anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-
-    if (updatedState === false) {
-      return next(
-        new HttpError(
-          "updating rating of all anime failed, please try again later",
-          500,
-          false
-        )
-      );
-    }
-  }
-
   let existingEntry = false;
   try {
     existingEntry = await db.query(
@@ -494,6 +402,30 @@ const deleteAnimeFromWatchlist = async (req, res, next) => {
         new HttpError(
           "Deleting anime from watchlist failed, please try again later",
           500
+        )
+      );
+    }
+
+    //update all ratings now
+    let updatedState = false;
+    try {
+      updatedState = await db.query("CALL update_animerank();");
+    } catch (error) {
+      return next(
+        new HttpError(
+          "updating rating of all anime failed, please try again later",
+          500,
+          false
+        )
+      );
+    }
+
+    if (updatedState === false) {
+      return next(
+        new HttpError(
+          "updating rating of all anime failed, please try again later",
+          500,
+          false
         )
       );
     }
