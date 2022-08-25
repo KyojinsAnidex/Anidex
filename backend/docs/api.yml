@@ -262,12 +262,7 @@ paths:
       tags:
         - user
       requestBody:
-        description: signup data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserSignIn"
+        $ref: "#/components/requestBodies/UserSignInInput"
       responses:
         "201":
           description: success
@@ -1361,7 +1356,7 @@ components:
     UserSignIn:
       type: object
       properties:
-        userid:
+        name:
           type: string
         password:
           type: string
@@ -1370,10 +1365,14 @@ components:
           format: email
         bio:
           type: string
+        image:
+          type: string
+          format: binary
       required:
-        - userid
+        - name
         - password
         - email
+        - image
 
     UserLogin:
       type: object
@@ -1791,6 +1790,17 @@ components:
                 type: string
             required:
               - searchString
+
+    UserSignInInput:
+      description: user data to sign in
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/UserSignIn"
+          encoding:
+            image:
+              contentType: image/jpeg, image/jpg, image/png
 
     AnimeInput:
       description: anime data to add

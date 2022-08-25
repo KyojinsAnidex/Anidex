@@ -199,12 +199,12 @@ const signupUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError("Invalid inputs passed, please check your data.", 422)
+      new HttpError("Invalid inputs passed, please check your data 1.", 422)
     );
   }
 
   const { email, password, name, bio } = req.body;
-  // const pictureid = req.file.path;
+  const pictureid = req.file.path.split("\\")[2];
 
   //is user already in db?
   let existingUser;
@@ -259,6 +259,8 @@ const signupUser = async (req, res, next) => {
     dbModel.users.userIDNOTNULL +
     ", " +
     dbModel.users.bio +
+    ", " +
+    dbModel.users.pictureNOTNULL +
     " ) VALUES ( '" +
     email +
     "' , '" +
@@ -267,6 +269,8 @@ const signupUser = async (req, res, next) => {
     name +
     "' , '" +
     bio +
+    "' , '" +
+    pictureid +
     "' ) RETURNING *";
   try {
     createdUser = await db.query(queryText);
@@ -275,13 +279,7 @@ const signupUser = async (req, res, next) => {
       new HttpError("Signing up user failed, please try again later.", 500)
     );
   }
-  if (createdUser === false) {
-    return next(
-      new HttpError("Signing up user failed, please try again later.", 500)
-    );
-  }
-
-  if (createdUser.rowCount === 0) {
+  if (createdUser === false || createdUser.rowCount === 0) {
     return next(
       new HttpError("Signing up user failed, please try again later.", 500)
     );
