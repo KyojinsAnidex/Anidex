@@ -262,12 +262,7 @@ paths:
       tags:
         - user
       requestBody:
-        description: signup data
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserSignIn"
+        $ref: "#/components/requestBodies/UserSignInInput"
       responses:
         "201":
           description: success
@@ -1361,7 +1356,7 @@ components:
     UserSignIn:
       type: object
       properties:
-        userid:
+        name:
           type: string
         password:
           type: string
@@ -1370,10 +1365,14 @@ components:
           format: email
         bio:
           type: string
+        image:
+          type: string
+          format: binary
       required:
-        - userid
+        - name
         - password
         - email
+        - image
 
     UserLogin:
       type: object
@@ -1652,11 +1651,15 @@ components:
         birthday:
           type: string
           format: date
+        image:
+          type: string
+          format: binary
       required:
         - lastname
         - firstname
         - gender
         - birthday
+        - image
 
     WatchroomSingle:
       type: object
@@ -1792,6 +1795,17 @@ components:
             required:
               - searchString
 
+    UserSignInInput:
+      description: user data to sign in
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/UserSignIn"
+          encoding:
+            image:
+              contentType: image/jpeg, image/jpg, image/png
+
     AnimeInput:
       description: anime data to add
       required: true
@@ -1847,7 +1861,7 @@ components:
       description: new character to entry
       required: true
       content:
-        application/json:
+        multipart/form-data:
           schema:
             type: object
             properties:
@@ -1859,19 +1873,29 @@ components:
                 type: string
               role:
                 type: string
+              image:
+                type: string
+                format: binary
             required:
               - lastname
               - firstname
               - gender
               - role
+              - image
+          encoding:
+            image:
+              contentType: image/jpeg, image/jpg, image/png
 
     PersonInput:
       description: request body for personnel
       required: true
       content:
-        application/json:
+        multipart/form-data:
           schema:
             $ref: "#/components/schemas/PersonInput"
+          encoding:
+            image:
+              contentType: image/jpeg, image/jpg, image/png
 
     WatchroomInput:
       description: new watchroom to create

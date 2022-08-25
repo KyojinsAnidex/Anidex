@@ -15,16 +15,13 @@ router.use(check_auth);
 
 router.post(
   "/",
-//   fileUpload.single("image"),
+  fileUpload.single("image"),
   [
-    check("firstname").not().isEmpty(),
-    check("lastname").not().isEmpty(),
-    check("role").not().isEmpty(),
-    check("gender").isIn(["M", "F", "O"])
+    check(["firstname", "lastname", "role"]).not().isEmpty(),
+    check("gender").isIn(["M", "F", "O"]),
   ],
   characterControllers.addAChar
 );
-
 
 router.patch("/:cid", characterControllers.editAChar);
 

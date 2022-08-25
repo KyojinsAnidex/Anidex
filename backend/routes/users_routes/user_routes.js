@@ -11,10 +11,9 @@ router.get("/", userControllers.getAllUsers);
 
 router.post(
   "/signup",
-  //   fileUpload.single("image"),
+  fileUpload.single("image"),
   [
-    check("name").not().isEmpty(),
-    check("password").not().isEmpty(),
+    check(["name", "password"]).not().isEmpty(),
     check("email").normalizeEmail().isEmail(),
   ],
   userControllers.signupUser
