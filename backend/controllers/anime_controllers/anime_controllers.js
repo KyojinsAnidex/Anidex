@@ -13,7 +13,9 @@ const getAllAnime = async (req, res, next) => {
 
 const getAnimeByID = async (req, res, next) => {
   let searchedAnime = false;
-  let animeGenres = false, animeStudios = false, animeGallery = false;
+  let animeGenres = false,
+    animeStudios = false,
+    animeGallery = false;
 
   const animeID = req.params.aid;
   let queryText =
@@ -286,11 +288,12 @@ const addAnime = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError("Invalid inputs provided, please check your inputs", 422)
+      new HttpError("Invalid inputs provided, please check your inputs 3", 422)
     );
   }
 
-  const { title, releasedate, synopsis } = req.body;
+  const { title, releasedate, releaseseason, synopsis } = req.body;
+  const filepath = req.file.path;
 
   let existingAnime;
   try {
@@ -328,12 +331,16 @@ const addAnime = async (req, res, next) => {
     dbModels.anime.releasedateNOTNULL +
     ", " +
     dbModels.anime.synopsis +
+    ", " +
+    dbModels.anime.releaseseason +
     " ) VALUES ( '" +
     title +
     "' , '" +
     releasedate +
     "' , '" +
     synopsis +
+    "' , '" +
+    releaseseason +
     "' ) RETURNING * ;";
   try {
     createdAnime = await db.query(queryText);
@@ -343,21 +350,43 @@ const addAnime = async (req, res, next) => {
     );
   }
 
-  if (createdAnime === false) {
+  if (createdAnime === false || createdAnime.rowCount === 0) {
     return next(
       new HttpError("Adding anime failed, please try again later", 500)
     );
   }
+  const animeid = createdAnime.rows[0].animeid;
 
-  if (createdAnime.rowCount === 0) {
+  //insert pic
+  let picStatus = false,
+    queryText4 =
+      "INSERT INTO " +
+      dbModels.tables.animepicture +
+      " VALUES ( '" +
+      filepath.split("\\")[2] +
+      "' , " +
+      animeid +
+      ", " +
+      true +
+      " ) RETURNING *";
+
+  try {
+    picStatus = await db.query(queryText4);
+  } catch (err) {
     return next(
-      new HttpError("Adding anime failed, please try again later", 500)
+      new HttpError("Adding anime picture failed, please try again later", 500)
+    );
+  }
+
+  if (picStatus === false || picStatus.rowCount === 0) {
+    return next(
+      new HttpError("Adding anime picture failed, please try again later", 500)
     );
   }
 
   res.status(201).json({
     success: true,
-    animeid: createdAnime.rows[0].animeid,
+    animeid: animeid,
   });
 };
 
