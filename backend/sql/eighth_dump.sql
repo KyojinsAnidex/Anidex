@@ -981,7 +981,6 @@ c839425e-163f-11ed-bdeb-ef989c9a4290.jpg	18	t
 c8394286-163f-11ed-bdec-8f0a51b6c116.jpg	19	t
 bb08caaa-163f-11ed-98cd-bbe4521f6055.jpg	2	t
 8d3dae94-1a57-11ed-aba7-db3f44823e8d.jpg	20	t
-13254e00-2457-11ed-91d8-d728f580f2eb.png	23	t
 \.
 
 
