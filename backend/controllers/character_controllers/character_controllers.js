@@ -65,7 +65,7 @@ const addAChar = async (req, res, next) => {
   }
 
   const { lastname, firstname, gender, role } = req.body;
-
+  const pictureid = req.file.path.split("\\")[2];
   let existingChar;
 
   try {
@@ -106,6 +106,8 @@ const addAChar = async (req, res, next) => {
     dbModels.characters.gender +
     ", " +
     dbModels.characters.role +
+    ", " +
+    dbModels.characters.pictureid +
     " ) VALUES ( '" +
     firstname +
     "' , '" +
@@ -114,6 +116,8 @@ const addAChar = async (req, res, next) => {
     gender +
     "' , '" +
     role +
+    "' , '" +
+    pictureid +
     "' ) RETURNING * ;";
   try {
     createdChar = await db.query(queryText);

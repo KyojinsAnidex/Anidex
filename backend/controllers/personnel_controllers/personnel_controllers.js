@@ -88,7 +88,7 @@ const addPerson = async (req, res, next) => {
   }
 
   const { lastname, firstname, gender, birthday } = req.body;
-
+  const pictureid = req.file.path.split("\\")[2];
   let existingPerson;
 
   try {
@@ -129,6 +129,8 @@ const addPerson = async (req, res, next) => {
     dbModels.personnel.gender +
     ", " +
     dbModels.personnel.birthday +
+    ", " + 
+    dbModels.personnel.pictureIDNOTNULL + 
     " ) VALUES ( '" +
     firstname +
     "' , '" +
@@ -136,7 +138,9 @@ const addPerson = async (req, res, next) => {
     "' , '" +
     gender +
     "' , '" +
-    birthday +
+    birthday + 
+    "' , '" +
+    pictureid + 
     "' ) RETURNING * ;";
   try {
     createdPerson = await db.query(queryText);

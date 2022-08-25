@@ -15,12 +15,10 @@ router.use(check_auth);
 
 router.post(
   "/",
-  //   fileUpload.single("image"),
+  fileUpload.single("image"),
   [
-    check("firstname").not().isEmpty(),
-    check("lastname").not().isEmpty(),
-    check("gender").not().isEmpty(),
-    check("birthday").not().isEmpty(),
+    check(["firstname", "lastname", "gender", "birthday"]).not().isEmpty(),
+    check("gender").isIn(["M", "F", "O"]),
   ],
   personnelControllers.addPerson
 );
