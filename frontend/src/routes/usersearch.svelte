@@ -65,11 +65,13 @@
 					</p>
 				</blockquote>
 				<div class="flex justify-center">	
+					<a href="/userwatchlist/{animes.resultUser[0].userid}">
 					<button
 						
 						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 						>Show Watchlist</button
 					>
+				</a>
 				</div>
 			</div>
 		</div>
