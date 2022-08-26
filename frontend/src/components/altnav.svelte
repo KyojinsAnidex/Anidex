@@ -94,9 +94,26 @@
 				<a href="/favourites">
 					<DropdownItem>Favourites</DropdownItem>
 				</a>
-				<a href="/addanime">
-					<DropdownItem>Add Anime</DropdownItem>
-				</a>
+					<DropdownItem>
+						<Dropdown label="Add" inline={true} placement="left-start" class="ml-16 w-44">
+							
+							<a href="/addanime">
+							<DropdownItem>
+								Add Anime
+							</DropdownItem>
+						</a>
+						<a href="/addpersonnel">
+							<DropdownItem>
+								Add Personnel
+							</DropdownItem>
+						</a>
+						<a href="/addcharacter">
+							<DropdownItem>
+								Add Character
+							</DropdownItem>
+						</a>
+						</Dropdown>
+					</DropdownItem>
 				<DropdownItem>WatchRoom</DropdownItem>
 				<a href="/accinfo">
 					<DropdownItem>More Info</DropdownItem>

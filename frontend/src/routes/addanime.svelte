@@ -55,9 +55,7 @@
 <div class="relative flex h-full w-full">
 	<div class="h-screen w-1/2 bg-black">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			<div>
-				<p class="text-2xl">Add Anime Info And Picture</p>
-			</div>
+			
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
@@ -85,7 +83,7 @@
 						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" />
 					</div>
 					<br />
-					<Dropdown label="Season" class="w-60">
+					<Dropdown label="Season" class="w-60" size="xl" color="black">
 						<ul slot="content" class="p-3">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={anime.releaseseason} name="dropdown" value={'Spring'} tinted
