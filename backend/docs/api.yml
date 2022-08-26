@@ -256,6 +256,67 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+    post:
+      summary: edit a user
+      tags:
+        - user
+      security:
+       - BearerAuth: []      
+      requestBody:
+        description: user data to sign in
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: old userid
+                newUserid:
+                  type: string
+                  description: new userid
+                password:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                bio:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+              required:
+                - name
+                - password
+                - email
+                - image
+                - newUserid
+            encoding:
+              image:
+                contentType: image/jpeg, image/jpg, image/png
+
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  userid: 
+                    type: string
+                  user: 
+                    $ref: "#/components/schemas/UserSingleOutput"
+        "403":
+          $ref: "#/components/responses/403Forbidden"          
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
   "/users/signup":
     post:
       summary: signup a new user
@@ -1651,6 +1712,11 @@ components:
         birthday:
           type: string
           format: date
+        address:
+          type: string
+        website:
+          type: string
+          format: url 
         image:
           type: string
           format: binary
@@ -1873,6 +1939,10 @@ components:
                 type: string
               role:
                 type: string
+              age: 
+                type: integer
+              description:
+                type: string
               image:
                 type: string
                 format: binary
@@ -1881,6 +1951,8 @@ components:
               - firstname
               - gender
               - role
+              - age 
+              - description
               - image
           encoding:
             image:

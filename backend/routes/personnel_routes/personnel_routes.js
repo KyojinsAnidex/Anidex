@@ -17,7 +17,9 @@ router.post(
   "/",
   fileUpload.single("image"),
   [
-    check(["firstname", "lastname", "gender", "birthday"]).not().isEmpty(),
+    check(["firstname", "lastname", "gender", "birthday", "website", "address"])
+      .not()
+      .isEmpty(),
     check("gender").isIn(["M", "F", "O"]),
   ],
   personnelControllers.addPerson

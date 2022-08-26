@@ -17,7 +17,8 @@ router.post(
   "/",
   fileUpload.single("image"),
   [
-    check(["firstname", "lastname", "role"]).not().isEmpty(),
+    check(["firstname", "lastname", "role", "gender", "age", "description"]).not().isEmpty(),
+    check("age").isNumeric(),
     check("gender").isIn(["M", "F", "O"]),
   ],
   characterControllers.addAChar

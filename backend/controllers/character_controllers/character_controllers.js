@@ -64,7 +64,14 @@ const addAChar = async (req, res, next) => {
     );
   }
 
-  const { lastname, firstname, gender, role } = req.body;
+  const { lastname, firstname, gender, role, age, description } = req.body;
+  
+  if (!req.file) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data 1.", 422)
+    );
+  }
+  
   const pictureid = req.file.path.split("\\")[2];
   let existingChar;
 
@@ -108,6 +115,10 @@ const addAChar = async (req, res, next) => {
     dbModels.characters.role +
     ", " +
     dbModels.characters.pictureid +
+    ", " +
+    dbModels.characters.age + 
+    ", " + 
+    dbModels.characters.description + 
     " ) VALUES ( '" +
     firstname +
     "' , '" +
@@ -118,6 +129,10 @@ const addAChar = async (req, res, next) => {
     role +
     "' , '" +
     pictureid +
+    "' , '" +
+    age + 
+    "' , '" + 
+    description +
     "' ) RETURNING * ;";
   try {
     createdChar = await db.query(queryText);

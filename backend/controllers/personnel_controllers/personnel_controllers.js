@@ -19,7 +19,7 @@ const getAllPerson = async (req, res, next) => {
 const getSinglePerson = async (req, res, next) => {
   let searchedPerson;
   let workedOnAnime = false;
-  
+
   const personID = req.params.pid;
 
   try {
@@ -87,7 +87,15 @@ const addPerson = async (req, res, next) => {
     );
   }
 
-  const { lastname, firstname, gender, birthday } = req.body;
+  const { lastname, firstname, gender, birthday, address, website } =
+    req.body;
+
+  if (!req.file) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data 1.", 422)
+    );
+  }
+
   const pictureid = req.file.path.split("\\")[2];
   let existingPerson;
 
@@ -129,8 +137,12 @@ const addPerson = async (req, res, next) => {
     dbModels.personnel.gender +
     ", " +
     dbModels.personnel.birthday +
-    ", " + 
-    dbModels.personnel.pictureIDNOTNULL + 
+    ", " +
+    dbModels.personnel.pictureIDNOTNULL +
+    ", " +
+    dbModels.personnel.address +
+    ", " +
+    dbModels.personnel.website +
     " ) VALUES ( '" +
     firstname +
     "' , '" +
@@ -138,9 +150,13 @@ const addPerson = async (req, res, next) => {
     "' , '" +
     gender +
     "' , '" +
-    birthday + 
+    birthday +
     "' , '" +
-    pictureid + 
+    pictureid +
+    "' , '" +
+    address +
+    "' , '" +
+    website +
     "' ) RETURNING * ;";
   try {
     createdPerson = await db.query(queryText);

@@ -32,10 +32,15 @@ router.post(
 
 router.get("/:uid", userControllers.getUserByID);
 
-// router.use(check_auth);
+router.use(check_auth);
 
 //protected
-// router.patch('/',);
+router.post(
+  "/:uid",
+  fileUpload.single("image"),
+  [check(["name", "email", "password", "bio", "newUserid"]).not().isEmpty()],
+  userControllers.editUser
+);
 
 //protected
 // router.delete('/',);

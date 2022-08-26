@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModel = require("../../models/db_models");
+const check_userid = require("../../middlewares/check_userid");
 
 const getAllUsers = async (req, res, next) => {
   let allUsers;
@@ -204,6 +205,11 @@ const signupUser = async (req, res, next) => {
   }
 
   const { email, password, name, bio } = req.body;
+  if (!req.file) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data 1.", 422)
+    );
+  }
   const pictureid = req.file.path.split("\\")[2];
 
   //is user already in db?
@@ -306,9 +312,106 @@ const signupUser = async (req, res, next) => {
   });
 };
 
+const editUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data 1.", 422)
+    );
+  }
+
+  const { email, password, name, bio, newUserid } = req.body;
+
+  // if (req.userData && req.userData.userId != name) {
+  //   console.log(req + " " + name);
+  //   return next(new HttpError("User trying to change other users data.", 403));
+  // }
+
+
+  if (!req.file) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data 2.", 422)
+    );
+  }
+  const pictureid = req.file.path.split("\\")[2];
+
+  let useridState = await check_userid(name);
+
+  if (useridState === 0) {
+    return next(
+      new HttpError(
+        "Invalid userid input provided, please check your inputs",
+        422
+      )
+    );
+  } else if (useridState === 2) {
+    return next(
+      new HttpError("Editing user failed, please try again later", 500)
+    );
+  }
+
+  //so user ase, then update it is
+  let queryText =
+    "UPDATE " +
+    dbModel.tables.users +
+    " SET " +
+    dbModel.users.userIDNOTNULL +
+    " = '" +
+    newUserid +
+    "', " +
+    dbModel.users.passwordNOTNULL +
+    " = '" +
+    password +
+    "' , " +
+    dbModel.users.mailNOTNULL +
+    " = '" +
+    email +
+    "' , " +
+    dbModel.users.bio +
+    " = '" +
+    bio +
+    "' , " +
+    dbModel.users.pictureNOTNULL +
+    " = '" +
+    pictureid +
+    "' WHERE " +
+    dbModel.users.userIDNOTNULL +
+    " = '" +
+    name +
+    "' RETURNING * ;";
+  let updateStatus = false;
+
+  try {
+    updateStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Editing user failed, please try again later. Had problem running a query in database",
+        500
+      )
+    );
+  }
+
+  if (updateStatus === false || updateStatus.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Editing user failed, please try again later. Had problem running a query in database",
+        500
+      )
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    userid: updateStatus.rows[0].userid,
+    user: updateStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllUsers,
   getUserByID,
   loginUser,
   signupUser,
+  editUser,
 };
