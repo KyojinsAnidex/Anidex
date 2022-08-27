@@ -292,7 +292,8 @@ const addAnime = async (req, res, next) => {
     );
   }
 
-  const { title, releasedate, releaseseason, synopsis } = req.body;
+  const { title, releasedate, releaseseason, synopsis, genres, studios } =
+    req.body;
   const filepath = req.file.path;
   // console.log("filepath" + filepath);
   // console.log("request body" + req.body);
@@ -384,6 +385,89 @@ const addAnime = async (req, res, next) => {
       new HttpError("Adding anime picture failed, please try again later", 500)
     );
   }
+
+  //insert genres
+  let queryText5 = "";
+  console.log(genres, Object.prototype.toString.call(genres));
+
+  let newgenres = genres
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+  console.log(newgenres, Object.prototype.toString.call(newgenres));
+
+  newgenres.forEach(async (element) => {
+    queryText5 =
+      "INSERT INTO " +
+      dbModels.tables.animeisofgenre +
+      " VALUES ( " +
+      animeid +
+      ", '" +
+      element +
+      "' ) RETURNING * ;";
+
+    genreStatus = false;
+
+    try {
+      genreStatus = await db.query(queryText5);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Added anime. Adding anime genre failed, please try again later",
+          500
+        )
+      );
+    }
+
+    if (genreStatus === false || genreStatus.rowCount === 0) {
+      return next(
+        new HttpError(
+          "Added anime. Adding anime genre failed, please try again later",
+          500
+        )
+      );
+    }
+  });
+
+  //insert studios
+  let newStudios = studios
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+  newStudios.forEach(async (element) => {
+    queryText5 =
+      "INSERT INTO " +
+      dbModels.tables.animestudio +
+      " VALUES ( " +
+      animeid +
+      ", '" +
+      element +
+      "' ) RETURNING * ;";
+
+    studioStatus = false;
+
+    try {
+      studioStatus = await db.query(queryText5);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Added anime and genre. Adding anime genre failed, please try again later",
+          500
+        )
+      );
+    }
+
+    if (studioStatus === false || studioStatus.rowCount === 0) {
+      return next(
+        new HttpError(
+          "Added anime and genre. Adding anime genre failed, please try again later",
+          500
+        )
+      );
+    }
+  });
 
   res.status(201).json({
     success: true,
