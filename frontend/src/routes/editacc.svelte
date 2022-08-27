@@ -71,9 +71,6 @@
 <div class="relative flex h-full w-full">
 	<div class="h-screen w-1/2 bg-black">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			<div>
-				<p class="text-2xl">Add User Info And Picture</p>
-			</div>
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleedit}>
 					<div>

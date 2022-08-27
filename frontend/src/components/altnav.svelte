@@ -88,6 +88,9 @@
 					<span class="block text-sm"> {$curruser.name} </span>
 					<span class="block truncate text-sm font-medium"> {$curruser.mail} </span>
 				</DropdownHeader>
+				<a href="/accinfo">
+					<DropdownItem>Show/Edit Account Info</DropdownItem>
+				</a>
 				<a href="/watchlist">
 					<DropdownItem>Watchlist</DropdownItem>
 				</a>
@@ -115,9 +118,7 @@
 						</Dropdown>
 					</DropdownItem>
 				<DropdownItem>WatchRoom</DropdownItem>
-				<a href="/accinfo">
-					<DropdownItem>More Info</DropdownItem>
-				</a>
+				
 				<DropdownDivider />
 				<a href="/logout">
 					<DropdownItem>Log out</DropdownItem>
