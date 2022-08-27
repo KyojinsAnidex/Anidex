@@ -115,6 +115,16 @@
 								Add Character
 							</DropdownItem>
 						</a>
+						<a href="/addstudio">
+							<DropdownItem>
+								Add Studio
+							</DropdownItem>
+						</a>
+						<a href="/addgenre">
+							<DropdownItem>
+								Add Genre
+							</DropdownItem>
+						</a>
 						</Dropdown>
 					</DropdownItem>
 				<DropdownItem>WatchRoom</DropdownItem>
