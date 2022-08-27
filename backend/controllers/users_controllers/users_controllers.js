@@ -327,7 +327,6 @@ const editUser = async (req, res, next) => {
   //   return next(new HttpError("User trying to change other users data.", 403));
   // }
 
-
   if (!req.file) {
     return next(
       new HttpError("Invalid inputs passed, please check your data 2.", 422)
@@ -350,6 +349,15 @@ const editUser = async (req, res, next) => {
     );
   }
 
+  //hash password
+  let hashedPassword = password;
+
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    return next(new HttpError("Could not edit user, please try again.", 500));
+  }
+
   //so user ase, then update it is
   let queryText =
     "UPDATE " +
@@ -361,7 +369,7 @@ const editUser = async (req, res, next) => {
     "', " +
     dbModel.users.passwordNOTNULL +
     " = '" +
-    password +
+    hashedPassword +
     "' , " +
     dbModel.users.mailNOTNULL +
     " = '" +
