@@ -1,4 +1,5 @@
 <script>
+	import Watchlist from './watchlist.svelte';
 	import { Spinner } from 'flowbite-svelte';
 
 	import { state, search } from '../stores/store';
@@ -55,15 +56,26 @@
 				<div class="animate-fade-in-down mb-1 text-center text-lg text-gray-900">
 					{animes.resultUser[0].userid}
 				</div>
-				<!-- <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">
+				 <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">
 					{animes.resultUser[0].email}
 				</div>
 				<blockquote>
 					<p class="animate-fade-in-down mx-12 mb-9 text-center text-sm">
 						{animes.resultUser[0].biography}
 					</p>
-				</blockquote> -->
+				</blockquote>
+				<div class="flex justify-center">	
+					<a href="/userwatchlist/{animes.resultUser[0].userid}">
+					<button
+						
+						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						>Show Watchlist</button
+					>
+				</a>
+				</div>
 			</div>
 		</div>
+	
 	</div>
+	
 {/await}
