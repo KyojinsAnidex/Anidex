@@ -7,7 +7,7 @@
 
 <script>
 	export let id;
-	import { studioresanimes, studiorespics,state,curruser } from '../../stores/store';
+	import { studioresanimes, studiorespics,state,curruser,eps } from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
 
 	let anime = $studioresanimes[id];
@@ -83,6 +83,26 @@
 	{
         giverating=!giverating;
 	}
+	let ependpoint="http://localhost:5000/episodes/"+anime.animeid;
+	async function proxyfetchepisodes() {
+		const response = await fetch(ependpoint);
+		if (response.status === 200) {
+			return await response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetchepisodes() {
+		let temp= await proxyfetchepisodes();
+
+		if (temp.success == false) {
+			console.log('No episodes Found');
+		} else {
+		    console.log(temp);
+		    $eps=temp;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -123,6 +143,17 @@
 				<h2 slot="header">Synopsis</h2>
 				<div slot="body">
 				  <p class=" text-center ">{anime.synopsis}</p>
+				  <br>
+				  <div class="flex justify-center">
+				  <a href="/episodes">
+				  <button
+								  on:click={fetchepisodes()}
+								  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								  >Episodes</button
+							  >
+						  </a>
+					  </div>
+				  
 				</div>
 			  </AccordionFlush>
 			{#if $state == 1}
