@@ -7,7 +7,7 @@
 
 <script>
 	export let id;
-	import { animesearch, animepics,state,curruser,eps } from '../../stores/store';
+	import { animesearch, animepics,state,curruser,eps,epanime} from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
 
 	let anime = $animesearch.resultAnime[id];
@@ -99,6 +99,7 @@
 		} else {
 		    console.log(temp);
 		    $eps=temp;
+			$epanime=anime.animeid;
 		}
 	}
 </script>

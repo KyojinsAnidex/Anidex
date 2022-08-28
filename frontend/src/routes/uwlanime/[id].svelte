@@ -7,7 +7,7 @@
 
 <script>
 	export let id;
-	import { wlanimes,state,curruser,eps} from '../../stores/store';
+	import { wlanimes,state,curruser,eps,epanime} from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush ,Rating} from 'flowbite-svelte';
 	let anime = $wlanimes[id].anime;
 	let picture = 'http://localhost:5000/uploads/images/' + $wlanimes[id].animepicture[0].pictureid;
@@ -98,6 +98,7 @@
 		} else {
 		    console.log(temp);
 		    $eps=temp;
+			$epanime=anime.animeid;
 		}
 	}
 
