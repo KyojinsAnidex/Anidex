@@ -1637,6 +1637,13 @@ components:
           type: integer
         title:
           type: string
+        airingdate:
+          type: string
+          format: date
+        runtime:
+          type: string
+          format: time
+          example: 00:22:06
       required:
         - episode
         - season
@@ -1667,6 +1674,7 @@ components:
       properties:
         success:
           type: boolean
+          example: false
         message:
           type: string
 
@@ -1717,6 +1725,22 @@ components:
         website:
           type: string
           format: url 
+        anime:
+          type: array
+          items:
+            type: integer
+            description: animeid of the anime
+            example:
+              - 127
+              - 128
+        role:
+          type: array
+          items:
+            type: string
+            description: role of person in the anime, same serial
+            example:
+              - Animator
+              - Director
         image:
           type: string
           format: binary
@@ -1955,6 +1979,18 @@ components:
                 type: integer
               description:
                 type: string
+              voiceActors:
+                type: array
+                description: personnelids of the character voice actors
+                items:
+                  type: integer
+                example: ["127","23"]
+              anime:
+                type: array
+                description: animeids of the anime
+                items:
+                  type: integer
+                example: ["127", "23"]
               image:
                 type: string
                 format: binary
@@ -1976,7 +2012,44 @@ components:
       content:
         multipart/form-data:
           schema:
-            $ref: "#/components/schemas/PersonInput"
+            type: object
+            properties:
+              lastname:
+                type: string
+              firstname:
+                type: string
+              gender:
+                type: string
+              birthday:
+                type: string
+                format: date
+              address:
+                type: string
+              website:
+                type: string
+                format: url 
+              anime:
+                type: array
+                description: animeids of the anime
+                items:
+                  type: integer
+                example: ["127", "23"]
+              role:
+                type: array
+                description: roles of persons in the anime, same serial as up
+                items:
+                  type: string
+                example: ["Voice Actor", "Director"]
+              image:
+                type: string
+                format: binary
+            required:
+            - lastname
+            - firstname
+            - gender
+            - birthday
+            - image
+
           encoding:
             image:
               contentType: image/jpeg, image/jpg, image/png

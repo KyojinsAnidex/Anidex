@@ -294,9 +294,15 @@ const addAnime = async (req, res, next) => {
 
   const { title, releasedate, releaseseason, synopsis, genres, studios } =
     req.body;
+  
+    if (!req.file) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  }
+
   const filepath = req.file.path;
-  // console.log("filepath" + filepath);
-  // console.log("request body" + req.body);
+  
   let existingAnime;
   try {
     existingAnime = await db.query(
@@ -388,14 +394,12 @@ const addAnime = async (req, res, next) => {
 
   //insert genres
   let queryText5 = "";
-  console.log(genres, Object.prototype.toString.call(genres));
 
   let newgenres = genres
     .replace(/[\[\]']+/g, "")
     .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
-  console.log(newgenres, Object.prototype.toString.call(newgenres));
 
   newgenres.forEach(async (element) => {
     queryText5 =

@@ -64,14 +64,23 @@ const addAChar = async (req, res, next) => {
     );
   }
 
-  const { lastname, firstname, gender, role, age, description } = req.body;
-  
+  const {
+    lastname,
+    firstname,
+    gender,
+    role,
+    age,
+    description,
+    anime,
+    voiceActors,
+  } = req.body;
+
   if (!req.file) {
     return next(
-      new HttpError("Invalid inputs passed, please check your data 1.", 422)
+      new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
-  
+
   const pictureid = req.file.path.split("\\")[2];
   let existingChar;
 
@@ -116,9 +125,9 @@ const addAChar = async (req, res, next) => {
     ", " +
     dbModels.characters.pictureid +
     ", " +
-    dbModels.characters.age + 
-    ", " + 
-    dbModels.characters.description + 
+    dbModels.characters.age +
+    ", " +
+    dbModels.characters.description +
     " ) VALUES ( '" +
     firstname +
     "' , '" +
@@ -130,8 +139,8 @@ const addAChar = async (req, res, next) => {
     "' , '" +
     pictureid +
     "' , '" +
-    age + 
-    "' , '" + 
+    age +
+    "' , '" +
     description +
     "' ) RETURNING * ;";
   try {
@@ -141,21 +150,80 @@ const addAChar = async (req, res, next) => {
       new HttpError("Adding character failed, please try again later", 500)
     );
   }
-  if (createdChar === false) {
+  if (createdChar === false || createdChar.rowCount === 0) {
     return next(
       new HttpError("Adding character failed, please try again later", 500)
     );
   }
-  if (createdChar.rowCount === 0) {
-    return next(
-      new HttpError("Adding character failed, please try again later", 500)
-    );
-  } else {
-    res.status(201).json({
-      success: true,
-      characterid: createdChar.rows[0].characterid,
-    });
-  }
+
+  //insert character voice actors;
+  let queryText6 = "",
+    voiceActorStatus = false,
+    animeStatus = false;
+
+  let newVoiceActors = voiceActors
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+
+  newVoiceActors.forEach(async (element) => {
+    queryText6 =
+      "INSERT INTO " +
+      dbModels.tables.charactervoiceactor +
+      " VALUES ('" +
+      createdChar.rows[0].characterid +
+      "' , '" +
+      element +
+      "') RETURNING *;";
+    voiceActorStatus = false;
+
+    try {
+      voiceActorStatus = await db.query(queryText6);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Added character. Adding character voice actors failed, please try again later",
+          500
+        )
+      );
+    }
+  });
+
+  // insert the anime of the characters
+  let newAnime = anime
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+
+  newAnime.forEach(async (element) => {
+    queryText6 =
+      "INSERT INTO " +
+      dbModels.tables.animecharacter +
+      " VALUES ('" +
+      element +
+      "' , '" +
+      createdChar.rows[0].characterid +
+      "') RETURNING *;";
+    animeStatus = false;
+
+    try {
+      animeStatus = await db.query(queryText6);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Added character and voice actor. Adding character anime failed, please try again later",
+          500
+        )
+      );
+    }
+  });
+
+  res.status(201).json({
+    success: true,
+    characterid: createdChar.rows[0].characterid,
+  });
 };
 
 const editAChar = async (req, res, next) => {};

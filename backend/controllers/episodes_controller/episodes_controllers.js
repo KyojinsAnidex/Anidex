@@ -95,7 +95,7 @@ const addEpisode = async (req, res, next) => {
     );
   }
 
-  const { episode, season, animeid, title } = req.body;
+  const { episode, season, animeid, title, airingdate, runtime } = req.body;
 
   let existingEpisode;
   try {
@@ -128,6 +128,8 @@ const addEpisode = async (req, res, next) => {
   }
 
   let createdEpisode;
+  let newtitle = title.replace(/'/, "''");
+  
   try {
     createdEpisode = await db.query(
       "INSERT INTO " +
@@ -140,14 +142,22 @@ const addEpisode = async (req, res, next) => {
         dbModels.episode.animeIDNOTNULL +
         ", " +
         dbModels.episode.title +
+        ", " +
+        dbModels.episode.airingdate +
+        ", " +
+        dbModels.episode.runtime +
         ") VALUES ('" +
         episode +
         "', '" +
         season +
         "', '" +
         animeid +
-        "', '" +
-        title +
+        "', '" + 
+        newtitle +
+        "' , '" +
+        airingdate +
+        "' , '" +
+        runtime +
         "' ) RETURNING * ;"
     );
   } catch (err) {

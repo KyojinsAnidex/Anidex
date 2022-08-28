@@ -87,8 +87,16 @@ const addPerson = async (req, res, next) => {
     );
   }
 
-  const { lastname, firstname, gender, birthday, address, website } =
-    req.body;
+  const {
+    lastname,
+    firstname,
+    gender,
+    birthday,
+    address,
+    website,
+    anime,
+    role,
+  } = req.body;
 
   if (!req.file) {
     return next(
@@ -170,13 +178,56 @@ const addPerson = async (req, res, next) => {
     return next(
       new HttpError("Adding person failed, please try again later", 500)
     );
-  } else {
-    res.status(201).json({
-      success: true,
-      // newPerson: createdPerson.rows[0],
-      personnelID: createdPerson.rows[0].personnelid,
-    });
   }
+
+  // add anime of the personnel
+  let queryText6 = "",
+    animeStatus = false;
+  let newAnime = anime
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+
+  let newRoles = role
+    .replace(/[\[\]']+/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .split(",");
+  let i = 0;
+
+  newAnime.forEach(async (element) => {
+    personnelRole = newRoles[i++];
+    queryText6 =
+      "INSERT INTO " +
+      dbModels.tables.animestaff +
+      " VALUES ('" +
+      createdPerson.rows[0].personnelid +
+      "' , '" +
+      element +
+      "' , '" +
+      personnelRole +
+      "') RETURNING *;";
+
+    animeStatus = false;
+
+    try {
+      animeStatus = await db.query(queryText6);
+    } catch (err) {
+      return next(
+        new HttpError(
+          "Added personnel. Adding personnel anime failed, please try again later",
+          500
+        )
+      );
+    }
+  });
+
+  res.status(201).json({
+    success: true,
+    // newPerson: createdPerson.rows[0],
+    personnelID: createdPerson.rows[0].personnelid,
+  });
 };
 
 module.exports = {

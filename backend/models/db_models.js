@@ -122,7 +122,6 @@ const personnel = {
   firstnameNOTNULL: "firstname",
   gender: "gender",
   birthday: "birthday",
-  age: "age",
   address: "address",
   website: "website",
   pictureIDNOTNULL: "pictureid",

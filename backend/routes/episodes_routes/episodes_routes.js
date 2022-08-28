@@ -13,11 +13,15 @@ router.get("/single/:episodeid", episodesControllers.getSingleEpisode);
 
 router.use(check_auth);
 
-router.post("/:aid", 
-[
-    check(["episode", "season", "animeid"]).not().isEmpty(),
+router.post(
+  "/:aid",
+  [
+    check(["episode", "season", "animeid", "airingdate", "runtime"])
+      .not()
+      .isEmpty(),
     check(["episode", "season", "animeid"]).isNumeric(),
-],
-episodesControllers.addEpisode);
+  ],
+  episodesControllers.addEpisode
+);
 
 module.exports = router;
