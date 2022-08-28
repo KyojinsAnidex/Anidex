@@ -81,11 +81,16 @@
         giverating=!giverating;
 	}
 	let ependpoint="http://localhost:5000/episodes/"+anime.animeid;
+	$eps=[];
+	$epanime=-1;
 	async function proxyfetchepisodes() {
 		const response = await fetch(ependpoint);
 		if (response.status === 200) {
 			return await response.json();
-		} else {
+		}
+		else if(response.status === 404) {
+			return await response.json();
+		}else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
@@ -97,9 +102,9 @@
 			console.log('No episodes Found');
 		} else {
 		    console.log(temp);
-		    $eps=temp;
-			$epanime=anime.animeid;
+		    $eps=temp;	
 		}
+		$epanime=anime.animeid;
 	}
 
 </script>

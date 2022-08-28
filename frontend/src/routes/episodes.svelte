@@ -1,9 +1,11 @@
 <script>
-    import {eps,state} from '../stores/store';
+    import {eps,state,epanime} from '../stores/store';
     import {Rating} from 'flowbite-svelte';
     console.log($eps);
+    console.log($epanime);
 
 </script>
+{#if $eps.length!=0}
 <div class="flex justify-center">
 <table class="table-auto border-separate">
     <tr>
@@ -25,6 +27,12 @@
     
     </table>
 </div>
+{:else}
+<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+    The anime does not have any Episodes Added yet
+</h4>
+
+{/if}
 <br>   {#if $state==1}
 		  <div class="flex justify-center">
 		  <a href="/addepisode">
@@ -35,3 +43,6 @@
 				  </a>
                 </div>
                 {/if}
+                
+                
+               
