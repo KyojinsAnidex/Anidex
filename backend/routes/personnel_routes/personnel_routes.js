@@ -2,6 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { personnelControllers } = require("../../controllers/index");
+const check_admin = require("../../middlewares/check_admin");
 const check_auth = require("../../middlewares/check_auth");
 const fileUpload = require("../../middlewares/file_upload");
 
@@ -24,5 +25,8 @@ router.post(
   ],
   personnelControllers.addPerson
 );
+
+router.use(check_admin);
+router.delete("/:pid", personnelControllers.deletePerson);
 
 module.exports = router;

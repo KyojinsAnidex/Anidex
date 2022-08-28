@@ -2,6 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { episodesControllers } = require("../../controllers/index");
+const check_admin = require("../../middlewares/check_admin");
 const check_auth = require("../../middlewares/check_auth");
 const fileUpload = require("../../middlewares/file_upload");
 
@@ -23,5 +24,8 @@ router.post(
   ],
   episodesControllers.addEpisode
 );
+
+router.use(check_admin);
+router.delete("/single/:episodeid", episodesControllers.deleteEpisode);
 
 module.exports = router;

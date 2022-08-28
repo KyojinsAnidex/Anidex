@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const common = require("../common_controllers/common");
-const check_userid = require("../../middlewares/check_userid");
-const check_animeid = require("../../middlewares/check_animeid");
+const check_userid = require("../../utils/check_userid");
+const check_animeid = require("../../utils/check_animeid");
 
 const {
   tables,
@@ -84,7 +84,7 @@ const addAnimeToWatchlist = async (req, res, next) => {
   const { animeid, favourite, rating } = req.body;
 
   let animeidState = await check_animeid(animeid);
-  let useridState = await check_userid(userid);
+  let useridState = await check_userid(userid.replace(/'/g, "''"));
 
   if (animeidState === 0 || useridState === 0) {
     return next(
@@ -114,7 +114,7 @@ const addAnimeToWatchlist = async (req, res, next) => {
         " = $1 AND " +
         animestars.userIDNOTNULL +
         " = $2 ;",
-      [animeid, userid]
+      [animeid, userid.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(
@@ -150,14 +150,14 @@ const addAnimeToWatchlist = async (req, res, next) => {
         " AND " +
         animestars.userIDNOTNULL +
         " = '" +
-        userid +
+        userid.replace(/'/g, "''") +
         "' RETURNING * ;";
     } else {
       queryText2 =
         "INSERT INTO " +
         tables.animestars +
         " VALUES ( '" +
-        userid +
+        userid.replace(/'/g, "''") +
         "', " +
         animeid +
         ", " +
@@ -220,7 +220,7 @@ const addAnimeToWatchlist = async (req, res, next) => {
         " = $1 AND " +
         watchlist.userIDNOTNULL +
         " = $2 ;",
-      [animeid, userid]
+      [animeid, userid.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(
@@ -256,14 +256,14 @@ const addAnimeToWatchlist = async (req, res, next) => {
       " AND " +
       watchlist.userIDNOTNULL +
       " = '" +
-      userid +
+      userid.replace(/'/g, "''") +
       "' RETURNING * ;";
   } else {
     queryText3 =
       "INSERT INTO " +
       tables.watchlist +
       " VALUES ( '" +
-      userid +
+      userid.replace(/'/g, "''") +
       "', " +
       favourite +
       ", " +
@@ -320,7 +320,7 @@ const deleteAnimeFromWatchlist = async (req, res, next) => {
       new HttpError("Invalid inputs provided, please check your inputs", 422)
     );
   }
-  const userid = req.params.uid;
+  const userid = req.params.uid.replace(/'/g, "''");
   const { animeid } = req.body;
 
   let animeidState = await check_animeid(animeid);

@@ -1,4 +1,6 @@
 const { validationResult } = require("express-validator");
+const path = require("path");
+const { unlink } = require("fs");
 
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
@@ -105,6 +107,12 @@ const addPerson = async (req, res, next) => {
   }
 
   const pictureid = req.file.path.split("\\")[2];
+
+  let newFirstname = firstname.replace(/'/g, "''"),
+    newLastname = lastname.replace(/'/g, "''"),
+    newAddress = address.replace(/'/g, "''"),
+    newWebsite = website.replace(/'/g, "''");
+
   let existingPerson;
 
   try {
@@ -116,7 +124,7 @@ const addPerson = async (req, res, next) => {
         " = $1 AND " +
         dbModels.personnel.lastnameNOTNULL +
         " = $2 ;",
-      [firstname, lastname]
+      [newFirstname, newLastname]
     );
   } catch (err) {
     return next(
@@ -152,9 +160,9 @@ const addPerson = async (req, res, next) => {
     ", " +
     dbModels.personnel.website +
     " ) VALUES ( '" +
-    firstname +
+    newFirstname +
     "' , '" +
-    lastname +
+    newLastname +
     "' , '" +
     gender +
     "' , '" +
@@ -162,9 +170,9 @@ const addPerson = async (req, res, next) => {
     "' , '" +
     pictureid +
     "' , '" +
-    address +
+    newAddress +
     "' , '" +
-    website +
+    newWebsite +
     "' ) RETURNING * ;";
   try {
     createdPerson = await db.query(queryText);
@@ -230,8 +238,56 @@ const addPerson = async (req, res, next) => {
   });
 };
 
+const deletePerson = async (req, res, next) => {
+  const personnelid = req.params.pid;
+
+  let queryText = "",
+    deleteStatus = false;
+
+  queryText =
+    "DELETE FROM " +
+    dbModels.tables.personnel +
+    " WHERE " +
+    dbModels.personnel.personnelIDNOTNULL +
+    " = '" +
+    personnelid +
+    "' RETURNING *;";
+
+  try {
+    deleteStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting person failed, please try again later", 500)
+    );
+  }
+
+  if (deleteStatus === false || deleteStatus.rowCount === 0) {
+    return next(
+      new HttpError("Deleting person failed, please try again later", 500)
+    );
+  }
+
+  //delete pic
+  unlink(
+    path.join("./uploads/images", deleteStatus.rows[0].pictureid),
+    (err) => {
+      if (err)
+        console.log(
+          "ERROR DELETING PERSON PICTURE AFTER PERSON DELETION\n" + err
+        );
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: "Deleted person Successfully",
+    deletedPerson: deleteStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllPerson,
   getSinglePerson,
   addPerson,
+  deletePerson,
 };

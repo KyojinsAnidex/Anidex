@@ -129,7 +129,7 @@ const addEpisode = async (req, res, next) => {
 
   let createdEpisode;
   let newtitle = title.replace(/'/, "''");
-  
+
   try {
     createdEpisode = await db.query(
       "INSERT INTO " +
@@ -152,7 +152,7 @@ const addEpisode = async (req, res, next) => {
         season +
         "', '" +
         animeid +
-        "', '" + 
+        "', '" +
         newtitle +
         "' , '" +
         airingdate +
@@ -185,8 +185,45 @@ const addEpisode = async (req, res, next) => {
   }
 };
 
+const deleteEpisode = async (req, res, next) => {
+  const episodeid = req.params.episodeid;
+
+  let queryText = "",
+    deleteStatus = false;
+
+  queryText =
+    "DELETE FROM " +
+    dbModels.tables.episode +
+    " WHERE " +
+    dbModels.episode.episodeidNOTNULL +
+    " = '" +
+    episodeid +
+    "' RETURNING *;";
+
+  try {
+    deleteStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting episode failed, please try again later", 500)
+    );
+  }
+
+  if (deleteStatus === false || deleteStatus.rowCount === 0) {
+    return next(
+      new HttpError("Deleting episode failed, please try again later", 500)
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    message: "Deleted episode Successfully",
+    deletedEpisode: deleteStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllEpisodes,
   getSingleEpisode,
   addEpisode,
+  deleteEpisode,
 };

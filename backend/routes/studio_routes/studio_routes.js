@@ -17,11 +17,7 @@ router.use(check_auth);
 
 router.post(
   "/",
-  [
-    check("studioname").not().isEmpty(),
-    check("office_address").not().isEmpty(),
-    check("website").not().isEmpty(),
-  ],
+  [check(["studioname", "office_address", "website"]).not().isEmpty()],
   studioControllers.addStudio
 );
 

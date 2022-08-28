@@ -100,7 +100,7 @@ const addGenre = async (req, res, next) => {
     " ( " +
     dbModels.genre.genreIDNOTNULL +
     " ) VALUES ( '" +
-    genre +
+    genre.replace(/'/g, "''") +
     "' ) RETURNING * ;";
   try {
     createdGenre = await db.query(queryText);

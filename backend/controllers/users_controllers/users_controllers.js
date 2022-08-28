@@ -1,11 +1,13 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const { unlink } = require("fs");
 
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModel = require("../../models/db_models");
-const check_userid = require("../../middlewares/check_userid");
+const check_userid = require("../../utils/check_userid");
 
 const getAllUsers = async (req, res, next) => {
   let allUsers;
@@ -54,6 +56,7 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserByID = async (req, res, next) => {
   let userID = req.params.uid;
+  userID = userID.replace(/'/g, "''");
 
   let searchedUser;
 
@@ -120,7 +123,7 @@ const loginUser = async (req, res, next) => {
         dbModel.users.mailNOTNULL +
         " = " +
         "'" +
-        email +
+        email.replace(/'/g, "''") +
         "'"
     );
   } catch (err) {
@@ -174,9 +177,13 @@ const loginUser = async (req, res, next) => {
 
   let token;
   try {
-    token = jwt.sign({ userId: name, email: email }, process.env.JWT_KEY, {
-      expiresIn: "1h",
-    });
+    token = jwt.sign(
+      { userId: name.replace(/'/g, "''"), email: email.replace(/'/g, "''") },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
   } catch (err) {
     return next(
       new HttpError(
@@ -223,7 +230,7 @@ const signupUser = async (req, res, next) => {
         " = $1 OR " +
         dbModel.users.mailNOTNULL +
         " = $2",
-      [name, email]
+      [name.replace(/'/g, "''"), email.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(
@@ -268,13 +275,13 @@ const signupUser = async (req, res, next) => {
     ", " +
     dbModel.users.pictureNOTNULL +
     " ) VALUES ( '" +
-    email +
+    email.replace(/'/g, "''") +
     "' , '" +
     hashedPassword +
     "' , '" +
-    name +
+    name.replace(/'/g, "''") +
     "' , '" +
-    bio +
+    bio.replace(/'/g, "''") +
     "' , '" +
     pictureid +
     "' ) RETURNING *";
@@ -327,6 +334,10 @@ const editUser = async (req, res, next) => {
   //   return next(new HttpError("User trying to change other users data.", 403));
   // }
 
+  if (req.userData.userId != name.replace(/'/g, "''")) {
+    return next(new HttpError("User trying to edit another user", 403));
+  }
+
   if (!req.file) {
     return next(
       new HttpError("Invalid inputs passed, please check your data 2.", 422)
@@ -334,7 +345,7 @@ const editUser = async (req, res, next) => {
   }
   const pictureid = req.file.path.split("\\")[2];
 
-  let useridState = await check_userid(name);
+  let useridState = await check_userid(name.replace(/'/g, "''"));
 
   if (useridState === 0) {
     return next(
@@ -365,7 +376,7 @@ const editUser = async (req, res, next) => {
     " SET " +
     dbModel.users.userIDNOTNULL +
     " = '" +
-    newUserid +
+    newUserid.replace(/'/g, "''") +
     "', " +
     dbModel.users.passwordNOTNULL +
     " = '" +
@@ -373,11 +384,11 @@ const editUser = async (req, res, next) => {
     "' , " +
     dbModel.users.mailNOTNULL +
     " = '" +
-    email +
+    email.replace(/'/g, "''") +
     "' , " +
     dbModel.users.bio +
     " = '" +
-    bio +
+    bio.replace(/'/g, "''") +
     "' , " +
     dbModel.users.pictureNOTNULL +
     " = '" +
@@ -385,7 +396,7 @@ const editUser = async (req, res, next) => {
     "' WHERE " +
     dbModel.users.userIDNOTNULL +
     " = '" +
-    name +
+    name.replace(/'/g, "''") +
     "' RETURNING * ;";
   let updateStatus = false;
 
@@ -463,6 +474,12 @@ const deleteUser = async (req, res, next) => {
       new HttpError("Deleting user failed, please try again later", 500)
     );
   }
+
+  //delete pic
+  unlink(path.join("./uploads/images", deleteStatus.rows[0].pictureid), (err) => {
+    if (err)
+      console.log("ERROR DELETING USER PICTURE AFTER USER DELETION\n" + err);
+  });
 
   res.status(201).json({
     success: true,

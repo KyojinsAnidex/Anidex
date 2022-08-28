@@ -36,6 +36,8 @@ tags:
     description: studio endpoints
   - name: search
     description: search endpoints
+  - name: admin
+    description: admin endpoints, mainly deletion
 
 paths:
   "/anime":
@@ -140,6 +142,36 @@ paths:
                           type: string
         "404":
           $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    delete:
+      summary: delete an anime, only for admin
+      tags:
+        - admin
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      security:
+       - BearerAuth: []      
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Deleted Anime successfully
+                  deletedAnime:
+                    $ref: "#/components/schemas/AnimeCommon"
+        "403":
+          $ref: "#/components/responses/403Forbidden"        
+        "401":
+          $ref: "#/components/responses/401AuthFailure"          
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
@@ -319,7 +351,7 @@ paths:
           $ref: "#/components/responses/500ServerSideError"
     
     delete:
-      summary: edit a user
+      summary: delete a user
       tags:
         - user
       parameters:
@@ -341,10 +373,10 @@ paths:
                     example: Deleted User successfully
                   deletedUser:
                     $ref: "#/components/schemas/UserSingleOutput"
+        "401":
+          $ref: '#/components/responses/401AuthFailure'
         "403":
           $ref: "#/components/responses/403Forbidden"          
-        "422":
-          $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
@@ -452,6 +484,7 @@ paths:
           $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
+    
     delete:
       summary: Deleting anime from user watchlist, also deletes rating if exists
       tags:
@@ -485,6 +518,8 @@ paths:
                     $ref: "#/components/schemas/WatchlistEntry"              
         "401":
           $ref: "#/components/responses/401AuthFailure"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
         "404":
           $ref: "#/components/responses/404NotFound"
         "422":
@@ -720,6 +755,36 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+    delete:
+      summary: delete a character, only for admin
+      tags:
+        - admin
+      parameters:
+        - $ref: "#/components/parameters/cid"
+      security:
+       - BearerAuth: []      
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Deleted character successfully
+                  deletedCharacter:
+                    $ref: "#/components/schemas/characterSingle"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"          
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+  
   "/genre":
     get:
       summary: get all genre
@@ -899,6 +964,36 @@ paths:
                     $ref: "#/components/schemas/animeStaffData"
         "404":
           $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    delete:
+      summary: delete a person, only for admin
+      tags:
+        - admin
+      parameters:
+        - $ref: "#/components/parameters/pid"
+      security:
+       - BearerAuth: []      
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Deleted person successfully
+                  deletedUser:
+                    $ref: "#/components/schemas/personnel"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"          
+        "403":
+          $ref: "#/components/responses/403Forbidden"
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
@@ -1182,6 +1277,36 @@ paths:
                     $ref: "#/components/schemas/episodeSingle"
         "404":
           $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    delete:
+      summary: delete an episode, only for admin
+      tags:
+        - admin
+      parameters:
+        - $ref: "#/components/parameters/episodeid"
+      security:
+       - BearerAuth: []      
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Deleted episode successfully
+                  deletedUser:
+                    $ref: "#/components/schemas/episodeSingle"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"          
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
@@ -2151,6 +2276,13 @@ components:
               website:
                 type: string
                 format: url
+              foundingdate:
+                type: string
+                format: date 
+            required:
+              - studioname
+              - office_address
+              - website
 
     AnimeRatingInput:
       description: data for a new anime rating
@@ -2299,7 +2431,7 @@ components:
             $ref: "#/components/schemas/failedResponses"
 
     403Forbidden:
-      description: Please use the status code to check for failure, not success field. Failure in authenticating this API call by JWT
+      description: Please use the status code to check for failure, not success field. User trying to access or modify forbidden resource
       content:
         application/json:
           schema:

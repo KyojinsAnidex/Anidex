@@ -1,5 +1,7 @@
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const { unlink } = require("fs");
+const path = require("path");
 
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
@@ -81,6 +83,10 @@ const addAChar = async (req, res, next) => {
     );
   }
 
+  let newLastname = lastname.replace(/'/g, "''"),
+    newFirstname = firstname.replace(/'/g, "''"),
+    newDescription = description.replace(/'/g, "''");
+
   const pictureid = req.file.path.split("\\")[2];
   let existingChar;
 
@@ -93,7 +99,7 @@ const addAChar = async (req, res, next) => {
         " = $1 AND " +
         dbModels.characters.lastnameNOTNULL +
         " = $2 ;",
-      [firstname, lastname]
+      [newFirstname, newLastname]
     );
   } catch (err) {
     return next(
@@ -129,9 +135,9 @@ const addAChar = async (req, res, next) => {
     ", " +
     dbModels.characters.description +
     " ) VALUES ( '" +
-    firstname +
+    newFirstname +
     "' , '" +
-    lastname +
+    newLastname +
     "' , '" +
     gender +
     "' , '" +
@@ -141,7 +147,7 @@ const addAChar = async (req, res, next) => {
     "' , '" +
     age +
     "' , '" +
-    description +
+    newDescription +
     "' ) RETURNING * ;";
   try {
     createdChar = await db.query(queryText);
@@ -228,9 +234,57 @@ const addAChar = async (req, res, next) => {
 
 const editAChar = async (req, res, next) => {};
 
+const deleteChar = async (req, res, next) => {
+  const characterid = req.params.cid;
+
+  let queryText = "",
+    deleteStatus = false;
+
+  queryText =
+    "DELETE FROM " +
+    dbModels.tables.characters +
+    " WHERE " +
+    dbModels.characters.characterIDNOTNULL +
+    " = '" +
+    characterid +
+    "' RETURNING *;";
+
+  try {
+    deleteStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting character failed, please try again later", 500)
+    );
+  }
+
+  if (deleteStatus === false || deleteStatus.rowCount === 0) {
+    return next(
+      new HttpError("Deleting character failed, please try again later", 500)
+    );
+  }
+
+  //delete pic
+  unlink(
+    path.join("./uploads/images", deleteStatus.rows[0].pictureid),
+    (err) => {
+      if (err)
+        console.log(
+          "ERROR DELETING CHARACTER PICTURE AFTER CHARACTER DELETION\n" + err
+        );
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: "Deleted Character Successfully",
+    deletedCharacter: deleteStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllChar,
   getAChar,
   addAChar,
   editAChar,
+  deleteChar,
 };

@@ -6,6 +6,7 @@ const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
 
 const common = require("../common_controllers/common");
+const check_animeid = require("../../utils/check_animeid");
 
 const getAllAnime = async (req, res, next) => {
   common.getAllFromTable(req, res, next, dbModels.tables.anime, "anime");
@@ -294,15 +295,18 @@ const addAnime = async (req, res, next) => {
 
   const { title, releasedate, releaseseason, synopsis, genres, studios } =
     req.body;
-  
-    if (!req.file) {
+
+  let newTitle = title.replace(/'/g, "''"),
+    newSynopsis = synopsis.replace(/'/g, "''");
+
+  if (!req.file) {
     return next(
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
 
   const filepath = req.file.path;
-  
+
   let existingAnime;
   try {
     existingAnime = await db.query(
@@ -311,7 +315,7 @@ const addAnime = async (req, res, next) => {
         " WHERE " +
         dbModels.anime.titleNOTNULL +
         " = $1 ;",
-      [title]
+      [newTitle]
     );
   } catch (err) {
     return next(
@@ -342,11 +346,11 @@ const addAnime = async (req, res, next) => {
     ", " +
     dbModels.anime.releaseseason +
     " ) VALUES ( '" +
-    title +
+    newTitle +
     "' , '" +
     releasedate +
     "' , '" +
-    synopsis +
+    newSynopsis +
     "' , '" +
     releaseseason +
     "' ) RETURNING * ;";
@@ -481,6 +485,55 @@ const addAnime = async (req, res, next) => {
 
 const editAnime = async (req, res, next) => {};
 
+const deleteAnime = async (req, res, next) => {
+  const animeid = req.params.aid;
+  let animeidstate = await check_animeid(animeid);
+  if (animeidstate === 0) {
+    return next(
+      new HttpError(
+        "Invalid animeid parameter provided, please check your url",
+        422
+      )
+    );
+  } else if (animeidstate === 2) {
+    return next(
+      new HttpError("Deleting anime failed, please try again later", 500)
+    );
+  }
+
+  let queryText = "",
+    deleteStatus = false;
+
+  queryText =
+    "DELETE FROM " +
+    dbModels.tables.anime +
+    " WHERE " +
+    dbModels.anime.animeIDNOTNULL +
+    " = '" +
+    animeid +
+    "' RETURNING *;";
+
+  try {
+    deleteStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting anime failed, please try again later", 500)
+    );
+  }
+
+  if (deleteStatus === false || deleteStatus.rowCount === 0) {
+    return next(
+      new HttpError("Deleting anime failed, please try again later", 500)
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    message: "Deleted Anime Successfully",
+    deletedAnime: deleteStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllAnime,
   getAnimeByID,
@@ -488,4 +541,5 @@ module.exports = {
   getAllAnimeItems,
   addAnime,
   editAnime,
+  deleteAnime,
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { animeControllers } = require("../../controllers/index");
+const check_admin = require("../../middlewares/check_admin");
 const check_auth = require("../../middlewares/check_auth");
 const fileUpload = require("../../middlewares/file_upload");
 
@@ -35,7 +36,8 @@ router.post(
 
 // router.patch('/:aid',[], animeControllers.editAnime);
 
-// //protected Admin
-// router.delete('/:aid',);
+// protected Admin
+router.use(check_admin);
+router.delete("/:aid", animeControllers.deleteAnime);
 
 module.exports = router;

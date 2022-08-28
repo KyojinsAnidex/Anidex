@@ -3,8 +3,8 @@ const { validationResult } = require("express-validator");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
-const check_animeid = require("../../middlewares/check_animeid");
-const check_userid = require("../../middlewares/check_userid");
+const check_animeid = require("../../utils/check_animeid");
+const check_userid = require("../../utils/check_userid");
 
 const common = require("../common_controllers/common");
 
@@ -69,6 +69,7 @@ const makeWatchroom = async (req, res, next) => {
   }
 
   const { watchroomname, animeid, description, duration } = req.body;
+
   let animeidState = await check_animeid(animeid);
   if (animeidState === 0) {
     return next(
@@ -82,7 +83,7 @@ const makeWatchroom = async (req, res, next) => {
       new HttpError("Adding new watchroom failed, please try again later", 500)
     );
   }
-  
+
   let existingWatchroom;
 
   try {
@@ -92,7 +93,7 @@ const makeWatchroom = async (req, res, next) => {
         " WHERE " +
         dbModels.watchroom.watchroomnameNOTNULL +
         " = $1 ;",
-      [watchroomname]
+      [watchroomname.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(
@@ -124,11 +125,11 @@ const makeWatchroom = async (req, res, next) => {
     ", " +
     dbModels.watchroom.endtimeNOTNULL +
     " ) VALUES ( '" +
-    watchroomname +
+    watchroomname.replace(/'/g, "''") +
     "' , '" +
     animeid +
     "' , '" +
-    description +
+    description.replace(/'/g, "''") +
     "', localtimestamp, localtimestamp + '" +
     duration +
     " days" +
@@ -140,21 +141,16 @@ const makeWatchroom = async (req, res, next) => {
       new HttpError("Adding watchroom failed, please try again later", 500)
     );
   }
-  if (createdWatchroom === false) {
+  if (createdWatchroom === false || createdWatchroom.rowCount === 0) {
     return next(
       new HttpError("Adding watchroom failed, please try again later", 500)
     );
   }
-  if (createdWatchroom.rowCount === 0) {
-    return next(
-      new HttpError("Adding watchroom failed, please try again later", 500)
-    );
-  } else {
-    res.status(201).json({
-      success: true,
-      watchroomid: createdWatchroom.rows[0].watchroomid,
-    });
-  }
+
+  res.status(201).json({
+    success: true,
+    watchroomid: createdWatchroom.rows[0].watchroomid,
+  });
 };
 
 const getParticipants = async (req, res, next) => {
@@ -245,7 +241,7 @@ const addParticipants = async (req, res, next) => {
         " = $1 AND " +
         dbModels.watchroomparticipants.userIDNOTNULL +
         " = $2 ;",
-      [watchroomid, userid]
+      [watchroomid, userid.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(new HttpError("Adding participatn to watchroom failed", 500));
@@ -265,7 +261,7 @@ const addParticipants = async (req, res, next) => {
       "INSERT INTO " +
         dbModels.tables.watchroomparticipants +
         " VALUES ( '" +
-        userid +
+        userid.replace(/'/g, "''") +
         "', '" +
         watchroomid +
         "' ) RETURNING * ;"

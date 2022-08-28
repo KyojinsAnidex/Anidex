@@ -3,8 +3,8 @@ const { validationResult } = require("express-validator");
 const db = require("../../db/index");
 const HttpError = require("../../models/http_error");
 const dbModels = require("../../models/db_models");
-const check_userid = require("../../middlewares/check_userid");
-const check_episodeid = require("../../middlewares/check_episodeid");
+const check_userid = require("../../utils/check_userid");
+const check_episodeid = require("../../utils/check_episodeid");
 
 const common = require("../common_controllers/common");
 

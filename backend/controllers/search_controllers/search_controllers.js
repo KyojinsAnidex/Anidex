@@ -18,7 +18,7 @@ const getAnimeByName = async (req, res, next) => {
     " WHERE " +
     dbModels.anime.titleNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%'";
   try {
     searchedAnime = await db.query(queryText);
@@ -27,7 +27,7 @@ const getAnimeByName = async (req, res, next) => {
       new HttpError("Searching anime failed, please try again later", 500)
     );
   }
-  if (searchedAnime === false ) {
+  if (searchedAnime === false) {
     return next(
       new HttpError("Searching anime failed, please try again later", 500)
     );
@@ -67,7 +67,7 @@ const getUserByName = async (req, res, next) => {
     " WHERE " +
     dbModels.users.userIDNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%'";
   try {
     searchedUser = await db.query(queryText);
@@ -76,7 +76,7 @@ const getUserByName = async (req, res, next) => {
       new HttpError("Searching user failed, please try again later", 500)
     );
   }
-  if (searchedUser === false ) {
+  if (searchedUser === false) {
     return next(
       new HttpError("Searching user failed, please try again later", 500)
     );
@@ -107,11 +107,11 @@ const getCharByName = async (req, res, next) => {
     " WHERE ( " +
     dbModels.characters.firstnameNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%' ) OR ( " +
     dbModels.characters.lastnameNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%' )";
   try {
     searchedCharacter = await db.query(queryText);
@@ -121,12 +121,11 @@ const getCharByName = async (req, res, next) => {
     );
   }
 
-  if (searchedCharacter === false ) {
+  if (searchedCharacter === false) {
     return next(
       new HttpError("Searching character failed, please try again later", 500)
     );
   }
-
 
   if (searchedCharacter.rowCount == 0) {
     res.status(404).json({
@@ -153,11 +152,11 @@ const getPersonnelByName = async (req, res, next) => {
     " WHERE ( " +
     dbModels.personnel.firstnameNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%' ) OR ( " +
     dbModels.personnel.lastnameNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%' )";
   try {
     searchedPersonnel = await db.query(queryText);
@@ -167,7 +166,7 @@ const getPersonnelByName = async (req, res, next) => {
     );
   }
 
-  if (searchedPersonnel === false ) {
+  if (searchedPersonnel === false) {
     return next(
       new HttpError("Searching personnel failed, please try again later", 500)
     );
@@ -198,7 +197,7 @@ const getStudioByName = async (req, res, next) => {
     " WHERE " +
     dbModels.studio.studioIDNOTNULL +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%'";
   try {
     searchedStudio = await db.query(queryText);
@@ -208,7 +207,7 @@ const getStudioByName = async (req, res, next) => {
     );
   }
 
-  if (searchedStudio === false ) {
+  if (searchedStudio === false) {
     return next(
       new HttpError("Searching studio failed, please try again later", 500)
     );
@@ -239,7 +238,7 @@ const getEpisodeByName = async (req, res, next) => {
     " WHERE " +
     dbModels.episode.title +
     " ILIKE '%" +
-    searchString +
+    searchString.replace(/'/g, "''") +
     "%'";
   try {
     searchedEpisode = await db.query(queryText);
@@ -249,12 +248,11 @@ const getEpisodeByName = async (req, res, next) => {
     );
   }
 
-  if (searchedEpisode === false ) {
+  if (searchedEpisode === false) {
     return next(
       new HttpError("Searching episode failed, please try again later", 500)
     );
   }
-
 
   if (searchedEpisode.rowCount == 0) {
     res.status(404).json({

@@ -149,7 +149,7 @@ const addStudio = async (req, res, next) => {
     );
   }
 
-  const { studioname, office_address, website } = req.body;
+  const { studioname, office_address, website, foundingdate } = req.body;
 
   let existingStudio;
 
@@ -160,7 +160,7 @@ const addStudio = async (req, res, next) => {
         " WHERE " +
         dbModels.studio.studioIDNOTNULL +
         " = $1 ;",
-      [studioname]
+      [studioname.replace(/'/g, "''")]
     );
   } catch (err) {
     return next(
@@ -187,12 +187,16 @@ const addStudio = async (req, res, next) => {
     dbModels.studio.office_address +
     ", " +
     dbModels.studio.website +
+    ", " + 
+    dbModels.studio.foundingdate +
     " ) VALUES ( '" +
-    studioname +
+    studioname.replace(/'/g, "''") +
     "', '" +
-    office_address +
+    office_address.replace(/'/g, "''") +
     "', '" +
-    website +
+    website.replace(/'/g, "''") +
+    "', '" +
+    foundingdate +
     "' ) RETURNING * ;";
   try {
     createdStudio = await db.query(queryText);

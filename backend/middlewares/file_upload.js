@@ -17,7 +17,7 @@ const fileUpload = multer({
     filename: (req, file, cb) => {
       const ext = MIME_TYPE_MAP[file.mimetype];
       //using uuid.v1 to generate unique name
-      cb(null, uuid.v1() + "." + ext); //so the filepath becomes: ./uploads/images/uuid.ext
+      cb(null, uuid.v1() + "." + ext); //so the filepath becomes: uploads/images/uuid.ext
     },
   }),
   fileFilter: (req, file, cb) => {
