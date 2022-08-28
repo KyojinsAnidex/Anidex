@@ -117,7 +117,7 @@ const getAllFromTable = async (
     } else {
       res.status(200).json({
         success: true,
-        pesonnels: allRes.rows,
+        personnels: allRes.rows,
         allAnimeStaffWork: allAnimeStaffWork,
       });
     }

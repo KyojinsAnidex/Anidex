@@ -22,8 +22,8 @@
 <script>
 	import { Input, Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
 	export let animes,personnels;
-	console.log(animes);
-	console.log(personnels);
+	// console.log(animes);
+	// console.log(personnels);
 
 	import { curruser } from '../stores/store';
 	let character = {
@@ -207,7 +207,7 @@
 					<div>
 						<label class="mb-2.5 block font-extrabold" for="title">Select Voice Actor</label>
 						<select multiple bind:value={character.voiceactors} class="text-black">
-							{#each personnels.pesonnels as per}
+							{#each personnels.personnels as per}
 								<option value={per.personnelid}>
 									{per.firstname +"  "+ per.lastname}
 								</option>
