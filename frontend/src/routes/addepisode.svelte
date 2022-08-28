@@ -55,7 +55,7 @@
 						<label class="mb-2.5 block font-extrabold" for="Tile">Title</label>
 						<input
 							type="text"
-							bind:value={episode.tilte}
+							bind:value={episode.title}
 							id="title"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Title"
