@@ -1,48 +1,129 @@
 <script>
-    import {eps,state,epanime} from '../stores/store';
-    import {Rating} from 'flowbite-svelte';
-    console.log($eps);
-    console.log($epanime);
+	import { eps, state, epanime, curruser } from '../stores/store';
+	import { Rating, Range, AccordionFlush } from 'flowbite-svelte';
+	//console.log($eps);
+	//console.log($epanime);
+	let rating = 0;
+	let endpoint = 'http://localhost:5000/episoderating/' + $curruser.name;
+	console.log($curruser);
+	async function proxyrate(epid) {
+		let response;
 
+		response = await fetch(endpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				episodeid: epid,
+				rating: rating
+				// etc.
+			})
+		});
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function rate(epid) {
+		let temp = await proxyrate(epid);
+
+		if (temp.success == false) {
+			alert('Could not Rate');
+		} else {
+			console.log(temp);
+			rating = 0;
+			fetchepisodes();
+		}
+	}
+	let ependpoint="http://localhost:5000/episodes/"+$epanime;
+	async function proxyfetchepisodes() {
+		const response = await fetch(ependpoint);
+		if (response.status === 200) {
+			return await response.json();
+		}
+		else if(response.status === 404) {
+			return await response.json();
+		}else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetchepisodes() {
+		let temp= await proxyfetchepisodes();
+
+		if (temp.success == false) {
+			console.log('No episodes Found');
+		} else {
+		    console.log(temp);
+		    $eps=temp;	
+		}
+		
+	}
 </script>
-{#if $eps.length!=0}
-<div class="flex justify-center">
-<table class="table-auto border-separate">
-    <tr>
-      <th>EpisodeTitle   </th>
-      <th>Season   </th>
-      <th>Episode  </th>
-      <th>Runtime(minutes:seconds)</th>
-      <th>Rating</th>
-    </tr> 
-{#each $eps.episodes as prop, i}
-<tr>
-    <td>{prop.title}  </td>
-    <td>{prop.season}  </td>
-    <td>{prop.episode}  </td>
-    <td>{prop.runtime.hours}:{prop.runtime.minutes}</td>
-    <td><Rating count rating={prop.episoderating}></Rating></td>
-</tr>
-		{/each}
-    
-    </table>
-</div>
-{:else}
-<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-    The anime does not have any Episodes Added yet
-</h4>
 
+{#if $eps.length != 0}
+	<div class="flex justify-center">
+		<table class="table-auto border-separate">
+			<tr>
+				<th>EpisodeTitle </th>
+				<th>Season </th>
+				<th>Episode </th>
+				<th>Runtime(minutes:seconds)</th>
+				<th>Rating</th>
+				{#if $state == 1}
+					<th>Rate</th>
+				{/if}
+			</tr>
+			{#each $eps.episodes as prop, i}
+				<tr>
+					<td>{prop.title} </td>
+					<td>{prop.season} </td>
+					<td>{prop.episode} </td>
+					<td>{prop.runtime.hours}:{prop.runtime.minutes}</td>
+					<td><Rating count rating={prop.episoderating} /></td>
+
+					{#if $state == 1}
+						<td>
+							<AccordionFlush id="1">
+								<h2 slot="header">Give Rating</h2>
+								<div slot="body">
+									<Range min="0" max="10" bind:value={rating} step="1" />
+									<br />
+									<p>Rating : {rating}</p>
+
+									<button
+                                    on:click={rate(prop.episodeid)}
+										class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+										>Rate</button
+									>
+								</div>
+							</AccordionFlush>
+						</td>
+					{/if}
+				</tr>
+			{/each}
+		</table>
+	</div>
+{:else}
+	<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+		The anime does not have any Episodes Added yet
+	</h4>
 {/if}
-<br>   {#if $state==1}
-		  <div class="flex justify-center">
-		  <a href="/addepisode">
-		  <button
-						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						  >Add Episodes</button
-					  >
-				  </a>
-                </div>
-                {/if}
-                
-                
-               
+<br />
+{#if $state == 1}
+	<div class="flex justify-center">
+		<a href="/addepisode">
+			<button
+				class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+				>Add Episodes</button
+			>
+		</a>
+	</div>
+{/if}

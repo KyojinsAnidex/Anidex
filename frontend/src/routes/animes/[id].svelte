@@ -10,6 +10,7 @@
 	export let id;
 	import { allanimes, curruser, state,eps,epanime } from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
+	
 	let anime = $allanimes[id].anime;
 	let picture = 'http://localhost:5000/uploads/images/' + $allanimes[id].animepicture[0].pictureid;
 	//   console.log(anime);
@@ -75,6 +76,8 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+		
+			
 		}
 	}
 	function checkrate()

@@ -49,7 +49,7 @@
 		}
 	}
 	let resanimes = [];
-	async function fetchanimeinfo() {
+	export async function fetchanimeinfo() {
 		animes = await fetchanimeid();
 
 		for (let i = 0; i < animes.results.length; i++) {

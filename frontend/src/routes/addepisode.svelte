@@ -3,7 +3,9 @@
 	let episode = {
 		episode: '',
 		season: '',
-		title: ''
+		title: '',
+		airingdate:'',
+		runtime:''
 	};
 	console.log($epanime);
 	let endpoint = 'http://localhost:5000/episodes/' + $epanime;
@@ -21,7 +23,8 @@
 				episode:episode.episode,
 				season: episode.season,
 				animeid: $epanime,
-				title: episode.title
+				title: episode.title,
+				runtime:episode.runtime
 				// etc.
 			})
 		});
@@ -81,6 +84,26 @@
 							placeholder="Episode"
 						/>
 					</div>
+					<div>
+						<label class="mb-2.0 block font-extrabold" for="release date">Airing Date</label>
+						<input
+							type="text"
+							id="AirDate"
+							bind:value={episode.airingdate}
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							placeholder="YEAR-MM-DATE"
+						/>
+                    </div>
+					<div>
+						<label class="mb-2.0 block font-extrabold" for="release date">Runtime</label>
+						<input
+							type="text"
+							id="Runtime"
+							bind:value={episode.runtime}
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							placeholder="HR-MN-SEC"
+						/>
+                    </div>
 
 					
 					
