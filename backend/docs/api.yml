@@ -260,6 +260,8 @@ paths:
       summary: edit a user
       tags:
         - user
+      parameters:
+        - $ref: "#/components/parameters/uid"
       security:
        - BearerAuth: []      
       requestBody:
@@ -295,7 +297,6 @@ paths:
             encoding:
               image:
                 contentType: image/jpeg, image/jpg, image/png
-
       responses:
         "201":
           description: success
@@ -309,6 +310,36 @@ paths:
                   userid: 
                     type: string
                   user: 
+                    $ref: "#/components/schemas/UserSingleOutput"
+        "403":
+          $ref: "#/components/responses/403Forbidden"          
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+    
+    delete:
+      summary: edit a user
+      tags:
+        - user
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      security:
+       - BearerAuth: []      
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Deleted User successfully
+                  deletedUser:
                     $ref: "#/components/schemas/UserSingleOutput"
         "403":
           $ref: "#/components/responses/403Forbidden"          

@@ -43,6 +43,10 @@ router.post(
 );
 
 //protected
-// router.delete('/',);
+router.delete(
+  "/:uid",
+  // [check(["token"]).not().isEmpty()],
+  userControllers.deleteUser
+);
 
 module.exports = router;

@@ -416,10 +416,66 @@ const editUser = async (req, res, next) => {
   });
 };
 
+const deleteUser = async (req, res, next) => {
+  const userid = req.params.uid;
+  let useridState = await check_userid(userid);
+
+  if (useridState === 0) {
+    return next(
+      new HttpError(
+        "Invalid userid parameter provided, please check your url",
+        422
+      )
+    );
+  } else if (useridState === 2) {
+    return next(
+      new HttpError("Deleting user failed, please try again later", 500)
+    );
+  }
+
+  // console.log(req.userData.userId);
+  if (req.userData.userId != userid) {
+    return next(new HttpError("User trying to delete another user", 403));
+  }
+
+  let queryText = "",
+    deleteStatus = false;
+
+  queryText =
+    "DELETE FROM " +
+    dbModel.tables.users +
+    " WHERE " +
+    dbModel.users.userIDNOTNULL +
+    " = '" +
+    userid +
+    "' RETURNING *;";
+
+  try {
+    deleteStatus = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting user failed, please try again later", 500)
+    );
+  }
+
+  if (deleteStatus === false || deleteStatus.rowCount === 0) {
+    return next(
+      new HttpError("Deleting user failed, please try again later", 500)
+    );
+  }
+
+  res.status(201).json({
+    success: true,
+    message: "Deleted User Successfully",
+    deletedUser: deleteStatus.rows[0],
+  });
+};
+
 module.exports = {
   getAllUsers,
   getUserByID,
   loginUser,
   signupUser,
   editUser,
+  deleteUser,
 };

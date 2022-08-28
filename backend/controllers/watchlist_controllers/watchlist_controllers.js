@@ -70,6 +70,7 @@ const getWatchlistOfUser = async (req, res, next) => {
       message: "watchlist empty with provided userID",
     });
   }
+  d;
 };
 
 const addAnimeToWatchlist = async (req, res, next) => {
@@ -338,6 +339,12 @@ const deleteAnimeFromWatchlist = async (req, res, next) => {
         "Deleting anime from watchlist failed, please try again later",
         500
       )
+    );
+  }
+
+  if (req.userData.userId != userid) {
+    return next(
+      new HttpError("User trying to delete another user's watchlist item", 403)
     );
   }
 
