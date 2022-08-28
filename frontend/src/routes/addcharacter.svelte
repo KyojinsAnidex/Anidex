@@ -1,5 +1,30 @@
+<script context="module">
+	export async function load({url}) {
+		let animes,personnels;
+		let response;
+		response = await fetch("http://localhost:5000/anime");
+		if (response.status === 200) {
+			animes = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		response = await fetch("http://localhost:5000/personnel");
+		if (response.status === 200) {
+			personnels = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		return { props: { animes,personnels } };
+	}
+</script>
 <script>
 	import { Input, Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
+	export let animes,personnels;
+	console.log(animes);
+	console.log(personnels);
+
 	import { curruser } from '../stores/store';
 	let character = {
 		lastname: '',
@@ -7,7 +32,9 @@
 		gender: '',
 		role: '',
 		age: 0,
-		description: ''
+		description: '',
+		voiceactors:[],
+		anime:[]
 	};
 	let image;
 	async function proxyaddcharacter() {
@@ -18,6 +45,8 @@
 		dataArray.append('role', character.role);
 		dataArray.append('age', character.age);
 		dataArray.append('description', character.description);
+		dataArray.append('voiceactors', character.voiceactors);
+		dataArray.append('anime', character.anime);
 		dataArray.append('image', image[0]);
 		for (var key of dataArray.entries()) {
 			console.log(key[0] + ', ' + key[1]);
@@ -155,23 +184,46 @@
 								accept="image/png, image/jpeg"
 							/>
 						</div>
-						<div class="my-10">
-							<input
-								type="submit"
-								id="submit"
-								class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
-							/>
-						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-blue-600">
-		<img
-			src="http://localhost:5000/uploads/images/signup.jpg"
-			class="object-cover h-full w-full"
-			alt="logo"
-		/>
+	
+	<div class="h-screen w-1/2 bg-black">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+			<div class="mt-10">
+				<form on:submit|preventDefault={handleadd}>
+					<div>
+						<label class="mb-2.5 block font-extrabold" for="title">Select Anime</label>
+						<select multiple bind:value={character.anime} class="text-black">
+							{#each animes.results as an}
+								<option value={an.animeid}>
+									{an.title}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<label class="mb-2.5 block font-extrabold" for="title">Select Voice Actor</label>
+						<select multiple bind:value={character.voiceactors} class="text-black">
+							{#each personnels.pesonnels as per}
+								<option value={per.personnelid}>
+									{per.firstname +"  "+ per.lastname}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div class="my-10">
+						<input
+							type="submit"
+							id="submit"
+							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+						/>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+	
 </div>

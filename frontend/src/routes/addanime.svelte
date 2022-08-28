@@ -1,28 +1,29 @@
 <script context="module">
-	export async function load({url}) {
-		let genres,studios;
+	export async function load({ url }) {
+		let genres, studios;
 		let response;
-		response = await fetch("http://localhost:5000/genre");
+		response = await fetch('http://localhost:5000/genre');
 		if (response.status === 200) {
-			genres = await  response.json();
+			genres = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		response = await fetch("http://localhost:5000/studios");
+		response = await fetch('http://localhost:5000/studios');
 		if (response.status === 200) {
-			studios = await  response.json();
+			studios = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		return { props: { genres,studios } };
+		return { props: { genres, studios } };
 	}
 </script>
+
 <script>
-	import {  Input, Dropdown, DropdownItem, Radio,Select } from 'flowbite-svelte';
+	import { Input, Dropdown, DropdownItem, Radio, Select } from 'flowbite-svelte';
 	import { curruser } from '../stores/store';
-	export let genres,studios;
+	export let genres, studios;
 	console.log(genres);
 	console.log(studios);
 	let anime = {
@@ -30,8 +31,8 @@
 		releasedate: '',
 		synopsis: '',
 		releaseseason: '',
-		genre:[],
-		studio:[]
+		genre: [],
+		studio: []
 	};
 	let image;
 	async function proxyaddanime() {
@@ -81,14 +82,13 @@
 	<title>Add Anime</title>
 </svelte:head>
 <div class=" flex justify-center  bg-black text-white">
-<h1 class="text-2xl">Anime Info</h1>
+	<h1 class="text-2xl">Anime Info</h1>
 </div>
 <div class="relative flex h-full w-full">
 	<div class="h-screen w-1/2 bg-black">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			
 			<div class="mt-10">
-				<form >
+				<form>
 					<div>
 						<label class="mb-2.5 block font-extrabold" for="title">Title</label>
 						<input
@@ -141,9 +141,15 @@
 					<br />
 					<div>
 						<label class="mb-2.5 block font-extrabold" for="File">Anime Picture</label>
-						<input type="file" bind:files={image} id="avatar" name="avatar" accept="image/png, image/jpeg" />
+						<input
+							type="file"
+							bind:files={image}
+							id="avatar"
+							name="avatar"
+							accept="image/png, image/jpeg"
+						/>
 					</div>
-					
+				</form>
 			</div>
 		</div>
 	</div>
@@ -179,10 +185,7 @@
 						/>
 					</div>
 				</form>
-
 			</div>
-
 		</div>
-		
 	</div>
 </div>
