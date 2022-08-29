@@ -70,7 +70,6 @@ const getWatchlistOfUser = async (req, res, next) => {
       message: "watchlist empty with provided userID",
     });
   }
-  d;
 };
 
 const addAnimeToWatchlist = async (req, res, next) => {

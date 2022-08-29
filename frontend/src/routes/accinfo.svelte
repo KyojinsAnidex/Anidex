@@ -41,6 +41,41 @@
           image = image + res.user.pictureid;
         }
       }
+    async function proxydelete()
+    {
+      let endpoint = 'http://localhost:5000/users/'+$curruser.name;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+                Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+    }
+    async function handledelete() {
+		let temp = await proxydelete();
+
+		if (temp.success == false) {
+			alert('Could not Add');
+		} else {
+			state.set(0);
+		curruser.set({
+			name: '',
+			mail: '',
+			image: '',
+			token: ''
+		});
+			console.log(temp);
+		}
+	}
+
 </script>
 
 {#await fetchuserinfo()}
@@ -70,6 +105,12 @@
 						>Edit Info</button
 					>
         </a>
+        <br>
+        <button
+        on:click={handledelete}
+        class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+        >Delete Account</button
+      >
         </div>
       
       </div>
