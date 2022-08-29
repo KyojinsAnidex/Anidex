@@ -10,7 +10,6 @@
 	export let id;
 	import { allanimes, curruser, state,eps,epanime } from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
-	
 	let anime = $allanimes[id].anime;
 	let picture = 'http://localhost:5000/uploads/images/' + $allanimes[id].animepicture[0].pictureid;
 	//   console.log(anime);
@@ -76,6 +75,7 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+			refresh();
 		
 			
 		}
@@ -110,6 +110,20 @@
 		}
 		$epanime=anime.animeid;
 	}
+	let refanime;
+	async function refresh()
+	{
+		let response;
+		let endpoint="http://localhost:5000/anime/"+$allanimes[id].anime.animeid;
+		response = await fetch(endpoint);
+		if (response.status === 200) {
+			refanime = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+
+	}
 </script>
 
 <svelte:head>
@@ -129,8 +143,9 @@
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Release Date: {anime.releasedate.slice(0, 10)}
 			</h4>
+			{#await refresh() then}
 			
-				<Rating count rating={anime.averagerating}  >
+				<Rating count rating={refanime.anime.averagerating}  >
 					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 					<a
 						href="/"
@@ -138,6 +153,7 @@
 						>69 reviews</a
 					>
 				</Rating>
+				{/await}
 			
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Anime Rank: {anime.animerank}

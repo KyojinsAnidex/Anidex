@@ -64,7 +64,7 @@
 			}
 		}
 		//console.log(resanimes);
-		shuffle(resanimes);
+	    shuffle(resanimes);
 		$allanimes = resanimes;
 		//console.log($allanimes);
 	}

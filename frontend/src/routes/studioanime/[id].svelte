@@ -10,6 +10,7 @@
 	import { studioresanimes, studiorespics,state,curruser,eps,epanime } from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
 
+
 	let anime = $studioresanimes[id];
 	let picture = $studiorespics[id];
 	//  console.log(anime);
@@ -77,6 +78,9 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+			refresh();
+		
+			
 		}
 	}
 	function checkrate()
@@ -109,6 +113,21 @@
 		}
 		$epanime=anime.animeid;
 	}
+	let refanime;
+	async function refresh()
+	{
+		let response;
+		let endpoint="http://localhost:5000/anime/"+$studioresanimes[id].anime.animeid;
+		response = await fetch(endpoint);
+		if (response.status === 200) {
+			refanime = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+
+	}
+	</script>
 <svelte:head>
 	<title>{anime.title}</title>
 </svelte:head>
@@ -126,14 +145,17 @@
 				Release Date: {anime.releasedate.slice(0, 10)}
 			</h4>
 			
-				<Rating count rating={anime.averagerating}  >
-					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
-					<a
-						href="/"
-						class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
-						>69 reviews</a
-					>
-				</Rating>
+			{#await refresh() then}
+			
+			<Rating count rating={refanime.anime.averagerating}  >
+				<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+				<a
+					href="/"
+					class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
+					>69 reviews</a
+				>
+			</Rating>
+			{/await}
 			
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Anime Rank: {anime.animerank}
@@ -191,4 +213,4 @@
 			{/if}
 		</div>
 	</div>
-</div>
+	</div>
