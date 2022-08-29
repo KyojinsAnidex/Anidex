@@ -16,7 +16,11 @@ const getAllEpisodes = async (req, res, next) => {
         dbModels.tables.episode +
         " WHERE " +
         dbModels.episode.animeIDNOTNULL +
-        " = $1 ;",
+        " = $1 ORDER BY " + 
+        dbModels.episode.seasonNOTNULL + 
+        ", " + 
+        dbModels.episode.episodeNOTNULL + 
+        " ASC ;",
       [animeid]
     );
   } catch (err) {
