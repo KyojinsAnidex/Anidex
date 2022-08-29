@@ -4,6 +4,7 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
   import { curruser ,state} from "../stores/store";
+  import { goto } from '$app/navigation';
   let endpoint = "http://localhost:5000/users/" + $curruser.name;
   let image = "http://localhost:5000/uploads/images/";
   let res = {
@@ -70,9 +71,11 @@
 			name: '',
 			mail: '',
 			image: '',
-			token: ''
+			token: '',
+      admin:false
 		});
 			console.log(temp);
+      goto('/');
 		}
 	}
 
@@ -106,6 +109,7 @@
 					>
         </a>
         <br>
+        <p> &nbsp</p>
         <button
         on:click={handledelete}
         class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"

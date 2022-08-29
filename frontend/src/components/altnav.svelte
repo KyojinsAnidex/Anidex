@@ -68,6 +68,7 @@
 	<form>
 		<div class="flex relative">
 		<Iconinput  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
+		<p> &nbsp</p>
 		<a href={$searchdest}>
 		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
 	</a>
@@ -87,6 +88,9 @@
 				<DropdownHeader>
 					<span class="block text-sm"> {$curruser.name} </span>
 					<span class="block truncate text-sm font-medium"> {$curruser.mail} </span>
+					{#if $curruser.admin==true}
+					<span class="block truncate text-sm font-medium"> Admin </span>
+					{/if}
 				</DropdownHeader>
 				<a href="/accinfo">
 					<DropdownItem>Show/Edit Account Info</DropdownItem>
@@ -127,8 +131,11 @@
 						</a>
 						</Dropdown>
 					</DropdownItem>
-				<DropdownItem>WatchRoom</DropdownItem>
-				
+					{#if $curruser.admin==true}
+					<a href="/admin">
+				<DropdownItem>Admin Rights</DropdownItem>
+			</a>
+			{/if}
 				<DropdownDivider />
 				<a href="/logout">
 					<DropdownItem>Log out</DropdownItem>

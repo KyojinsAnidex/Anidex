@@ -7,7 +7,8 @@
 			name: '',
 			mail: '',
 			image: '',
-			token: ''
+			token: '',
+			admin:false
 		});
 		search.set({
 			txt: '',

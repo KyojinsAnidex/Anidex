@@ -4,7 +4,8 @@ export let curruser=writable('curruser',
     name:'',
     mail:'',
     image:'',
-    token:''
+    token:'',
+    admin:false
 })
 export let allanimes=writable('allanimes',[]);
 export let topanimes=writable('topanimes',[]);

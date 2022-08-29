@@ -79,6 +79,7 @@
 			$curruser.name = temp.userid;
 			$curruser.mail = temp.email;
 			$curruser.token = temp.token;
+			$curruser.admin=temp.admin;
 			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();

@@ -1,0 +1,295 @@
+<script context="module">
+	export async function load({url}) {
+		let animes,personnels,characters;
+		let response;
+		response = await fetch("http://localhost:5000/anime");
+		if (response.status === 200) {
+			animes = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		response = await fetch("http://localhost:5000/personnel");
+		if (response.status === 200) {
+			personnels = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+        response = await fetch("http://localhost:5000/characters");
+		if (response.status === 200) {
+			characters = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		return { props: { animes,personnels,characters } };
+	}
+</script>
+<svelte:head>
+	<title>
+        Admin Rights
+    </title>
+</svelte:head>
+<script>
+    export let animes,personnels,characters;
+    import {AccordionFlush} from "flowbite-svelte";
+    import {curruser} from '../stores/store';
+    //console.log(animes);
+    //console.log(personnels);
+   // console.log(characters);
+    let episodes,chosenanime,chosenpersonnel,chosencharacter,chosenepisode;
+	async function proxyfetchepisodes() {
+        let ependpoint="http://localhost:5000/episodes/"+chosenanime;
+		const response = await fetch(ependpoint);
+		if (response.status === 200) {
+			return await response.json();
+		}
+		else if(response.status === 404) {
+			return await response.json();
+		}else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetchepisodes() {
+		let temp= await proxyfetchepisodes();
+
+		if (temp.success == false) {
+			console.log('No episodes Found');
+		} else {
+		   // console.log(temp);	
+            episodes=temp;
+		}
+		
+	}
+    async function proxydeleteanime()
+    {
+      let endpoint = 'http://localhost:5000/anime/'+chosenanime;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+                Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+    }
+    async function handledeleteanime() {
+		let temp = await proxydeleteanime();
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {		
+			console.log(temp);
+		}
+	}
+    async function proxydeletecharacters()
+    {
+      let endpoint = 'http://localhost:5000/characters/'+chosencharacter;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+                Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+    }
+    async function handledeletecharacter() {
+		let temp = await proxydeletecharacters();
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {		
+			console.log(temp);
+		}
+	}
+    async function proxydeletepersonnel()
+    {
+      let endpoint = 'http://localhost:5000/personnel/'+chosenpersonnel;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+                Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+    }
+    async function handledeletepersonnel() {
+		let temp = await proxydeletepersonnel();
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {		
+			console.log(temp);
+		}
+	}
+    async function proxydeleteepisode()
+    {
+      let endpoint = 'http://localhost:5000/episodes/single/'+chosenepisode;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+                Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			},
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+    }
+    async function handledeleteepisode() {
+		let temp = await proxydeleteepisode();
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {		
+			console.log(temp);
+		}
+	}
+</script>
+<div class="relative flex h-full w-full">
+	<div class="h-screen w-1/2 bg-black">
+		<AccordionFlush id="1">
+            <h2 slot="header">Delete Anime</h2>
+        <div slot="body">
+            <select  bind:value={chosenanime} class="text-black">
+                {#each animes.results as an}
+                    <option value={an.animeid}>
+                        {an.title}
+                    </option>
+                {/each}
+            </select>
+		  <br>
+          <br>
+		  <div class="flex justify-center">
+		
+		  <button
+						  on:click={handledeleteanime}
+						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						  >Delete Chosen Anime</button
+					  >
+				 
+			  </div>
+		  
+        </div>
+
+        </AccordionFlush>
+        <AccordionFlush id="5">
+            <h2 slot="header">Delete Character</h2>
+        <div slot="body">
+            <select  bind:value={chosencharacter} class="text-black">
+                {#each characters.results as char}
+                    <option value={char.characterid}>
+                        {char.firstname +"  "+ char.lastname}
+                    </option>
+                {/each}
+            </select>
+		  <br>
+          <br>
+		  <div class="flex justify-center">
+		
+		  <button
+						  on:click={handledeletecharacter}
+						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						  >Delete Chosen Character</button
+					  >
+				 
+			  </div>
+		  
+        </div>
+
+        </AccordionFlush>
+        <AccordionFlush id="2">
+            <h2 slot="header">Delete Personnel</h2>
+            <div slot='body'>
+            <select  bind:value={chosenpersonnel} class="text-black">
+                {#each personnels.personnels as per}
+                    <option value={per.personnelid}>
+                        {per.firstname +"  "+ per.lastname}
+                    </option>
+                {/each}
+            </select>
+            <br>
+            <br>
+            <div class="flex justify-center">
+          
+            <button
+                            on:click={handledeletepersonnel}
+                            class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+                            >Delete Chosen Personnel</button
+                        >
+                   
+                </div>
+        </div>
+
+
+        </AccordionFlush>
+		</div>
+	<div class="h-screen w-1/2 bg-black">
+        <AccordionFlush id="3">
+            <h2 slot="header">Delete Episode</h2>
+        <div slot="body">
+            <select  bind:value={chosenanime} class="text-black">
+                {#each animes.results as an}
+                    <option value={an.animeid}>
+                        {an.title}
+                    </option>
+                {/each}
+            </select>
+            <AccordionFlush id="4">
+                <h2 slot="header">Choose Episode</h2>
+                <div slot="body">
+            {#await fetchepisodes() then}
+            <select  bind:value={chosenepisode} class="text-black">
+                {#each episodes.episodes as prop}
+                <option value={prop.episodeid}>
+                    {prop.title}
+                </option>
+                {/each}
+            </select>
+            {/await}  
+		  <br>
+          <br>
+		  <div class="flex justify-center">
+		
+		  <button
+						  on:click={handledeleteepisode}
+						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						  >Delete Chosen Episode</button
+					  >
+				 
+			  </div>
+		  
+        </div>
+    </AccordionFlush>
+
+        </AccordionFlush>
+
+	</div>
+	
+</div>
