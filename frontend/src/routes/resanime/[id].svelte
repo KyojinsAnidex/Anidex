@@ -114,7 +114,7 @@
 	async function refresh()
 	{
 		let response;
-		let endpoint="http://localhost:5000/anime/"+$animesearch.resultAnime[id].anime.animeid;
+		let endpoint="http://localhost:5000/anime/"+$animesearch.resultAnime[id].animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await  response.json();
