@@ -11,6 +11,7 @@ const episodesControllers = require("./episodes_controller/episodes_controllers"
 const studioControllers = require("./studio_controllers/studio_controllers");
 const animeRatingControllers = require("./animerating_controllers/animerating_controllers");
 const episodeRatingControllers = require("./episodeRating_controllers/episodeRating_controllers");
+const discussionControllers = require("./discussion_controllers/discussion_controllers");
 
 module.exports = {
   animeControllers,
@@ -26,4 +27,5 @@ module.exports = {
   studioControllers,
   animeRatingControllers,
   episodeRatingControllers,
+  discussionControllers,
 };

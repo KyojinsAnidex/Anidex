@@ -13,6 +13,7 @@ const episodeRoutes = require("./episodes_routes/episodes_routes");
 const studioRoutes = require("./studio_routes/studio_routes");
 const animeRatingRoutes = require("./animerating_routes/animerating_routes");
 const episodeRatingRoutes = require("./episodeRating_routes/episodeRating_routes");
+const discussionRoutes = require("./discussion_routes/discussion_routes");
 
 //export a method to add all routes to app parameter
 module.exports = (app) => {
@@ -32,4 +33,5 @@ module.exports = (app) => {
   app.use("/studios", studioRoutes);
   app.use("/animerating", animeRatingRoutes);
   app.use("/episoderating", episodeRatingRoutes);
+  app.use("/discussion", discussionRoutes);
 };
