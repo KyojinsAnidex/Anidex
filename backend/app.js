@@ -53,7 +53,7 @@ app.use((req, res, next) => {
  */
 app.use((error, req, res, next) => {
   if (req.file) {
-    fs.unlink(path.join(__dirname, req.file.path), (err) => {
+    fs.unlink(path.join("./", req.file.path), (err) => {
       console.log("ERROR UNLINKING FILE FROM FAILED REQUEST\n" + err);
     });
   }

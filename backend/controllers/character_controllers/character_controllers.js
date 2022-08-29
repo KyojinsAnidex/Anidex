@@ -20,7 +20,9 @@ const getAllChar = async (req, res, next) => {
 };
 
 const getAChar = async (req, res, next) => {
-  let searchedChar;
+  let searchedChar = false,
+    anime = false,
+    voiceActor = false;
 
   const charID = req.params.cid;
 
@@ -39,23 +41,78 @@ const getAChar = async (req, res, next) => {
     );
   }
 
-  if (searchedChar === false) {
+  if (searchedChar === false || searchedChar.rowCount === 0) {
     return next(
       new HttpError("Fetching character failed, please try again later.", 500)
     );
   }
 
-  if (searchedChar.rowCount === 0) {
-    res.status(404).json({
-      success: false,
-      message: "No character with provided characterID",
-    });
-  } else {
-    res.status(200).json({
-      success: true,
-      character: searchedChar.rows[0],
-    });
+  try {
+    anime = await db.query(
+      "SELECT " +
+        dbModels.animecharacter.animeIDNOTNULL +
+        " FROM " +
+        dbModels.tables.animecharacter +
+        " WHERE " +
+        dbModels.animecharacter.characterIDNOTNULL +
+        " = " +
+        searchedChar.rows[0].characterid +
+        ";"
+    );
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Fetching character's anime failed, please try again later.",
+        500
+      )
+    );
   }
+
+  if (anime === false || anime.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Fetching character's anime failed, please try again later.",
+        500
+      )
+    );
+  }
+
+  try {
+    voiceActor = await db.query(
+      "SELECT " +
+        dbModels.charactervoiceactor.personnelIDNOTNULL +
+        " FROM " +
+        dbModels.tables.charactervoiceactor +
+        " WHERE " +
+        dbModels.charactervoiceactor.characteridNOTNULL +
+        " = " +
+        searchedChar.rows[0].characterid +
+        ";"
+    );
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Fetching character's voice actor failed, please try again later.",
+        500
+      )
+    );
+  }
+
+  if (voiceActor === false || voiceActor.rowCount === 0) {
+    return next(
+      new HttpError(
+        "Fetching character's voice actor failed, please try again later.",
+        500
+      )
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    character: searchedChar.rows[0],
+    anime: anime.rows,
+    voiceActor: voiceActor.rows,
+  });
 };
 
 const addAChar = async (req, res, next) => {

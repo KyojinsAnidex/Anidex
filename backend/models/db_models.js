@@ -19,6 +19,11 @@ const tables = {
   watchlist: "watchlist",
   watchroom: "watchroom",
   watchroomparticipants: "watchroomparticipants",
+  animeDiscussion: "animediscussion",
+  discussionEntries: "discussionentries",
+  discussionHead: "discussionheads",
+  discussionTags: "discussiontags",
+  tagCloud: "tagcloud",
 };
 
 const users = {
@@ -165,6 +170,38 @@ const watchroomparticipants = {
   watchroomidNOTNULL: "watchroomid",
 };
 
+const discussionEntries = {
+  userIDNOTNULL: "userid",
+  contentNOTNULL: "discussionentry",
+  entryTime: "entrytime",
+  votesNOTNULL: "votes",
+  discussionHeadIdNOTNULL: "discussionheadid",
+};
+
+const discussionHead = {
+  discussionHeadIdNOTNULL: "discussionheadid",
+  contentNOTNULL: "content",
+  votesNOTNULL: "votes",
+  startTime: "starttime",
+  userIDNOTNULL: "userid",
+};
+
+const discussionTags = {
+  tagsNOTNULL: "tags",
+  discussionHeadIdNOTNULL: "discussionheadid",
+};
+
+const tagCloud = {
+  tagNameNOTNULL: "tagname",
+  descriptionNOTNULL: "description",
+};
+
+const animeDiscussion = {
+  discussionHeadIdNOTNULL: "discussionheadid",
+  animeIDNOTNULL: "animeid",
+  tagNOTNULL: "tag",
+};
+
 module.exports = {
   tables,
   anime,
@@ -187,4 +224,9 @@ module.exports = {
   watchlist,
   watchroom,
   watchroomparticipants,
+  animeDiscussion,
+  discussionEntries,
+  discussionHead,
+  discussionTags, 
+  tagCloud
 };

@@ -121,6 +121,81 @@ const getAllFromTable = async (
         allAnimeStaffWork: allAnimeStaffWork,
       });
     }
+  } else if (searchingName === "characters") {
+    let allAnime = [];
+    let totalCharacters = allRes.rows.length;
+
+    //for each character find her/his anime, add to allAnime
+    for (let i = 0; i < totalCharacters; i++) {
+      let thisCharacterAnime = false;
+      try {
+        thisCharacterAnime = await db.query(
+          "SELECT * " +
+            // dbModel.animeisofgenre.genreNameNOTNULL +
+            " FROM " +
+            dbModel.tables.animecharacter +
+            " WHERE " +
+            dbModel.animecharacter.characterIDNOTNULL +
+            " = " +
+            allRes.rows[i].characterid +
+            "; "
+        );
+      } catch (err) {
+        return next(
+          new HttpError(
+            "Failed to get anime for character, please try again later",
+            500,
+            false
+          )
+        );
+      }
+
+      allAnime.push(thisCharacterAnime.rows);
+    }
+
+    let allVoiceActor = [];
+
+    //for each character find her/his voice actor, add to allVoiceActor
+    for (let i = 0; i < totalCharacters; i++) {
+      let thisCharacterVoiceActor = false;
+      try {
+        thisCharacterVoiceActor = await db.query(
+          "SELECT * " +
+            // dbModel.animeisofgenre.genreNameNOTNULL +
+            " FROM " +
+            dbModel.tables.charactervoiceactor +
+            " WHERE " +
+            dbModel.charactervoiceactor.characteridNOTNULL +
+            " = " +
+            allRes.rows[i].characterid +
+            "; "
+        );
+      } catch (err) {
+        return next(
+          new HttpError(
+            "Failed to get voice actor for character, please try again later",
+            500,
+            false
+          )
+        );
+      }
+
+      allVoiceActor.push(thisCharacterVoiceActor.rows);
+    }
+
+    if (allRes.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "No character found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: allRes.rows,
+        allAnime: allAnime,
+        allVoiceActor: allVoiceActor,
+      });
+    }
   } else {
     if (allRes.rowCount === 0) {
       res.status(404).json({

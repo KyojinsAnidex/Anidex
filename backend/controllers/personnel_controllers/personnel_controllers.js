@@ -18,6 +18,7 @@ const getAllPerson = async (req, res, next) => {
   );
 };
 
+
 const getSinglePerson = async (req, res, next) => {
   let searchedPerson;
   let workedOnAnime = false;

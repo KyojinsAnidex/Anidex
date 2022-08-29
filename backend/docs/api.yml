@@ -698,6 +698,29 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/characterSingle"
+                  allAnime:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          animeid:
+                            type: integer
+                          characterid:
+                            type: integer
+                  allVoiceActor:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          personnelid:
+                            type: integer
+                          characterid:
+                            type: integer
+                      
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
@@ -750,6 +773,16 @@ paths:
                     type: boolean
                   character:
                     $ref: "#/components/schemas/characterSingle"
+                  anime:
+                    description: animeid of the anime
+                    type: array
+                    items: 
+                        type: integer
+                  voiceActors:
+                    description: personnel id of the voice actor
+                    type: array
+                    items:
+                      type: integer 
         "404":
           $ref: "#/components/responses/404NotFound"
         "500":
