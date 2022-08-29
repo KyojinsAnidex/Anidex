@@ -11,6 +11,12 @@ router.get("/:aid", animeRatingControllers.getAnimeAllRating);
 
 router.get("/user/:uid", animeRatingControllers.getUserAllRating);
 
+router.post(
+  "/anime/:uid",
+  [check(["animeid"]).not().isEmpty()],
+  animeRatingControllers.getAnimeRatingByUser
+);
+
 router.use(check_auth);
 
 router.post(

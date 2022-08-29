@@ -1522,6 +1522,40 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+  "/animerating/anime/{uid}":
+    post:
+      summary: get single anime rating by a single user
+      tags:
+        - animeRating
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                animeid:
+                  type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  rating:
+                    type: integer
+                    minimum: 0
+                    maximum: 10
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
   "/episoderating/{episodeid}":
     get:
       summary: get all rating of a single episode
@@ -1597,6 +1631,40 @@ paths:
                     $ref: "#/components/schemas/episodeRatingAll"
         "404":
           $ref: "#/components/responses/404NotFound"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+ 
+  "/episoderating/episode/{uid}":
+    post:
+      summary: get single episode rating by a single user
+      tags:
+        - episodeRating
+      parameters:
+        - $ref: "#/components/parameters/uid"
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                episodeid:
+                  type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  rate:
+                    type: integer
+                    minimum: 0
+                    maximum: 10
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
         "500":
           $ref: "#/components/responses/500ServerSideError"
 

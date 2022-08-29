@@ -96,6 +96,68 @@ const getUserAllRating = async (req, res, next) => {
   }
 };
 
+const getAnimeRatingByUser = async (req, res, next) => {
+  let star;
+  const userid = req.params.uid;
+  const { animeid } = req.body;
+  let animeidstate = await check_animeid(animeid),
+    useridstate = await check_userid(userid);
+  if (animeidstate === 0 || useridstate === 0) {
+    return next(
+      new HttpError(
+        "Invalid animeid or userid parameter provided, please check your url",
+        422
+      )
+    );
+  } else if (animeidstate === 2|| useridstate === 2) {
+    return next(
+      new HttpError("Getting rating failed, please try again later", 500)
+    );
+  }
+  let queryText =
+    "SELECT * FROM " +
+    dbModels.tables.animestars +
+    " WHERE " +
+    dbModels.animestars.userIDNOTNULL +
+    " = '" +
+    userid +
+    "' AND " +
+    dbModels.animestars.animeIDNOTNULL +
+    " = '" +
+    animeid +
+    "' ;";
+  try {
+    star = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Fetching this anime rating by this user failed, please try again later.",
+        500
+      )
+    );
+  }
+  if (star === false) {
+    return next(
+      new HttpError(
+        "Fetching this anime rating by this user failed, please try again later.",
+        500
+      )
+    );
+  }
+
+  if (star.rowCount === 0) {
+    res.status(200).json({
+      success: true,
+      rating: 0,
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      rating: star.rows[0].starcount,
+    });
+  }
+};
+
 const addRatingByUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -246,4 +308,5 @@ module.exports = {
   getAnimeAllRating,
   getUserAllRating,
   addRatingByUser,
+  getAnimeRatingByUser,
 };

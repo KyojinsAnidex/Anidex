@@ -11,6 +11,12 @@ router.get("/:episodeid", episodeRatingControllers.getEpisodeAllRating);
 
 router.get("/user/:uid", episodeRatingControllers.getUserAllRating);
 
+router.post(
+  "/episode/:uid",
+  [check("episodeid").not().isEmpty()],
+  episodeRatingControllers.getUserSingleRating
+);
+
 router.use(check_auth);
 
 router.post(

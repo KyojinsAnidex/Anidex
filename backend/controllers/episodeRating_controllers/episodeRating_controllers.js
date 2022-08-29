@@ -96,6 +96,68 @@ const getUserAllRating = async (req, res, next) => {
   }
 };
 
+const getUserSingleRating = async (req, res, next) => {
+  let rate;
+  const userid = req.params.uid;
+  const { episodeid } = req.body;
+  let episodeidstate = await check_episodeid(episodeid),
+    useridstate = await check_userid(userid);
+  if (episodeidstate === 0 || useridstate === 0) {
+    return next(
+      new HttpError(
+        "Invalid episodeid or userid parameter provided, please check your url",
+        422
+      )
+    );
+  } else if (episodeidstate === 2 || useridstate === 2) {
+    return next(
+      new HttpError("Getting rating failed, please try again later", 500)
+    );
+  }
+  let queryText =
+    "SELECT * FROM " +
+    dbModels.tables.episoderates +
+    " WHERE " +
+    dbModels.episoderates.userIDNOTNULL +
+    " = '" +
+    userid +
+    "' AND " +
+    dbModels.episoderates.episodeidNOTNULL +
+    " = '" +
+    episodeid +
+    "' ;";
+  try {
+    rate = await db.query(queryText);
+  } catch (err) {
+    return next(
+      new HttpError(
+        "Fetching the rating by this user failed, please try again later.",
+        500
+      )
+    );
+  }
+  if (rate === false) {
+    return next(
+      new HttpError(
+        "Fetching the rating by this user failed, please try again later.",
+        500
+      )
+    );
+  }
+
+  if (rate.rowCount === 0) {
+    res.status(200).json({
+      success: true,
+      rating: 0,
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      rating: rate.rows[0].rating,
+    });
+  }
+};
+
 const addRatingByUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -217,4 +279,5 @@ module.exports = {
   getEpisodeAllRating,
   getUserAllRating,
   addRatingByUser,
+  getUserSingleRating,
 };
