@@ -117,7 +117,9 @@
 		<a href="allcharacters">
 			<DropdownItem>Character</DropdownItem>
 		</a>
+		<a href="allpersonnel">
 			<DropdownItem>Personnel</DropdownItem>
+		</a>
 		</Dropdown>
 		
 		<NavLi href="/ratedanime">Top Rated</NavLi>

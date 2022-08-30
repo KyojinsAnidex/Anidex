@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search, perpics, persearch } from '../stores/store';
+	import { state, search, perpics, persearch,pershowchoice } from '../stores/store';
 	let animes = {
 		success: false,
 		resultPersonnel: []
@@ -44,6 +44,7 @@
 			addperpic();
 			$perpics = pictures;
 			$persearch = animes;
+			$pershowchoice=0;
 		}
 	}
 
