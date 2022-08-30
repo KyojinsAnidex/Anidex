@@ -1,5 +1,4 @@
 <script context="module">
-	
 	export async function load({ params }) {
 		let discussionheadid = params.discussionheadid;
         let discussion;
@@ -18,9 +17,10 @@
     export let discussion;
     console.log(discussion);
 	import {Card,Avatar,Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, AccordionFlush} from 'flowbite-svelte';
+	import {state,curruser} from './../../stores/store.js';
 </script>
 <div class="flex justify-center">
-<Card img={'http://localhost:5000/uploads/images/'+discussion.discussionHead.pictureid} href="/" horizontal reverse={false}>
+<Card img={'http://localhost:5000/uploads/images/'+discussion.discussionHead.pictureid} horizontal reverse={false}>
 	<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{discussion.discussionHead.userid}</h5>
 	<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Votes: {discussion.discussionHead.votes}</h5>
 	<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Start Time: {discussion.discussionHead.starttime.slice(0,10)}</h5>
@@ -56,7 +56,7 @@
                   
              
 			</tr>
-              {/each}
-            
+              {/each}           
           </table>
 		</div>
+

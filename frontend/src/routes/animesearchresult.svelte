@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, animesearch, animepics, search, searchdest } from '../stores/store';
+	import { state, animesearch, animepics, search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultAnime: []
