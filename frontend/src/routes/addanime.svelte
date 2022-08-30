@@ -81,41 +81,45 @@
 <svelte:head>
 	<title>Add Anime</title>
 </svelte:head>
-<div class=" flex justify-center  bg-black text-white">
-	<h1 class="text-2xl">Anime Info</h1>
+<div class=" flex justify-center  text-black">
+	<h1 class="text-2xl">Anime Information</h1>
 </div>
 <div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+
+	<div class="h-screen w-1/2 ">
+			
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+			<h2 class="text-2xl font-bold">Add Anime </h2>
+		
 			<div class="mt-10">
 				<form>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Title</label>
+						<label class="mb-2.5 block font-bold" for="title">Title</label>
 						<input
 							type="text"
 							id="name"
 							bind:value={anime.title}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Title"
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Release Date</label>
+						<label class="mb-2.5 block text-black font-bold" for="release date">Release Date</label>
 						<input
 							type="text"
 							id="Releasedate"
 							bind:value={anime.releasedate}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="YEAR-MM-DATE"
 						/>
 					</div>
 					<div>
-						<label for="sys" class="mb-2.5 block font-extrabold ">Synopsis</label>
+						<label for="sys" class="mb-2.5 block text-black font-bold ">Synopsis</label>
 						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" />
 					</div>
 					<br />
-					<Dropdown label="Season" class="w-60" size="xl" color="black">
-						<ul slot="content" class="p-3">
+					<Dropdown label="Season" class="w-60 font-bold" size="xl" color="black">
+						<ul slot="content" class="p-3 ">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={anime.releaseseason} name="dropdown" value={'Spring'} tinted
 									>Spring</Radio
@@ -140,7 +144,7 @@
 					</Dropdown>
 					<br />
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="File">Anime Picture</label>
+						<label class="mb-2.5 block font-bold" for="File">Anime Picture</label>
 						<input
 							type="file"
 							bind:files={image}
@@ -153,12 +157,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			<div class="mt-10">
+	<div class="h-screen w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+			<div class="mt-10 ">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Select Genre</label>
+						<label class="mb-2.5 block font-bold" for="title">Select Genre</label>
 						<select multiple bind:value={anime.genre} class="text-black">
 							{#each genres.results as gen}
 								<option value={gen.genrename}>
@@ -168,7 +172,7 @@
 						</select>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Select Studio</label>
+						<label class="mb-2.5 block font-bold" for="title">Select Studio</label>
 						<select multiple bind:value={anime.studio} class="text-black">
 							{#each studios.results as std}
 								<option value={std.studioname}>
@@ -177,11 +181,11 @@
 							{/each}
 						</select>
 					</div>
-					<div class="my-10">
+					<div class="my-10 ">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="w-2/5 rounded-2xl text-white text-xl font-bold bg-red-900 p-1 align-center hover:bg-red-500"
 						/>
 					</div>
 				</form>

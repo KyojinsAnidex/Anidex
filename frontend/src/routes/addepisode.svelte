@@ -1,11 +1,11 @@
 <script>
-	import {  curruser,epanime } from '../stores/store';
+	import { curruser, epanime } from '../stores/store';
 	let episode = {
 		episode: '',
 		season: '',
 		title: '',
-		airingdate:'',
-		runtime:''
+		airingdate: '',
+		runtime: ''
 	};
 	console.log($epanime);
 	let endpoint = 'http://localhost:5000/episodes/' + $epanime;
@@ -20,11 +20,11 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				episode:episode.episode,
+				episode: episode.episode,
 				season: episode.season,
 				animeid: $epanime,
 				title: episode.title,
-				runtime:episode.runtime
+				runtime: episode.runtime
 				// etc.
 			})
 		});
@@ -44,18 +44,20 @@
 		}
 	}
 </script>
+
 <svelte:head>
 	<title>Add Episode</title>
 </svelte:head>
 
 <div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			
-			<div class="mt-10">
+	 
+	<div class="h-screen w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+			<h2 class="text-xl font-bold">Add Anime Episodes</h2>
+			<div class="mt-10 text-black">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="Tile">Title</label>
+						<label class="mb-2.5 block text-lg font-bold" for="Tile">Title</label>
 						<input
 							type="text"
 							bind:value={episode.title}
@@ -64,8 +66,8 @@
 							placeholder="Title"
 						/>
 					</div>
-                    <div>
-						<label class="mb-2.5 block font-extrabold" for="Season">Season</label>
+					<div>
+						<label class="mb-2.5 block text-lg font-bold" for="Season">Season</label>
 						<input
 							type="number"
 							bind:value={episode.season}
@@ -74,8 +76,8 @@
 							placeholder="Season"
 						/>
 					</div>
-                    <div>
-						<label class="mb-2.5 block font-extrabold" for="Episode Number">Episode Number</label>
+					<div>
+						<label class="mb-2.5 block text-lg font-bold" for="Episode Number">Episode Number</label>
 						<input
 							type="number"
 							bind:value={episode.episode}
@@ -85,33 +87,31 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="release date">Airing Date</label>
+						<label class="mb-2.0 block text-lg font-bold" for="release date">Airing Date</label>
 						<input
 							type="text"
 							id="AirDate"
 							bind:value={episode.airingdate}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
-							placeholder="YEAR-MM-DATE"
+							placeholder="YY-MM-DD"
 						/>
-                    </div>
+					</div>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="release date">Runtime</label>
+						<label class="mb-2.0 block text-lg font-bold" for="release date">Runtime</label>
 						<input
 							type="text"
 							id="Runtime"
 							bind:value={episode.runtime}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
-							placeholder="HR-MN-SEC"
+							placeholder="HH:MM:SS"
 						/>
-                    </div>
+					</div>
 
-					
-					
-					<div class="my-10">
+					<div class="my-10 text-xl font-bold text-white items-center justify-center">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="w-2/5 rounded-2xl bg-red-900 p-2 hover:bg-red-500"
 						/>
 					</div>
 				</form>

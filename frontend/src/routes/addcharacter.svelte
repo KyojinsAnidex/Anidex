@@ -90,9 +90,11 @@
 	<div class="h-full w-1/2 bg-white">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
+				<h2 class="text-2xl font-bold">Add Character</h2>
+		
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">First Name</label>
+						<label class="mb-2.5 block font-bold" for="title">First Name</label>
 						<input
 							type="text"
 							id="firstname"
@@ -102,7 +104,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Last Name</label>
+						<label class="mb-2.5 block font-bold" for="title">Last Name</label>
 						<input
 							type="text"
 							id="lastname"
@@ -112,7 +114,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Age</label>
+						<label class="mb-2.5 block font-bold" for="title">Age</label>
 						<input
 							type="number"
 							id="firstname"
@@ -122,13 +124,14 @@
 						/>
 					</div>
 					<br />
-					<div class="grid grid-cols-2 divide-x">
-						<div>
-							<Dropdown label=" Choose Role" class="w-60" color="white" size="l">
+					<div class="grid grid-cols-2 divide-x items-center">
+						<div class="font-bold">
+							Role
+							<Dropdown label={character.role} class="w-60" color="white" size="l">
 								<ul slot="content" class="p-3">
 									<DropdownItem
 										class="rounded"
-										liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+										liClass="p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
 									>
 										<Radio bind:group={character.role} name="dropdown" value={'Main'} tinted
 											>Main</Radio
@@ -145,8 +148,9 @@
 									</DropdownItem>
 								</ul>
 							</Dropdown>
-							<div>
-								<Dropdown label=" Choose Gender" class="w-60" color="white" size="l">
+							<div class="font-bold">
+								Gender
+								<Dropdown label={character.gender} class="w-60" color="white" size="l">
 									<ul slot="content" class="p-3">
 										<DropdownItem
 											class="rounded"
@@ -165,7 +169,7 @@
 						</div>
 					</div>
 					<div>
-						<label for="sys" class="mb-2.5 block font-extrabold ">Description</label>
+						<label for="sys" class="mb-2.5 block font-bold ">Character Description</label>
 						<Input
 							bind:value={character.description}
 							id="sys"
@@ -176,7 +180,7 @@
 					<br />
 					<div>
 						<div>
-							<label class="mb-2.5 block font-extrabold" for="File">Character Picture</label>
+							<label class="mb-2.5 block font-bold" for="File">Character Picture</label>
 							<input
 								type="file"
 								bind:files={image}
@@ -191,12 +195,12 @@
 		</div>
 	</div>
 
-	<div class="h-full w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-gray-900 xl:w-1/2">
+	<div class="h-full w-1/2 bg-white items-center justify-center">
+		<div class="mx-auto flex h-full w-2/3 flex-col  justify-center text-gray-900 xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Select Anime</label>
+						<label class="mb-2.5 block font-bold" for="title">Select Anime</label>
 						<select multiple bind:value={character.anime} class="text-gray-900">
 							{#each animes.results as an}
 								<option value={an.animeid}>
@@ -206,7 +210,7 @@
 						</select>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Select Voice Actor</label>
+						<label class="mb-2.5 block font-bold" for="title">Select Voice Actor</label>
 						<select multiple bind:value={character.voiceactors} class="text-gray-900">
 							{#each personnels.personnels as per}
 								<option value={per.personnelid}>
@@ -215,11 +219,11 @@
 							{/each}
 						</select>
 					</div>
-					<div class="my-10">
+					<div class="my-10 text-xl font-bold text-white align-middle">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="w-2/5 align-middle rounded-2xl bg-red-900 p-2 hover:bg-red-600"
 						/>
 					</div>
 				</form>

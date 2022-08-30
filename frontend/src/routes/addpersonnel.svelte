@@ -1,18 +1,19 @@
 <script context="module">
-	export async function load({url}) {
+	export async function load({ url }) {
 		let animes;
 		let response;
-		response = await fetch("http://localhost:5000/anime");
+		response = await fetch('http://localhost:5000/anime');
 		if (response.status === 200) {
-			animes = await  response.json();
+			animes = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		
-		return { props: { animes} };
+
+		return { props: { animes } };
 	}
 </script>
+
 <script>
 	import { Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
 	import { curruser } from '../stores/store';
@@ -23,14 +24,14 @@
 		firstname: '',
 		gender: '',
 		birthday: '',
-		address:'',
-		website:'',
-		anime:[]
+		address: '',
+		website: '',
+		anime: []
 	};
 	let image;
 	async function proxyaddpersonnel() {
 		const dataArray = new FormData();
-		dataArray.append('lastname',personnel.lastname);
+		dataArray.append('lastname', personnel.lastname);
 		dataArray.append('firstname', personnel.firstname);
 		dataArray.append('gender', personnel.gender);
 		dataArray.append('birthday', personnel.birthday);
@@ -76,13 +77,14 @@
 	<title>Add Personnel</title>
 </svelte:head>
 <div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			
+	<div class="h-screen w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
+				<h2 class="text-2xl font-bold">Add Personnel</h2>
+
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">First Name</label>
+						<label class="mb-2.0 block text-lg font-bold" for="title">First Name</label>
 						<input
 							type="text"
 							id="firstname"
@@ -91,8 +93,8 @@
 							placeholder="First Name"
 						/>
 					</div>
-                    <div>
-						<label class="mb-2.0 block font-extrabold" for="title">Last Name</label>
+					<div>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Last Name</label>
 						<input
 							type="text"
 							id="lastname"
@@ -101,22 +103,21 @@
 							placeholder="Last Name"
 						/>
 					</div>
-                    <br />
-					<Dropdown label=" Choose Gender" class="w-60" color="white" size="l">
+					<br />
+					<h2 class="text-lg font-bold">Choose Gender</h2>
+					<Dropdown label={personnel.gender} class="w-60" color="white" size="l">
 						<ul slot="content" class="p-3">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-								<Radio bind:group={personnel.gender} name="dropdown" value={'M'} tinted
-									>Male</Radio
-								>
-                                <Radio bind:group={personnel.gender} name="dropdown" value={'F'} tinted
+								<Radio bind:group={personnel.gender} name="dropdown" value={'M'} tinted>Male</Radio>
+								<Radio bind:group={personnel.gender} name="dropdown" value={'F'} tinted
 									>Female</Radio
 								>
-                            </DropdownItem>
+							</DropdownItem>
 						</ul>
 					</Dropdown>
-                    <br>
+					<br />
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">Address</label>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Address</label>
 						<input
 							type="text"
 							id="address"
@@ -126,7 +127,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">Website</label>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Website</label>
 						<input
 							type="url"
 							id="website"
@@ -136,7 +137,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="release date">BirthDay</label>
+						<label class="mb-2.0 block text-lg font-bold" for="release date">BirthDay</label>
 						<input
 							type="text"
 							id="Birthdate"
@@ -144,23 +145,28 @@
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="YEAR-MM-DATE"
 						/>
-                    </div>
-                    <br>
-					<div>
-						<label class="mb-2.0 block font-extrabold" for="File">Personnel Picture</label>
-						<input type="file" bind:files={image} id="avatar" name="avatar" accept="image/png, image/jpeg" />
 					</div>
-					
+					<br />
+					<div>
+						<label class="mb-2.0 block text-lg font-bold" for="File">Personnel Picture</label>
+						<input
+							type="file"
+							bind:files={image}
+							id="avatar"
+							name="avatar"
+							accept="image/png, image/jpeg"
+						/>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+	<div class="h-screen w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">Select Anime</label>
+						<label class="mb-2.5 block text-lg font-bold" for="title">Select Anime</label>
 						<select multiple bind:value={personnel.anime} class="text-black">
 							{#each animes.results as an}
 								<option value={an.animeid}>
@@ -173,12 +179,11 @@
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="px-3 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
 						/>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
 </div>
