@@ -134,14 +134,14 @@
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<img class="h-52 rounded-full mb-4" src={picture} alt="Anime Pic" />
+			<h2 class="mt-2 text-3xl font-medium text-gray-700 dark:text-red-700">
+				{anime.title}
+			</h2>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Tittle: {anime.title}
+				Year: {anime.releasedate.slice(0, 4)}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Release Season: {anime.releaseseason}
-			</h4>
-			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Release Date: {anime.releasedate.slice(0, 10)}
+				Season: {anime.releaseseason}
 			</h4>
 			{#await refresh() then}
 			
@@ -156,17 +156,17 @@
 				
 			
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Rank: {refanime.anime.animerank}
+				Rank: {refanime.anime.animerank}
 			</h4>
 			{/await}
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Genre:
+				Genre:
 				{#each $allanimes[id].animegenres as genre}
 					{genre.genrename+" "}
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Studio:
+				Studio:
 				{#each $allanimes[id].animestudio as studio}
 					{studio.studioname}
 				{/each}
@@ -177,15 +177,15 @@
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
       <AccordionFlush id="1" >
-        <h2 slot="header">Synopsis</h2>
+        <h2 slot="header" class=" text-xl text-gray-700">Synopsis</h2>
         <div slot="body">
           <p class=" text-center ">{anime.synopsis}</p>
 		  <br>
-        <div class="flex justify-center">
+        <div class="flex justify-center ">
 		<a href="/episodes">
 		<button
 						on:click={fetchepisodes()}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 						>Episodes</button
 					>
 				</a>
@@ -195,7 +195,7 @@
 			
 			{#if $state == 1}			
       <AccordionFlush id="2" >
-        <h2 slot="header">Add To Watchlist</h2>
+        <h2 slot="header" class=" text-xl text-gray-700">Add To Watchlist</h2>
         <div slot="body">
 					<Radio bind:group={favourite} value="true">Favourite</Radio>
 					<Radio bind:group={favourite} value="false">Not Favourite</Radio>
