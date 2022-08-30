@@ -25,12 +25,9 @@
 		});
 		if (response.status === 200) {
 			return await response.json();
-		}
-		else if(response.status === 404) 
-		{
+		} else if (response.status === 404) {
 			alert('No anime Found');
-		}
-		else {
+		} else {
 			alert('An error Try Again');
 			throw new Error(response.statusText);
 		}
@@ -74,7 +71,7 @@
 	}
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 h-screen bg-solarizedBase3 text-solarizedBase02">
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
@@ -83,10 +80,9 @@
 				<a href="/resanime/{i}">
 					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
 				</a>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium text-solarizedBase02 dark:text-red-700">
 					{animes.resultAnime[i].title}
 				</h4>
-				
 			</div>
 		{/each}
 	{/await}

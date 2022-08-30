@@ -224,7 +224,7 @@
 	<Alert>
 		<div class="flex justify-center" />
 		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do You Really Want To Delete The Chosen Anime?</span
+			>Do you really want to delete this anime?</span
 		>
 		<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
@@ -234,7 +234,7 @@
 	<Alert>
 		<div class="flex justify-center" />
 		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do You Really Want To Delete The Chosen Character?</span
+			>Do you really want to delete this character?</span
 		>
 		<Button on:click={handledeletecharacter} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
@@ -244,7 +244,7 @@
 	<Alert>
 		<div class="flex justify-center" />
 		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do You Really Want To Delete The Chosen Personnel?</span
+			>Do you really want to delete this person</span
 		>
 		<Button on:click={handledeletepersonnel} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
@@ -254,7 +254,7 @@
 	<Alert>
 		<div class="flex justify-center" />
 		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do You Really Want To Delete The Chosen Episode?</span
+			>Do you really want to delete this episode?</span
 		>
 		<Button on:click={handledeleteepisode} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
@@ -264,16 +264,19 @@
 	<Alert>
 		<div class="flex justify-center" />
 		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do You Really Want To Delete The Chosen Anime?</span
+			>Do you really want to delete this anime?</span
 		>
 		<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 	</Alert>
 {/if}
-<div class="relative flex justify-center h-full w-full bg-red-100">
-	<div class="h-full w-1/2  ">
+<div class="relative flex justify-center h-full w-full bg-solarizedBase3">
+	<div class="h-full w-1/2  text-solarizedBase01">
+		<h2 class="text-3xl font-medium flex justify-center">Anidex Admin Page</h2>
+		<h2 class="text-2xl font-medium flex justify-center">Entry Deletion</h2>
+		
 		<AccordionFlush id="1">
-			<h2 slot="header">Delete Anime</h2>
+			<h2 slot="header" class="text-xl font-bold">Delete Anime</h2>
 			<div slot="body">
 				<select bind:value={chosenanime} class="text-black">
 					{#each animes.results as an}
@@ -287,14 +290,14 @@
 				<div class="flex justify-center">
 					<button
 						on:click={animedel}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-red-600 active:bg-red-600 hover:bg-red-700"
-						>Delete Chosen Anime</button
+						class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
+						>Delete Anime</button
 					>
 				</div>
 			</div>
 		</AccordionFlush>
 		<AccordionFlush id="5">
-			<h2 slot="header">Delete Character</h2>
+			<h2 slot="header"  class="text-xl font-bold">Delete Character</h2>
 			<div slot="body">
 				<select bind:value={chosencharacter} class="text-black">
 					{#each characters.results as char}
@@ -308,14 +311,14 @@
 				<div class="flex justify-center">
 					<button
 						on:click={chardel}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-red-600 active:bg-red-600 hover:bg-red-700"
-						>Delete Chosen Character</button
+						class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
+						>Delete Character</button
 					>
 				</div>
 			</div>
 		</AccordionFlush>
 		<AccordionFlush id="2">
-			<h2 slot="header">Delete Personnel</h2>
+			<h2 slot="header" class ="text-xl font-bold">Delete Personnel</h2>
 			<div slot="body">
 				<select bind:value={chosenpersonnel} class="text-black">
 					{#each personnels.personnels as per}
@@ -329,14 +332,14 @@
 				<div class="flex justify-center">
 					<button
 						on:click={perdel}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-red-600 active:bg-red-600 hover:bg-red-700"
-						>Delete Chosen Personnel</button
+						class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
+						>Delete Personnel</button
 					>
 				</div>
 			</div>
 		</AccordionFlush>
 		<AccordionFlush id="3">
-			<h2 slot="header">Delete Episode</h2>
+			<h2 slot="header" class ="text-xl font-bold">Delete Episode</h2>
 			<div slot="body">
 				<select bind:value={chosenanime} class="text-black">
 					{#each animes.results as an}
@@ -346,7 +349,7 @@
 					{/each}
 				</select>
 				<AccordionFlush id="4">
-					<h2 slot="header">Choose Episode</h2>
+					<h2 slot="header" class ="text-lg font-bold">Choose Episode</h2>
 					<div slot="body">
 						{#await fetchepisodes() then}
 							<select bind:value={chosenepisode} class="text-black">
@@ -362,7 +365,8 @@
 						<div class="flex justify-center">
 							<button
 								on:click={epdel}
-								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-red-600 active:bg-red-600 hover:bg-red-700"
+								class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
+						
 								>Delete Chosen Episode</button
 							>
 						</div>
@@ -371,5 +375,4 @@
 			</div></AccordionFlush
 		>
 	</div>
-	
 </div>

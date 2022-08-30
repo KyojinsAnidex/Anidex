@@ -1,11 +1,11 @@
 <script>
 	import { allan, anshowchoice } from './../stores/store.js';
- import { Spinner,AccordionFlush,Rating } from 'flowbite-svelte';
+	import { Spinner, AccordionFlush, Rating } from 'flowbite-svelte';
 
- let animes;
- let animeinfos=[];
- let endpoint="http://localhost:5000/anime";
- let image = "http://localhost:5000/uploads/images/";
+	let animes;
+	let animeinfos = [];
+	let endpoint = 'http://localhost:5000/anime';
+	let image = 'http://localhost:5000/uploads/images/';
 
 	async function proxyfetchanimeid() {
 		const response = await fetch(endpoint);
@@ -51,29 +51,29 @@
 			}
 		}
 		//console.log(resanimes);
-        fetchanime();
+		fetchanime();
 	}
-    async function fetchanime()
-	{   for(let i=0;i<resanimes.length;i++)  
-        {
-		let response;
-		response = await fetch("http://localhost:5000/anime/"+resanimes[i].anime.animeid);
-        let anime;
-		if (response.status === 200) {
-			anime = await  response.json();
-            console.log(anime);
-		} else {
-			console.log('An error Try Again');
-			throw new Error(response.statusText);
+	async function fetchanime() {
+		for (let i = 0; i < resanimes.length; i++) {
+			let response;
+			response = await fetch('http://localhost:5000/anime/' + resanimes[i].anime.animeid);
+			let anime;
+			if (response.status === 200) {
+				anime = await response.json();
+				console.log(anime);
+			} else {
+				console.log('An error Try Again');
+				throw new Error(response.statusText);
+			}
+			animeinfos.push(anime);
 		}
-        animeinfos.push(anime);
-    }
-	$allan=animeinfos;
-	$anshowchoice=1;
-	console.log(animeinfos);
+		$allan = animeinfos;
+		$anshowchoice = 1;
+		console.log(animeinfos);
 	}
 </script>
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
