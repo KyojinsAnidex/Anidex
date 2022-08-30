@@ -62,7 +62,7 @@
 {#if logchoice==1}
 <Alert>
 	<div class="flex justify-center"></div>
-	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
+	<span class="text-lg font-medium text-red-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
 	<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
 	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 </Alert>
@@ -113,10 +113,10 @@
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
 	</NavUl>
-	<div class="flex md:order-2">
-		<Dropdown arrowIcon={false} inline={true} class="bg-slate-600">
+	<div class="flex  justify-end">
+		<Dropdown arrowIcon={false} inline={true} class="bg-white">
 			
-			<Avatar src={$curruser.image} slot="label" border class="ring-red-400 dark:ring-red-300" />
+			<Avatar src={$curruser.image} slot="label"  />
 			{#if $state == 1}
 				<DropdownHeader>
 					<span class="block text-sm"> {$curruser.name} </span>
@@ -166,7 +166,7 @@
 					</DropdownItem>
 					{#if $curruser.admin==true}
 					<a href="/admin">
-				<DropdownItem>Admin Rights</DropdownItem>
+				<DropdownItem>Admin Page</DropdownItem>
 			</a>
 			{/if}
 				<DropdownDivider />

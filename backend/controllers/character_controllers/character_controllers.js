@@ -239,6 +239,7 @@ const addAChar = async (req, res, next) => {
       "' , '" +
       element +
       "') RETURNING *;";
+
     voiceActorStatus = false;
 
     try {
@@ -269,6 +270,7 @@ const addAChar = async (req, res, next) => {
       "' , '" +
       createdChar.rows[0].characterid +
       "') RETURNING *;";
+
     animeStatus = false;
 
     try {

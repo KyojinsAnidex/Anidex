@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 // serve static images
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
-// probably better than cors
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -47,10 +47,9 @@ app.use((req, res, next) => {
   throw error;
 });
 
-/**
- * General Http error message for a server side error,
- * deletes associated file as this req could not be processed
- */
+
+// General Http error message for a server side error,
+// deletes associated file as this req could not be processed
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(path.join("./", req.file.path), (err) => {
@@ -60,16 +59,12 @@ app.use((error, req, res, next) => {
   if (res.headerSent) {
     return next(error);
   }
-  // console.log(req.body);
-  // console.log(error.message);
   const status = error.code || 500;
   res.status(status);
   res.json({ message: error.message || "An unknown error occurred!" });
 });
 
-/**
- * Server starts
- */
+//server start
 app.listen(port, () => {
-  console.log("Server listenning on port " + port);
+  console.log("Server listenning on port " + port + ", start at " + new Date());
 });
