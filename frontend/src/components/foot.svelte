@@ -9,9 +9,9 @@
 	} from 'flowbite-svelte';
 </script>
 
-<Footer footerType="socialmedia">
-	<div class="md:flex md:justify-between">
-		<div class="mb-6 md:mb-0">
+<Footer footerType="socialmedia" class = "w-full h-24 fixed bottom-0 z-50">
+	<div class="md:flex md:justify-between h-4 ">
+		<div class="mb-4 md:mb-0">
 			<FooterBrand
 				href="http://127.0.0.1:5173/"
 				src="http://localhost:5000/uploads/images/anidex.jpg"
@@ -25,7 +25,6 @@
 					Resources
 				</h2>
 				<FooterLinkGroup>
-					<FooterLink liClass="mb-4" href="https://flowbite-svelte.com/">Flowbite</FooterLink>
 					<FooterLink liClass="mb-4" href="https://tailwindcss.com/">Tailwind CSS</FooterLink>
 				</FooterLinkGroup>
 			</div>
