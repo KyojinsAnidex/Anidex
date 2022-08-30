@@ -9,9 +9,9 @@
 		const response = await fetch('http://localhost:5000/studios', {
 			method: 'POST',
 			headers: {
-                Authorization: 'Bearer ' + $curruser.token,
+				Authorization: 'Bearer ' + $curruser.token,
 				'Content-Type': 'application/json'
-                
+
 				// like application/json or text/xml
 			},
 			body: JSON.stringify({
@@ -27,7 +27,6 @@
 		if (response.status === 201) {
 			return await response.json();
 		} else {
-			
 			alert('Could Not Add Studio Try Again');
 			throw new Error(response.statusText);
 		}
@@ -42,17 +41,18 @@
 		}
 	}
 </script>
+
 <svelte:head>
 	<title>Add Studio</title>
 </svelte:head>
 <div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			
+	<div class="h-screen w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
+				<h2 class="text-2xl font-bold">		Add Studio </h2>
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">Studio Name</label>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Studio Name</label>
 						<input
 							type="text"
 							id="firstname"
@@ -61,8 +61,8 @@
 							placeholder="Name"
 						/>
 					</div>
-                    <div>
-						<label class="mb-2.0 block font-extrabold" for="title">Address</label>
+					<div>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Address</label>
 						<input
 							type="text"
 							id="address"
@@ -72,7 +72,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">Website</label>
+						<label class="mb-2.0 block text-lg font-bold" for="title">Website</label>
 						<input
 							type="url"
 							id="website"
@@ -81,12 +81,12 @@
 							placeholder="website address"
 						/>
 					</div>
-				
-					<div class="my-5">
+
+					<div class="my-5 flex justify-center">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="px-4 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
 						/>
 					</div>
 				</form>
@@ -101,4 +101,3 @@
 		/>
 	</div>
 </div>
-

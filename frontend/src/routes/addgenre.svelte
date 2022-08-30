@@ -1,28 +1,27 @@
 <script>
 	import { curruser } from './../stores/store.js';
 	let genre = {
-		genre: ''	
+		genre: ''
 	};
 	async function proxyhandleadd() {
 		const response = await fetch('http://localhost:5000/genre', {
 			method: 'POST',
 			headers: {
-                Authorization: 'Bearer ' + $curruser.token,
+				Authorization: 'Bearer ' + $curruser.token,
 				'Content-Type': 'application/json'
-                
+
 				// like application/json or text/xml
 			},
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				genre:genre.genre
+				genre: genre.genre
 				// etc.
 			})
 		});
 		if (response.status === 201) {
 			return await response.json();
 		} else {
-			
 			alert('Could Not Add Studio Try Again');
 			throw new Error(response.statusText);
 		}
@@ -37,17 +36,19 @@
 		}
 	}
 </script>
+
 <svelte:head>
 	<title>Add Genre</title>
 </svelte:head>
 <div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
-			
+	<div class="h-screen w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
+				<h2 class="text-2xl font-bold">Add Genre</h2>
+		
 				<form on:submit|preventDefault={handleadd}>
 					<div>
-						<label class="mb-2.0 block font-extrabold" for="title">Genre</label>
+						<label class="mb-2.0  text-xl font-bold flex justify-center" for="title">Genre</label>
 						<input
 							type="text"
 							id="firstname"
@@ -56,11 +57,11 @@
 							placeholder="Genre Name"
 						/>
 					</div>
-					<div class="my-5">
+					<div class="my-5 ">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="w-2/5 rounded-2xl text-white text-xl font-bold bg-red-900 p-2 align-center hover:bg-red-500"
 						/>
 					</div>
 				</form>
@@ -75,4 +76,3 @@
 		/>
 	</div>
 </div>
-
