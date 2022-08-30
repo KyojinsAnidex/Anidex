@@ -68,7 +68,7 @@
 
 {#if $eps.length != 0}
 	<div class="flex justify-center">
-		<table class="table-auto border-separate">
+		<table class="table-auto border-separate" cellpadding="20"cellspacing="20">
 			<tr>
 				<th>Title </th>
 				<th>Season </th>

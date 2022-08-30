@@ -176,8 +176,7 @@
                       </a>
                   </TableBodyCell>
               </TableBodyRow>
-              {/each}
-            
+              {/each}      
           </TableBody>
       </Table>
 {/if}

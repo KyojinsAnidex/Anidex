@@ -111,7 +111,7 @@
 </div>
 {:else}
 <div class="flex justify-center p-20">
-	<table class="table-fixed border-solid ">
+	<table class="table-fixed border-solid " cellpadding="20"cellspacing="20">
 		<tr>
 			<th>Content of Review</th>
 			<th>Reviewer</th>
