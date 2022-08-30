@@ -33,3 +33,4 @@ export let wlanimes= writable('wlanimes',[]);
 export let animeofinterest= writable('animeofinterest',[]);
 export let eps=writable('eps',[]);
 export let epanime=writable('epanime',-1);
+export let charshowchoice=writable('charshowchoice',0);

@@ -109,7 +109,17 @@
 	  </form>
 	</NavUl>
 	<NavUl {hidden}>
-		<NavLi href="/" active={true}>Home</NavLi>
+		<NavLi href="/" >Home</NavLi>
+		<Dropdown label="Database" inline={true}>
+			<a href="allanime">
+			<DropdownItem>Anime</DropdownItem>
+		</a>
+		<a href="allcharacters">
+			<DropdownItem>Character</DropdownItem>
+		</a>
+			<DropdownItem>Personnel</DropdownItem>
+		</Dropdown>
+		
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
 	</NavUl>

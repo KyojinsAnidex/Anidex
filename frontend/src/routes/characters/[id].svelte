@@ -9,11 +9,15 @@
 <script>
 	export let id;
 import { AccordionFlush,Rating } from 'flowbite-svelte';
-	import { charsearch, charpics } from '../../stores/store';
+	import { charsearch, charpics,charshowchoice } from '../../stores/store';
 	
-
-	let char = $charsearch.resultCharacter[id];
-	let picture = $charpics[id];
+    
+	let char; 
+	let picture;
+	
+	char= $charsearch.resultCharacter[id];
+	picture = $charpics[id];
+	
 	//  console.log(anime);
 	// console.log(picture);
 	let anime,character,person;
