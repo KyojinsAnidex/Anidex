@@ -1,5 +1,7 @@
 <script>
+	import { allan, anshowchoice } from './../stores/store.js';
  import { Spinner,AccordionFlush,Rating } from 'flowbite-svelte';
+
  let animes;
  let animeinfos=[];
  let endpoint="http://localhost:5000/anime";
@@ -66,7 +68,9 @@
 		}
         animeinfos.push(anime);
     }
-	
+	$allan=animeinfos;
+	$anshowchoice=1;
+	console.log(animeinfos);
 	}
 </script>
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
@@ -75,55 +79,16 @@
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				
+				<a href="/ranimes/{i}">
 					<img
 						class="h-52 rounded-full mb-4"
 						src={image + resanimes[i].animepicture[0].pictureid}
 						alt="Anime Pic"
 					/>
+				</a>
 				<h2 class="mt-2 text-lg font-medium text-black dark:text-red-700">
 					{resanimes[i].anime.title}
 				</h2>
-               
-				<AccordionFlush >
-                    
-                    <h2 slot="header"> More Info </h2>
-                    <div slot="body">
-                    <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-                            Release Season: {animeinfos[i].anime.releaseseason}
-                        </h4>
-                        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-                            Release Date: {animeinfos[i].anime.releasedate.slice(0, 10)}
-                        </h4>
-                        
-                            <Rating count rating={animeinfos[i].anime.averagerating}>
-                                <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
-                            </Rating>
-        
-                            <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-                                Anime Rank: {animeinfos[i].anime.animerank}
-                            </h4>
-                        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-                            Anime Genre:
-                            {#each animeinfos[i].animegenres as genre}
-                                {genre.genrename + ' '}
-                            {/each}
-                        </h4>
-                        <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-                            Anime Studio:
-                            {#each animeinfos[i].animestudio as studio}
-                                {studio.studioname}
-                            {/each}
-                        </h4>
-                        
-                    </div>
-                    
-                   
-                </div>
-                
-                </AccordionFlush>
-	
 			</div>
 		{/each}
 	{/await}

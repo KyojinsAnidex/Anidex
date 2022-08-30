@@ -7,10 +7,20 @@
 
 <script>
 	export let id;
-	import { topanimes,curruser,state,eps,epanime } from '../../stores/store';
+	import { topanimes,curruser,state,eps,epanime,allan,anshowchoice } from '../../stores/store';
 	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
-	let anime = $topanimes[id].anime;
-	let picture = 'http://localhost:5000/uploads/images/' + $topanimes[id].animepicture[0].pictureid;
+	let anime;
+	let picture;
+	if($anshowchoice==0)
+	{
+	anime = $topanimes[id].anime;
+	picture = 'http://localhost:5000/uploads/images/' + $topanimes[id].animepicture[0].pictureid;
+	}
+	else
+	{
+		anime=$allan[id].anime;
+		picture='http://localhost:5000/uploads/images/' + $allan[id].animepicture[0].pictureid;
+	}
 	//   console.log(anime);
 	//  console.log(picture);
 	let giverating = false;

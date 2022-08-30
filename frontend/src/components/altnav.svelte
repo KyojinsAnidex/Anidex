@@ -1,5 +1,5 @@
 <script>
-	import { state, curruser, search, searchdest } from './../stores/store.js';
+	import { state, curruser, search } from './../stores/store.js';
 	import {
 		Navbar,
 		NavBrand,
@@ -42,22 +42,7 @@
 	}
 	
 	
-	$: {
-		//	console.log($search.txt);
-		//	console.log($search.type);
-		//	console.log($curruser);
-		if ($search.type == 'anime') {
-			$searchdest = '/animesearchresult';
-		} else if ($search.type == 'user') {
-			$searchdest = '/usersearch';
-		} else if ($search.type == 'character') {
-			$searchdest = '/charactersearch';
-		} else if ($search.type == 'studio') {
-			$searchdest = '/studiosearch';
-		} else if ($search.type == 'personnel') {
-			$searchdest = '/personnelsearch';
-		}
-	}
+
 </script>
 {#if logchoice==1}
 <Alert>
@@ -102,9 +87,27 @@
 		<div class="flex relative">
 		<Iconinput  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
 		<p> &nbsp</p>
-		<a href={$searchdest}>
+		{#if $search.type == 'anime'}
+		<a href='/animesearchresult'>
 		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
 	</a>
+	{:else if $search.type == 'user'}
+	<a href='/usersearchresult'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'character'}
+	<a href='/charactersearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'studio'}
+	<a href='/studiosearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'personnel'}
+	<a href='/personnelsearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{/if}
 		</div>
 	  </form>
 	</NavUl>
