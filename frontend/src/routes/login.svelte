@@ -79,7 +79,7 @@
 			$curruser.name = temp.userid;
 			$curruser.mail = temp.email;
 			$curruser.token = temp.token;
-			$curruser.admin=temp.admin;
+			$curruser.admin = temp.admin;
 			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();
@@ -90,20 +90,20 @@
 </script>
 
 <svelte:head>
-	<title>Log in</title>
+	<title>Log Into Anidex</title>
 </svelte:head>
 
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-solarizedBase02 xl:w-1/2">
 			<div>
-				<p class="text-2xl">Login</p>
-				<p>please login to continue</p>
+				<p class="text-2xl font-bold">Login</p>
+				<p>Please login to continue</p>
 			</div>
 			<div class="mt-10">
 				<form on:submit|preventDefault={handlelogin}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="Name">Name</label>
+						<label class="mb-2.5 block font-bold" for="Name">Name</label>
 						<input
 							type="text"
 							bind:value={user.name}
@@ -113,7 +113,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="email">Email</label>
+						<label class="mb-2.5 block font-bold" for="email">Email</label>
 						<input
 							type="email"
 							bind:value={user.email}
@@ -123,7 +123,7 @@
 						/>
 					</div>
 					<div class="mt-4">
-						<label class="mb-2.5 block font-extrabold" for="password">Password</label>
+						<label class="mb-2.5 block font-bold" for="password">Password</label>
 						<input
 							type="password"
 							bind:value={user.password}
@@ -131,11 +131,11 @@
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow"
 						/>
 					</div>
-					<div class="my-10">
+					<div class="my-10 flex justify-center">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="rounded-2xl text-xl font-medium text-white bg-solarizedRed px-5 py-2 hover:bg-red-500"
 						/>
 					</div>
 				</form>

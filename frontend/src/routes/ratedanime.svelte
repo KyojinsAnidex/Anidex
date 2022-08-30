@@ -1,10 +1,10 @@
 <script>
-	import { state, topanimes,anshowchoice } from '../stores/store';
-	import { Spinner,Rating } from 'flowbite-svelte';
+	import { state, topanimes, anshowchoice } from '../stores/store';
+	import { Spinner, Rating } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
 	let image = 'http://localhost:5000/uploads/images/';
-	let search=6;
+	let search = 6;
 	async function proxyfetchanimeid() {
 		const response = await fetch(endpoint);
 		if (response.status === 200) {
@@ -50,19 +50,18 @@
 		}
 		//console.log(resanimes);
 		$topanimes = resanimes;
-		$anshowchoice=0;
+		$anshowchoice = 0;
 		//console.log($allanimes);
 	}
-	function showmore()
-	{
-		search=search*2;
+	function showmore() {
+		search = search * 2;
 	}
 </script>
 
 <svelte:head>
 	<title>Top Rated Anime</title>
 </svelte:head>
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
@@ -76,29 +75,27 @@
 							alt="Anime Pic"
 						/>
 					</a>
-					<h2 class="mt-2 text-lg font-medium text-black dark:text-red-700">
+					<h2 class="mt-2 text-xl font-medium  dark:text-red-700">
 						{resanimes[i].anime.title}
 					</h2>
-					<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+					<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 						{resanimes[i].anime.releaseseason}
 					</h4>
-					<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+					<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 						{resanimes[i].anime.releasedate.slice(0, 4)}
 					</h4>
-					<Rating count rating={resanimes[i].anime.averagerating}  >
+					<Rating count rating={resanimes[i].anime.averagerating}>
 						<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 					</Rating>
 				</div>
 			{/if}
 		{/each}
-		{#if resanimes.length>search}
-		<button
+		{#if resanimes.length > search}
+			<button
 				on:click={showmore}
-				class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-slate-600 active:bg-red-600 hover:bg-red-700"
+				class="px-5 inline py-3 text-xl font-medium leading-5   transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-slate-600 active:bg-solarizedBase01 hover:bg-solarizedBase2"
 				>Show More</button
 			>
-			{/if}
-		
+		{/if}
 	{/await}
 </div>
-

@@ -1,11 +1,11 @@
 <script>
-	import { Spinner,Checkbox } from 'flowbite-svelte';
+	import { Spinner, Checkbox } from 'flowbite-svelte';
 	import { curruser, wlanimes, state } from '../stores/store';
 
 	let watchlist = {
 		success: false,
 		watchlist_anime: [],
-		watchlist_favourite:[]
+		watchlist_favourite: []
 	};
 	let resanimes = [];
 	//console.log($curruser);
@@ -17,9 +17,7 @@
 		const response = await fetch(watchlistendpoint);
 		if (response.status === 200) {
 			return await response.json();
-		}
-		else if(response.status === 404) 
-		{
+		} else if (response.status === 404) {
 			alert('No Watchlist Found');
 		} else {
 			console.log('An error Try Again');
@@ -35,7 +33,6 @@
 			//console.log(temp);
 			//console.log(watchlist);
 			return temp;
-		    
 		}
 	}
 	let anime;
@@ -67,18 +64,16 @@
 		//console.log(resanimes);
 		$wlanimes = resanimes;
 		//console.log($wlanimes);
-		
 	}
 	//fetchanimeinfo();
-	
 </script>
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
-	
 		{#each resanimes as prop, i}
-			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto bg-solarizedBase3 text-solarizedBase02">
 				<a href="/wlanime/{i}">
 					<img
 						class="h-52 rounded-full mb-4"
@@ -86,17 +81,16 @@
 						alt="Anime Pic"
 					/>
 				</a>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-xl font-medium  dark:text-red-700">
 					{resanimes[i].anime.title}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{resanimes[i].anime.releaseseason}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{resanimes[i].anime.releasedate.slice(0, 4)}
 				</h4>
 			</div>
-			
 		{/each}
 	{/await}
 </div>

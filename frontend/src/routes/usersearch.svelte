@@ -1,5 +1,4 @@
 <script>
-
 	import { Spinner } from 'flowbite-svelte';
 
 	import { state, search } from '../stores/store';
@@ -47,16 +46,16 @@
 {#await fetchuserinfo()}
 	<div class="text-center"><Spinner size="10" color="red" /></div>
 {:then}
-	<div class="container min-w-full">
+	<div class="container min-w-full bg-solarizedBase3 text-solarizedBase02">
 		<div class="grid grid-cols-1 md:grid-cols-2">
 			<div class="mt-10">
 				<div class="flex justify-center">
 					<img class="h-52 rounded-full mb-4" src={image} alt="person pic" />
 				</div>
-				<div class="animate-fade-in-down mb-1 text-center text-lg text-gray-900">
+				<div class="animate-fade-in-down mb-1 text-center text-xl">
 					{animes.resultUser[0].userid}
 				</div>
-				 <div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">
+				<div class="animate-fade-in-down mb-1 text-center text-lg ">
 					{animes.resultUser[0].email}
 				</div>
 				<blockquote>
@@ -64,18 +63,15 @@
 						{animes.resultUser[0].biography}
 					</p>
 				</blockquote>
-				<div class="flex justify-center">	
+				<div class="flex justify-center">
 					<a href="/userwatchlist/{animes.resultUser[0].userid}">
-					<button
-						
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Show Watchlist</button
-					>
-				</a>
+						<button
+							class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl transition-all duration-400 border border-transparent rounded-2xl focus:outline-none text-solarizedBase3 bg-green-600 active:bg-red-600 hover:bg-red-700"
+							>Show Watchlist</button
+						>
+					</a>
 				</div>
 			</div>
 		</div>
-	
 	</div>
-	
 {/await}
