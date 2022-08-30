@@ -67,7 +67,7 @@
 	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 </Alert>
 {/if}
-<Navbar let:hidden let:toggle rounded={true}>
+<Navbar let:hidden let:toggle rounded={true} >
 	<NavBrand href="/">
 		<img
 			src="http://localhost:5000/uploads/images/anidex.jpg"
@@ -113,8 +113,8 @@
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
 	</NavUl>
-	<div class="flex  justify-end">
-		<Dropdown arrowIcon={false} inline={true} class="bg-white">
+	<div class="flex  justify-end z-50">
+		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible">
 			
 			<Avatar src={$curruser.image} slot="label"  />
 			{#if $state == 1}
