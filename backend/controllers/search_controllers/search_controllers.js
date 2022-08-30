@@ -11,15 +11,10 @@ const getAnimeByName = async (req, res, next) => {
   let searchedAnime;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT * FROM " +
-    dbModels.tables.anime +
-    " WHERE " +
-    dbModels.anime.titleNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%'";
+  let queryText = "SELECT * FROM search_anime( '" + newSearchString + "' ) ;";
   try {
     searchedAnime = await db.query(queryText);
   } catch (err) {
@@ -50,25 +45,11 @@ const getUserByName = async (req, res, next) => {
   let searchedUser;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT " +
-    dbModels.users.userIDNOTNULL +
-    ", " +
-    dbModels.users.mailNOTNULL +
-    ", " +
-    dbModels.users.bio +
-    ", " +
-    dbModels.users.pictureNOTNULL +
-    ", " +
-    dbModels.users.admin +
-    " FROM " +
-    dbModels.tables.users +
-    " WHERE " +
-    dbModels.users.userIDNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%'";
+  let queryText = "SELECT * FROM search_users( '" + newSearchString + "' ) ;";
+  
   try {
     searchedUser = await db.query(queryText);
   } catch (err) {
@@ -100,19 +81,11 @@ const getCharByName = async (req, res, next) => {
   let searchedCharacter;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT * FROM " +
-    dbModels.tables.characters +
-    " WHERE ( " +
-    dbModels.characters.firstnameNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%' ) OR ( " +
-    dbModels.characters.lastnameNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%' )";
+  let queryText = "SELECT * FROM search_characters( '" + newSearchString + "' ) ;";
+  
   try {
     searchedCharacter = await db.query(queryText);
   } catch (err) {
@@ -145,19 +118,11 @@ const getPersonnelByName = async (req, res, next) => {
   let searchedPersonnel;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT * FROM " +
-    dbModels.tables.personnel +
-    " WHERE ( " +
-    dbModels.personnel.firstnameNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%' ) OR ( " +
-    dbModels.personnel.lastnameNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%' )";
+  let queryText = "SELECT * FROM search_person( '" + newSearchString + "' ) ;";
+  
   try {
     searchedPersonnel = await db.query(queryText);
   } catch (err) {
@@ -190,15 +155,11 @@ const getStudioByName = async (req, res, next) => {
   let searchedStudio;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT * FROM " +
-    dbModels.tables.studio +
-    " WHERE " +
-    dbModels.studio.studioIDNOTNULL +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%'";
+  let queryText = "SELECT * FROM search_studio( '" + newSearchString + "' ) ;";
+  
   try {
     searchedStudio = await db.query(queryText);
   } catch (err) {
@@ -231,16 +192,11 @@ const getEpisodeByName = async (req, res, next) => {
   let searchedEpisode;
 
   const { searchString } = req.body;
+  let newSearchString = searchString.trim().replace(/ /g, " | ");
+  // console.log(testString);
 
-  let queryText =
-    "SELECT * FROM " +
-    dbModels.tables.episode +
-    " WHERE " +
-    dbModels.episode.title +
-    " ILIKE '%" +
-    searchString.replace(/'/g, "''") +
-    "%'";
-  try {
+  let queryText = "SELECT * FROM search_episode( '" + newSearchString + "' ) ;";
+    try {
     searchedEpisode = await db.query(queryText);
   } catch (err) {
     return next(

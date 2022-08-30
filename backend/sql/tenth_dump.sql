@@ -501,6 +501,152 @@ $$;
 ALTER FUNCTION public.insert_discussionhead_with_tag(param_content character varying, param_userid character varying, param_animeid integer, param_tags character varying[]) OWNER TO me;
 
 --
+-- Name: search_anime(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_anime(term character varying) RETURNS TABLE(animeid integer, title character varying, releaseseason character varying, releasedate date, averagerating numeric, animerank integer, synopsis text)
+    LANGUAGE sql
+    AS $$ 
+SELECT
+	anime.animeid, 
+	anime.title, 
+	anime.releaseseason,
+	anime.releasedate, 
+	anime.averagerating,
+	anime.animerank,
+	anime.synopsis 
+FROM
+	anime 
+WHERE
+	textsearchable_index_col @@ to_tsquery( 'english', COALESCE ( term, '' ) )
+	OR
+	title ILIKE '%' || term || '%' ;
+-- 	WHERE textsearchable_index_col @@ to_tsquery( 'english', term) OR title ILIKE '%term%';
+
+$$;
+
+
+ALTER FUNCTION public.search_anime(term character varying) OWNER TO me;
+
+--
+-- Name: search_characters(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_characters(term character varying) RETURNS TABLE(characterid integer, firstname character varying, lastname character varying, gender character varying, age integer, role character varying, description text, pictureid character varying)
+    LANGUAGE sql
+    AS $$ 
+SELECT
+	characterid, firstname , lastname , gender , age int4, role , description , pictureid 
+FROM
+	characters 
+WHERE
+	textsearchable_index_col @@ to_tsquery( 'english', COALESCE ( term, '' ) ) 
+	OR
+	( ( firstname ILIKE '%' || term || '%' ) OR ( lastname ILIKE '%' || term || '%' ) ) ;
+
+$$;
+
+
+ALTER FUNCTION public.search_characters(term character varying) OWNER TO me;
+
+--
+-- Name: search_episode(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_episode(term character varying) RETURNS TABLE(episodeid integer, episode integer, season integer, airingdate date, title character varying, runtime interval, episoderating numeric, animeid integer)
+    LANGUAGE sql
+    AS $$ SELECT
+	episodeid,
+	episode,
+	season,
+	airingdate,
+	title,
+	runtime,
+	episoderating,
+	animeid 
+FROM
+	episode 
+WHERE
+	textsearchable_index_col @@to_tsquery( 'english', COALESCE ( term, '' ) ) 
+	OR ( ( title ILIKE'%' || term || '%' ) );
+
+$$;
+
+
+ALTER FUNCTION public.search_episode(term character varying) OWNER TO me;
+
+--
+-- Name: search_person(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_person(term character varying) RETURNS TABLE(personnelid integer, firstname character varying, lastname character varying, gender character varying, birthday date, address character varying, website character varying, pictureid character varying)
+    LANGUAGE sql
+    AS $$ SELECT
+	personnelid,
+	firstname,
+	lastname,
+	gender,
+	birthday,
+	address,
+	website,
+	pictureid 
+FROM
+personnel 
+WHERE
+	textsearchable_index_col @@to_tsquery( 'english', COALESCE ( term, '' ) ) 
+	OR ( ( firstname ILIKE'%' || term || '%' ) OR ( lastname ILIKE'%' || term || '%' ) );
+
+$$;
+
+
+ALTER FUNCTION public.search_person(term character varying) OWNER TO me;
+
+--
+-- Name: search_studio(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_studio(term character varying) RETURNS TABLE(studioname character varying, foundingdate date, office_address character varying, website character varying)
+    LANGUAGE sql
+    AS $$ SELECT
+	studioname,
+	foundingdate,
+	office_address,
+	website 
+FROM
+	studio 
+WHERE
+	textsearchable_index_col @@to_tsquery( 'english', COALESCE ( term, '' ) ) 
+	OR ( ( studioname ILIKE'%' || term || '%' ) );
+
+$$;
+
+
+ALTER FUNCTION public.search_studio(term character varying) OWNER TO me;
+
+--
+-- Name: search_users(character varying); Type: FUNCTION; Schema: public; Owner: me
+--
+
+CREATE FUNCTION public.search_users(term character varying) RETURNS TABLE(userid character varying, email character varying, biography text, pictureid character varying, admin boolean)
+    LANGUAGE sql
+    AS $$ SELECT
+	userid,
+	email,
+	biography,
+	pictureid,
+	ADMIN 
+FROM
+	users
+WHERE
+	textsearchable_index_col @@to_tsquery( 'english', COALESCE ( term, '' ) ) 
+	OR ( ( userid ILIKE'%' || term || '%' ) );
+
+$$;
+
+
+ALTER FUNCTION public.search_users(term character varying) OWNER TO me;
+
+--
 -- Name: update_animerank(); Type: PROCEDURE; Schema: public; Owner: me
 --
 
@@ -573,7 +719,8 @@ CREATE TABLE public.anime (
     releasedate date NOT NULL,
     averagerating numeric DEFAULT 0.0,
     animerank integer,
-    synopsis text NOT NULL
+    synopsis text NOT NULL,
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text)) STORED
 );
 
 
@@ -703,6 +850,7 @@ CREATE TABLE public.characters (
     role character varying(31) NOT NULL,
     description text DEFAULT ''::text,
     pictureid character varying(255),
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (((COALESCE(firstname, ''::character varying))::text || ' '::text) || (COALESCE(lastname, ''::character varying))::text))) STORED,
     CONSTRAINT character_age_check CHECK ((age > 0)),
     CONSTRAINT character_gender_check CHECK (((gender)::text = ANY (ARRAY[('M'::character varying)::text, ('F'::character varying)::text, ('O'::character varying)::text])))
 );
@@ -790,7 +938,8 @@ CREATE TABLE public.episode (
     title character varying(255),
     runtime interval,
     episoderating numeric DEFAULT 0.0,
-    animeid integer NOT NULL
+    animeid integer NOT NULL,
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text)) STORED
 );
 
 
@@ -856,6 +1005,7 @@ CREATE TABLE public.personnel (
     address character varying(255) DEFAULT 'Tokyo'::character varying,
     website character varying(255),
     pictureid character varying(255),
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (((COALESCE(firstname, ''::character varying))::text || ' '::text) || (COALESCE(lastname, ''::character varying))::text))) STORED,
     CONSTRAINT personnel_gender_check CHECK (((gender)::text = ANY (ARRAY[('M'::character varying)::text, ('F'::character varying)::text, ('O'::character varying)::text])))
 );
 
@@ -914,7 +1064,8 @@ CREATE TABLE public.studio (
     studioname character varying(255) NOT NULL,
     foundingdate date,
     office_address character varying(255),
-    website character varying(255)
+    website character varying(255),
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (((((COALESCE(studioname, ''::character varying))::text || ' '::text) || (COALESCE(office_address, ''::character varying))::text) || ' '::text) || (COALESCE(website, ''::character varying))::text))) STORED
 );
 
 
@@ -943,6 +1094,7 @@ CREATE TABLE public.users (
     biography text,
     pictureid character varying(255),
     admin boolean DEFAULT false,
+    textsearchable_index_col tsvector GENERATED ALWAYS AS (to_tsvector('english'::regconfig, (COALESCE(userid, ''::character varying))::text)) STORED,
     CONSTRAINT users_email_check CHECK (((email)::text ~~ '_%@_%.___'::text)),
     CONSTRAINT users_security_key_check CHECK ((length((security_key)::text) > 0))
 );
@@ -2459,6 +2611,48 @@ ALTER TABLE ONLY public.watchroom
 
 ALTER TABLE ONLY public.watchroomparticipants
     ADD CONSTRAINT watchroomparticipants_pk PRIMARY KEY (userid, watchroomid);
+
+
+--
+-- Name: textsearch_idx; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx ON public.anime USING gin (textsearchable_index_col);
+
+
+--
+-- Name: textsearch_idx_characters; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx_characters ON public.characters USING gin (textsearchable_index_col);
+
+
+--
+-- Name: textsearch_idx_episode; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx_episode ON public.episode USING gin (textsearchable_index_col);
+
+
+--
+-- Name: textsearch_idx_personnel; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx_personnel ON public.personnel USING gin (textsearchable_index_col);
+
+
+--
+-- Name: textsearch_idx_studio; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx_studio ON public.studio USING gin (textsearchable_index_col);
+
+
+--
+-- Name: textsearch_idx_users; Type: INDEX; Schema: public; Owner: me
+--
+
+CREATE INDEX textsearch_idx_users ON public.users USING gin (textsearchable_index_col);
 
 
 --
