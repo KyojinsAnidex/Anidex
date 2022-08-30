@@ -1,5 +1,5 @@
 <script>
-	import Watchlist from './watchlist.svelte';
+
 	import { Spinner } from 'flowbite-svelte';
 
 	import { state, search } from '../stores/store';
