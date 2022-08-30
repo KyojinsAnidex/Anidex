@@ -26,7 +26,7 @@
 		if (response.status === 200) {
 			return await response.json();
 		} else if (response.status === 404) {
-			alert('No user found, please try again');
+			alert('No user found.');
 			throw new Error(response.statusText);
 		} else {
 			alert('An error happened, please try again');

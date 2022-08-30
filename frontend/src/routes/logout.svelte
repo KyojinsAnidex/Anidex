@@ -1,6 +1,8 @@
 <script>
 	import { state, search, curruser } from '../stores/store';
 	import { goto } from '$app/navigation';
+	import {Alert} from "flowbite-svelte";
+	let choice=0;
 	function handlelogout() {
 		state.set(0);
 		curruser.set({
@@ -16,6 +18,10 @@
 		});
 		goto('/');
 	}
+	function logout()
+	{
+		choice=1;
+	}
 </script>
 
 <svelte:head>
@@ -30,7 +36,7 @@
 				We are sorry to see you log out
 			</p>
 			<button
-				on:click={handlelogout}
+				on:click={logout}
 				class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 				>Log out</button
 			>

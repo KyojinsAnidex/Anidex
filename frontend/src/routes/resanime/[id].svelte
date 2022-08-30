@@ -142,22 +142,22 @@
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Release Date: {anime.releasedate.slice(0, 10)}
 			</h4>
-			
 			{#await refresh() then}
 			
-			<Rating count rating={refanime.anime.averagerating}  >
-				<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
-				<a
-					href="/"
-					class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
-					>69 reviews</a
-				>
-			</Rating>
-			{/await}
+				<Rating count rating={refanime.anime.averagerating}  >
+					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+					<a
+						href="/"
+						class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
+						>69 reviews</a
+					>
+				</Rating>
+				
 			
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Rank: {anime.animerank}
+				Anime Rank: {refanime.anime.animerank}
 			</h4>
+			{/await}
 		</div>
 	</div>
 	<div class="h-screen w-1/2">

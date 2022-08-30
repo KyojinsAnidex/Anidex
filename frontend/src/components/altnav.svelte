@@ -14,7 +14,30 @@
 		Radio,
 		Button,
 		Iconinput,
+		Alert
 	} from 'flowbite-svelte';
+	let logchoice=0;
+	function handlelogout() {
+		state.set(0);
+		curruser.set({
+			name: '',
+			mail: '',
+			image: '',
+			token: '',
+			admin:false
+		});
+		search.set({
+			txt: '',
+			type: ''
+		});
+		goto('/');
+	}
+	function logout()
+	{
+		logchoice=1;
+	}
+	
+	
 	
 	$: {
 		//	console.log($search.txt);
@@ -33,7 +56,13 @@
 		}
 	}
 </script>
-
+{#if logchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">This is a info alert</span>
+	<Button size="xs" outline color="blue"></Button>
+</Alert>
+{/if}
 <Navbar let:hidden let:toggle rounded={true}>
 	<NavBrand href="/">
 		<img
@@ -137,9 +166,8 @@
 			</a>
 			{/if}
 				<DropdownDivider />
-				<a href="/logout">
-					<DropdownItem>Log out</DropdownItem>
-				</a>
+				
+					<DropdownItem on:click={logout}>Log out</DropdownItem>
 			{:else}
 				<a href="/login">
 					<DropdownItem>Log in</DropdownItem>

@@ -22,6 +22,10 @@
 		});
 		if (response.status === 200) {
 			return await response.json();
+		}
+		else if(response.status === 404) 
+		{
+			alert('No Studio Found');
 		} else {
 			alert('An error Try Again');
 			throw new Error(response.statusText);

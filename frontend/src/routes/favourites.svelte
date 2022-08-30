@@ -17,6 +17,10 @@
 		const response = await fetch(watchlistendpoint);
 		if (response.status === 200) {
 			return await response.json();
+		}
+		else if(response.status === 404) 
+		{
+			alert('No Favourites Found');
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
