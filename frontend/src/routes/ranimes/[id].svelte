@@ -7,19 +7,24 @@
 
 <script>
 	export let id;
-	import { topanimes,curruser,state,eps,epanime,allan,anshowchoice } from '../../stores/store';
-	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
+	import {
+		topanimes,
+		curruser,
+		state,
+		eps,
+		epanime,
+		allan,
+		anshowchoice
+	} from '../../stores/store';
+	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime;
 	let picture;
-	if($anshowchoice==0)
-	{
-	anime = $topanimes[id].anime;
-	picture = 'http://localhost:5000/uploads/images/' + $topanimes[id].animepicture[0].pictureid;
-	}
-	else
-	{
-		anime=$allan[id].anime;
-		picture='http://localhost:5000/uploads/images/' + $allan[id].animepicture[0].pictureid;
+	if ($anshowchoice == 0) {
+		anime = $topanimes[id].anime;
+		picture = 'http://localhost:5000/uploads/images/' + $topanimes[id].animepicture[0].pictureid;
+	} else {
+		anime = $allan[id].anime;
+		picture = 'http://localhost:5000/uploads/images/' + $allan[id].animepicture[0].pictureid;
 	}
 	//   console.log(anime);
 	//  console.log(picture);
@@ -153,19 +158,19 @@
 				</Rating>
 
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Anime Rank: {refanime.anime.animerank}
+					Rank: {refanime.anime.animerank}
 				</h4>
 			{/await}
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Genre:
+				Genre:
 				{#each $topanimes[id].animegenres as genre}
-					{genre.genrename}
+					{genre.genrename + ' | '}
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Anime Studio:
+				Studio:
 				{#each $topanimes[id].animestudio as studio}
-					{studio.studioname}
+					{studio.studioname + ' | '}
 				{/each}
 			</h4>
 		</div>
@@ -173,7 +178,7 @@
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<AccordionFlush id="1">
-				<h2 slot="header">Synopsis</h2>
+				<h2 slot="header" class="text-lg">Synopsis</h2>
 				<div slot="body">
 					<p class=" text-center ">{anime.synopsis}</p>
 					<div class="flex justify-center">

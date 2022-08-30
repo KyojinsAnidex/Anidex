@@ -122,7 +122,7 @@
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<img class="h-52 rounded-full mb-4" src={picture} alt="Anime Pic" />
-			<h2 class="mt-2 text-3xl font-medium text-gray-700 dark:text-red-700">
+			<h2 class="mt-2 text-3xl font-medium text-black dark:text-red-700">
 				{anime.title}
 			</h2>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">

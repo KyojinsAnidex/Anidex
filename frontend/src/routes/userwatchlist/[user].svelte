@@ -1,19 +1,19 @@
 <script context="module">
-
 	export async function load({ params }) {
 		let user = params.user;
 		return { props: { user } };
 	}
 </script>
+
 <script>
-	import { Spinner,Checkbox } from 'flowbite-svelte';
-	import {  wlanimes, state } from '../../stores/store';
-    export let user;
+	import { Spinner, Checkbox } from 'flowbite-svelte';
+	import { wlanimes, state } from '../../stores/store';
+	export let user;
 
 	let watchlist = {
 		success: false,
 		watchlist_anime: [],
-		watchlist_favourite:[]
+		watchlist_favourite: []
 	};
 	let resanimes = [];
 	let watchlistendpoint = 'http://localhost:5000/watchlist/' + user;
@@ -35,7 +35,6 @@
 			//console.log(temp);
 			//console.log(watchlist);
 			return temp;
-		    
 		}
 	}
 	let anime;
@@ -67,16 +66,14 @@
 		//console.log(resanimes);
 		$wlanimes = resanimes;
 		//console.log($wlanimes);
-		
 	}
 	//fetchanimeinfo();
-	
 </script>
+
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
-	
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<a href="/uwlanime/{i}">
@@ -86,7 +83,7 @@
 						alt="Anime Pic"
 					/>
 				</a>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-2xl font-medium text-black dark:text-red-700">
 					{resanimes[i].anime.title}
 				</h4>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
@@ -96,7 +93,6 @@
 					{resanimes[i].anime.releasedate.slice(0, 4)}
 				</h4>
 			</div>
-			
 		{/each}
 	{/await}
 </div>

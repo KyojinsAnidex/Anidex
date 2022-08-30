@@ -98,7 +98,7 @@
 			<a href="../studioanime/{i}">
 				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
 			</a>
-			<h2 class="mt-2 text-lg text-center font-medium text-black dark:text-red-700">
+			<h2 class="mt-2 text-2xl text-center font-medium text-black dark:text-red-700">
 				{animeresults[i].title}
 			</h2>
 			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">

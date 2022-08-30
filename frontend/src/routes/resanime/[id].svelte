@@ -124,47 +124,46 @@
 		<div class="h-screen w-1/2">
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<img class="h-52 rounded-full mb-4" src={picture} alt="Anime Pic" />
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Tittle: {anime.title}
+				<h4 class="mt-2 text-l3xl font-medium text-black dark:text-red-700">
+					{anime.title}
 				</h4>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Release Season: {anime.releaseseason}
+					 {anime.releasedate.slice(0, 4)}
 				</h4>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Release Date: {anime.releasedate.slice(0, 10)}
+					{anime.releaseseason}
 				</h4>
 				
-					<Rating count rating={refanime.anime.averagerating}>
-						<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
-						<a
-							href="/"
-							class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
-							>69 reviews</a
-						>
-					</Rating>
+				<Rating count rating={refanime.anime.averagerating}>
+					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
+					<a
+						href="/"
+						class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
+						>69 reviews</a
+					>
+				</Rating>
 
-					<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-						Anime Rank: {refanime.anime.animerank}
-					</h4>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Anime Genre:
+					Rank: {refanime.anime.animerank}
+				</h4>
+				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+					Genre:
 					{#each refanime.animegenres as genre}
-						{genre.genrename + ' '}
+						{genre.genrename + ' | '}
 					{/each}
 				</h4>
 				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					Anime Studio:
+					Studio:
 					{#each refanime.animestudio as studio}
-						{studio.studioname}
+						{studio.studioname + ' | '}
 					{/each}
 				</h4>
-				
 			</div>
 		</div>
 		<div class="h-screen w-1/2">
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<AccordionFlush id="1">
-					<h2 slot="header">Synopsis</h2>
+					<h2 slot="header" class="text-xl">Synopsis</h2>
 					<div slot="body">
 						<p class=" text-center ">{anime.synopsis}</p>
 						<div class="flex justify-center">
@@ -180,7 +179,7 @@
 				</AccordionFlush>
 				{#if $state == 1}
 					<AccordionFlush id="2">
-						<h2 slot="header">Add To Watchlist</h2>
+						<h2 slot="header" class="text-xl">Add To Watchlist</h2>
 						<div slot="body">
 							<Radio bind:group={favourite} value="true">Favourite</Radio>
 							<Radio bind:group={favourite} value="false">Not Favourite</Radio>
