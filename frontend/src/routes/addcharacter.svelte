@@ -1,27 +1,28 @@
 <script context="module">
-	export async function load({url}) {
-		let animes,personnels;
+	export async function load({ url }) {
+		let animes, personnels;
 		let response;
-		response = await fetch("http://localhost:5000/anime");
+		response = await fetch('http://localhost:5000/anime');
 		if (response.status === 200) {
-			animes = await  response.json();
+			animes = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		response = await fetch("http://localhost:5000/personnel");
+		response = await fetch('http://localhost:5000/personnel');
 		if (response.status === 200) {
-			personnels = await  response.json();
+			personnels = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		return { props: { animes,personnels } };
+		return { props: { animes, personnels } };
 	}
 </script>
+
 <script>
 	import { Input, Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
-	export let animes,personnels;
+	export let animes, personnels;
 	// console.log(animes);
 	// console.log(personnels);
 
@@ -33,8 +34,8 @@
 		role: '',
 		age: 0,
 		description: '',
-		voiceactors:[],
-		anime:[]
+		voiceactors: [],
+		anime: []
 	};
 	let image;
 	async function proxyaddcharacter() {
@@ -85,9 +86,9 @@
 <svelte:head>
 	<title>Add Character</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+<div class="flex h-full w-full items-stretch">
+	<div class="h-full w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
@@ -96,7 +97,7 @@
 							type="text"
 							id="firstname"
 							bind:value={character.firstname}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="First Name"
 						/>
 					</div>
@@ -106,7 +107,7 @@
 							type="text"
 							id="lastname"
 							bind:value={character.lastname}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Last Name"
 						/>
 					</div>
@@ -116,7 +117,7 @@
 							type="number"
 							id="firstname"
 							bind:value={character.age}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Age"
 						/>
 					</div>
@@ -189,14 +190,14 @@
 			</div>
 		</div>
 	</div>
-	
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+
+	<div class="h-full w-1/2 bg-white">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-gray-900 xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block font-extrabold" for="title">Select Anime</label>
-						<select multiple bind:value={character.anime} class="text-black">
+						<select multiple bind:value={character.anime} class="text-gray-900">
 							{#each animes.results as an}
 								<option value={an.animeid}>
 									{an.title}
@@ -206,10 +207,10 @@
 					</div>
 					<div>
 						<label class="mb-2.5 block font-extrabold" for="title">Select Voice Actor</label>
-						<select multiple bind:value={character.voiceactors} class="text-black">
+						<select multiple bind:value={character.voiceactors} class="text-gray-900">
 							{#each personnels.personnels as per}
 								<option value={per.personnelid}>
-									{per.firstname +"  "+ per.lastname}
+									{per.firstname + '  ' + per.lastname}
 								</option>
 							{/each}
 						</select>
@@ -225,5 +226,4 @@
 			</div>
 		</div>
 	</div>
-	
 </div>
