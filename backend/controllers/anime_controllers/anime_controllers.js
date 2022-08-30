@@ -477,6 +477,30 @@ const addAnime = async (req, res, next) => {
     }
   });
 
+  //update all rankings now
+  let updatedState = true;
+  try {
+    updatedState = await db.query("CALL update_animerank();");
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Updating ranks of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
+  if (updatedState === false) {
+    return next(
+      new HttpError(
+        "Updating ranks of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
   res.status(201).json({
     success: true,
     animeid: animeid,
@@ -524,6 +548,30 @@ const deleteAnime = async (req, res, next) => {
   if (deleteStatus === false || deleteStatus.rowCount === 0) {
     return next(
       new HttpError("Deleting anime failed, please try again later", 500)
+    );
+  }
+
+  //update all rankings now
+  let updatedState = true;
+  try {
+    updatedState = await db.query("CALL update_animerank();");
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Updating ranks of anime failed, please try again later",
+        500,
+        false
+      )
+    );
+  }
+
+  if (updatedState === false) {
+    return next(
+      new HttpError(
+        "Updating ranks of anime failed, please try again later",
+        500,
+        false
+      )
     );
   }
 
