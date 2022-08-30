@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { Helper, Input } from 'flowbite-svelte';
 	let user = {
 		name: '',
@@ -52,6 +53,7 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+			goto('/');
 		}
 	}
 </script>
@@ -137,7 +139,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-full w-1/2 bg-blue-600">
+	<div class="h-full w-1/2 ">
 		<img
 			src="http://localhost:5000/uploads/images/signup.jpg"
 			class="object-cover h-full w-full"
