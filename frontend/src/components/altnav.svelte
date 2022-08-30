@@ -16,7 +16,7 @@
 		Iconinput,
 		Alert
 	} from 'flowbite-svelte';
-	let logchoice=0;
+	let logchoice = 0;
 	function handlelogout() {
 		state.set(0);
 		curruser.set({
@@ -24,7 +24,7 @@
 			mail: '',
 			image: '',
 			token: '',
-			admin:false
+			admin: false
 		});
 		search.set({
 			txt: '',
@@ -32,25 +32,26 @@
 		});
 		resetalert();
 	}
-	function logout()
-	{
-		logchoice=1;
+	function logout() {
+		logchoice = 1;
 	}
-	function resetalert()
-	{
-		logchoice=0;
+	function resetalert() {
+		logchoice = 0;
 	}
 	
 	
 
 </script>
-{#if logchoice==1}
-<Alert>
-	<div class="flex justify-center"></div>
-	<span class="text-lg font-medium text-red-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
-	<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
-	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-</Alert>
+
+{#if logchoice == 1}
+	<Alert>
+		<div class="flex justify-center" />
+		<span class="text-lg font-medium text-red-700 dark:text-blue-800"
+			>Do You Really Want To Log Out?</span
+		>
+		<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
+		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+	</Alert>
 {/if}
 <Navbar let:hidden let:toggle rounded={true} class="flex-auto" >
 	<NavBrand href="/">
@@ -111,8 +112,7 @@
 		</div>
 	  </form>
 	</NavUl>
-	<NavUl {hidden}>
-		<NavLi href="/" >Home</NavLi>
+	<NavUl {hidden} >
 		<Dropdown label="Database" inline={true}>
 			<a href="allanime">
 			<DropdownItem>Anime</DropdownItem>
@@ -124,20 +124,19 @@
 			<DropdownItem>Personnel</DropdownItem>
 		</a>
 		</Dropdown>
-		
+
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
 	</NavUl>
 	<div class="flex  justify-end z-50">
 		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible">
-			
-			<Avatar src={$curruser.image} slot="label"  />
+			<Avatar src={$curruser.image} slot="label" />
 			{#if $state == 1}
 				<DropdownHeader>
 					<span class="block text-sm"> {$curruser.name} </span>
 					<span class="block truncate text-sm font-medium"> {$curruser.mail} </span>
-					{#if $curruser.admin==true}
-					<span class="block truncate text-sm font-medium"> Admin </span>
+					{#if $curruser.admin == true}
+						<span class="block truncate text-sm font-medium"> Admin </span>
 					{/if}
 				</DropdownHeader>
 				<a href="/accinfo">
@@ -149,44 +148,33 @@
 				<a href="/favourites">
 					<DropdownItem>Favourites</DropdownItem>
 				</a>
-					<DropdownItem>
-						<Dropdown label="Add" inline={true} placement="left-start" class="ml-16 w-44">
-							
-							<a href="/addanime">
-							<DropdownItem>
-								Add Anime
-							</DropdownItem>
+				<DropdownItem>
+					<Dropdown label="Add" inline={true} placement="left-start" class="ml-16 w-44">
+						<a href="/addanime">
+							<DropdownItem>Add Anime</DropdownItem>
 						</a>
 						<a href="/addpersonnel">
-							<DropdownItem>
-								Add Personnel
-							</DropdownItem>
+							<DropdownItem>Add Personnel</DropdownItem>
 						</a>
 						<a href="/addcharacter">
-							<DropdownItem>
-								Add Character
-							</DropdownItem>
+							<DropdownItem>Add Character</DropdownItem>
 						</a>
 						<a href="/addstudio">
-							<DropdownItem>
-								Add Studio
-							</DropdownItem>
+							<DropdownItem>Add Studio</DropdownItem>
 						</a>
 						<a href="/addgenre">
-							<DropdownItem>
-								Add Genre
-							</DropdownItem>
+							<DropdownItem>Add Genre</DropdownItem>
 						</a>
-						</Dropdown>
-					</DropdownItem>
-					{#if $curruser.admin==true}
+					</Dropdown>
+				</DropdownItem>
+				{#if $curruser.admin == true}
 					<a href="/admin">
-				<DropdownItem>Admin Page</DropdownItem>
-			</a>
-			{/if}
+						<DropdownItem>Admin Page</DropdownItem>
+					</a>
+				{/if}
 				<DropdownDivider />
-				
-					<DropdownItem on:click={logout}>Log out</DropdownItem>
+
+				<DropdownItem on:click={logout}>Log out</DropdownItem>
 			{:else}
 				<a href="/login">
 					<DropdownItem>Log in</DropdownItem>

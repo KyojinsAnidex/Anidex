@@ -1,5 +1,4 @@
 <script context="module">
-
 	export async function load({ params }) {
 		let id = params.id;
 		return { props: { id } };
@@ -8,58 +7,53 @@
 
 <script>
 	export let id;
-	import { allanimes, curruser, state,eps,epanime } from '../../stores/store';
-	import { Range, Label, Radio,AccordionFlush,Rating } from 'flowbite-svelte';
+	import { allanimes, curruser, state, eps, epanime } from '../../stores/store';
+	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime = $allanimes[id].anime;
 	let picture = 'http://localhost:5000/uploads/images/' + $allanimes[id].animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
 	let rating = 0;
-	let giverating=false;
+	let giverating = false;
 	let favourite = false;
 	let endpoint = 'http://localhost:5000/watchlist/' + $curruser.name;
 	//console.log($curruser);
 	async function proxyrate() {
 		let response;
-		if(giverating==true)
-		{
-		 response = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + $curruser.token
-				// like application/json or text/xml
-			},
-			body: JSON.stringify({
-				// Example: Update JSON file with
-				//          local data properties
-				animeid: anime.animeid,
-				favourite: favourite,
-				rating: rating
-				// etc.
-			})
-		});
-	}
-	else
-	{
-		 response = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + $curruser.token
-				// like application/json or text/xml
-			},
-			body: JSON.stringify({
-				// Example: Update JSON file with
-				//          local data properties
-				animeid: anime.animeid,
-				favourite: favourite,
-				// etc.
-			})
-		});
-
-
-	}
+		if (giverating == true) {
+			response = await fetch(endpoint, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + $curruser.token
+					// like application/json or text/xml
+				},
+				body: JSON.stringify({
+					// Example: Update JSON file with
+					//          local data properties
+					animeid: anime.animeid,
+					favourite: favourite,
+					rating: rating
+					// etc.
+				})
+			});
+		} else {
+			response = await fetch(endpoint, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + $curruser.token
+					// like application/json or text/xml
+				},
+				body: JSON.stringify({
+					// Example: Update JSON file with
+					//          local data properties
+					animeid: anime.animeid,
+					favourite: favourite
+					// etc.
+				})
+			});
+		}
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -76,53 +70,47 @@
 		} else {
 			console.log(temp);
 			refresh();
-		
-			
 		}
 	}
-	function checkrate()
-	{
-        giverating=!giverating;
+	function checkrate() {
+		giverating = !giverating;
 	}
-	let ependpoint="http://localhost:5000/episodes/"+anime.animeid;
-	$eps=[];
-	$epanime=-1;
+	let ependpoint = 'http://localhost:5000/episodes/' + anime.animeid;
+	$eps = [];
+	$epanime = -1;
 	async function proxyfetchepisodes() {
 		const response = await fetch(ependpoint);
 		if (response.status === 200) {
 			return await response.json();
-		}
-		else if(response.status === 404) {
+		} else if (response.status === 404) {
 			return await response.json();
-		}else {
+		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
 	}
 	async function fetchepisodes() {
-		let temp= await proxyfetchepisodes();
+		let temp = await proxyfetchepisodes();
 
 		if (temp.success == false) {
 			console.log('No episodes Found');
 		} else {
-		    console.log(temp);
-		    $eps=temp;	
+			console.log(temp);
+			$eps = temp;
 		}
-		$epanime=anime.animeid;
+		$epanime = anime.animeid;
 	}
 	let refanime;
-	async function refresh()
-	{
+	async function refresh() {
 		let response;
-		let endpoint="http://localhost:5000/anime/"+$allanimes[id].anime.animeid;
+		let endpoint = 'http://localhost:5000/anime/' + $allanimes[id].anime.animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
-			refanime = await  response.json();
+			refanime = await response.json();
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-
 	}
 </script>
 
@@ -138,14 +126,13 @@
 				{anime.title}
 			</h2>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Year: {anime.releasedate.slice(0, 4)}
+				{anime.releasedate.slice(0, 4)}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Season: {anime.releaseseason}
+				{anime.releaseseason}
 			</h4>
 			{#await refresh() then}
-			
-				<Rating count rating={refanime.anime.averagerating}  >
+				<Rating count rating={refanime.anime.averagerating}>
 					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 					<a
 						href="/"
@@ -153,16 +140,15 @@
 						>69 reviews</a
 					>
 				</Rating>
-				
-			
-			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-				Rank: {refanime.anime.animerank}
-			</h4>
+
+				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+					Rank: {refanime.anime.animerank}
+				</h4>
 			{/await}
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Genre:
 				{#each $allanimes[id].animegenres as genre}
-					{genre.genrename+" "}
+					{genre.genrename + ' | '}
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
@@ -171,56 +157,55 @@
 					{studio.studioname}
 				{/each}
 			</h4>
-			
 		</div>
 	</div>
 	<div class="h-screen w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-      <AccordionFlush id="1" >
-        <h2 slot="header" class=" text-xl text-gray-700">Synopsis</h2>
-        <div slot="body">
-          <p class=" text-center ">{anime.synopsis}</p>
-		  <br>
-        <div class="flex justify-center ">
-		<a href="/episodes">
-		<button
-						on:click={fetchepisodes()}
-						class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Episodes</button
-					>
-				</a>
-			</div>
-			</div>
-      </AccordionFlush>
-			
-			{#if $state == 1}			
-      <AccordionFlush id="2" >
-        <h2 slot="header" class=" text-xl text-gray-700">Add To Watchlist</h2>
-        <div slot="body">
-					<Radio bind:group={favourite} value="true">Favourite</Radio>
-					<Radio bind:group={favourite} value="false">Not Favourite</Radio>
-		  {#if giverating==false}
-		  <br>
-		  <button
-						on:click={checkrate}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Rate</button
-					>
-					{/if}
-                {#if giverating==true}
-				<br>
-				<p>Rating Bar:</p>
-				<Range min="0" max="10" bind:value={rating} step="1" />
-				<br>
-				<p>Rating : {rating}</p>
-				{/if}
-				<button
-						on:click={rate}
-						class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-						>Submit</button
-					>
-        </div>
-      </AccordionFlush>		
+			<AccordionFlush id="1">
+				<h2 slot="header" class=" text-xl text-gray-700">Synopsis</h2>
+				<div slot="body">
+					<p class=" text-center ">{anime.synopsis}</p>
+					<br />
+					<div class="flex justify-center ">
+						<a href="/episodes">
+							<button
+								on:click={fetchepisodes()}
+								class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								>Episodes</button
+							>
+						</a>
+					</div>
+				</div>
+			</AccordionFlush>
+
+			{#if $state == 1}
+				<AccordionFlush id="2">
+					<h2 slot="header" class=" text-xl text-gray-700">Add To Watchlist</h2>
+					<div slot="body">
+						<Radio bind:group={favourite} value="true">Favourite</Radio>
+						<Radio bind:group={favourite} value="false">Not Favourite</Radio>
+						{#if giverating == false}
+							<br />
+							<button
+								on:click={checkrate}
+								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								>Rate</button
+							>
+						{/if}
+						{#if giverating == true}
+							<br />
+							<p>Rating Bar:</p>
+							<Range min="0" max="10" bind:value={rating} step="1" />
+							<br />
+							<p>Rating : {rating}</p>
+						{/if}
+						<button
+							on:click={rate}
+							class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+							>Submit</button
+						>
+					</div>
+				</AccordionFlush>
 			{/if}
 		</div>
 	</div>
