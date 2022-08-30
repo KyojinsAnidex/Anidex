@@ -14,7 +14,9 @@
 </script>
 <script>
     export let characters;
-    //import {char}
+   import {allchar,charshowchoice} from '../stores/store';
+   $allchar=characters;
+   $charshowchoice=1;
     	
     </script>
     <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
