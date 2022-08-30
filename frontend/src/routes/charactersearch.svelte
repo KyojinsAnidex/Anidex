@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search, charpics, charsearch } from '../stores/store';
+	import { charshowchoice , search, charpics, charsearch } from '../stores/store';
 	let animes = {
 		success: false,
 		resultCharacter: []
@@ -44,6 +44,7 @@
 			addcharpic();
 			$charpics = pictures;
 			$charsearch = animes;
+			$charshowchoice=0;
 		}
 	}
 

@@ -8,10 +8,20 @@
 <script>
 	export let id;
 import { AccordionFlush,Rating } from 'flowbite-svelte';
-	import { persearch, perpics } from '../../stores/store';
+	import { persearch, perpics,pershowchoice,allper } from '../../stores/store';
 
-	let per = $persearch.resultPersonnel[id];
-	let picture = $perpics[id];
+	let per;
+	let picture;
+	if($pershowchoice==0)
+	{
+	per = $persearch.resultPersonnel[id];
+	picture = $perpics[id];
+	}
+	else
+	{
+		per=$allper.personnels[id];
+		picture="http://localhost:5000/uploads/images/"+$allper.personnels[id].pictureid
+	}
 	//  console.log(anime);
 	// console.log(picture);
 	let temp,person;

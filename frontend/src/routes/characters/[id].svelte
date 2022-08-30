@@ -9,14 +9,21 @@
 <script>
 	export let id;
 import { AccordionFlush,Rating } from 'flowbite-svelte';
-	import { charsearch, charpics,charshowchoice } from '../../stores/store';
+	import { charsearch, charpics,charshowchoice,allchar } from '../../stores/store';
 	
     
 	let char; 
 	let picture;
-	
+	if($charshowchoice==0)
+	{
 	char= $charsearch.resultCharacter[id];
 	picture = $charpics[id];
+	}
+	else
+	{
+		char=$allchar.results[id];
+		picture="http://localhost:5000/uploads/images/"+$allchar.results[id].pictureid
+	}
 	
 	//  console.log(anime);
 	// console.log(picture);
