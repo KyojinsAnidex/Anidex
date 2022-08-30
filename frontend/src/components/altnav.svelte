@@ -13,7 +13,7 @@
 		DropdownDivider,
 		Radio,
 		Button,
-		Iconinput,
+		Input,
 		Alert
 	} from 'flowbite-svelte';
 	let logchoice = 0;
@@ -84,33 +84,43 @@
 			</DropdownItem>
 		</ul>
 	</Dropdown>
-	<form>
-		<div class="flex relative">
-		<Iconinput  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
+		<Input  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
 		<p> &nbsp</p>
 		{#if $search.type == 'anime'}
 		<a href='/animesearchresult'>
-		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+			<button
+			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+			>Search</button
+		>
 	</a>
 	{:else if $search.type == 'user'}
 	<a href='/usersearchresult'>
-		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+		<button
+			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+			>Search</button>
 	</a>
 	{:else if $search.type == 'character'}
 	<a href='/charactersearch'>
-		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
-	</a>
+		<button
+		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+		>Search</button></a>
 	{:else if $search.type == 'studio'}
 	<a href='/studiosearch'>
-		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
-	</a>
+		<button
+		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+		>Search</button></a>
 	{:else if $search.type == 'personnel'}
 	<a href='/personnelsearch'>
-		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
-	</a>
+		<button
+		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+		>Search</button></a>
+	{:else}
+	<a href="/">
+		<button
+			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+			>Search</button></a>
 	{/if}
-		</div>
-	  </form>
+		
 	</NavUl>
 	<NavUl {hidden} >
 		<Dropdown label="Database" inline={true}>

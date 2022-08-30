@@ -14,7 +14,7 @@
 	}
 </script>
 <script>
-     import { Avatar,Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Checkbox, TableSearch } from 'flowbite-svelte';
+     import { Avatar,Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell  } from 'flowbite-svelte';
     export let foruminfo;
     console.log(foruminfo);
 </script>
@@ -23,6 +23,7 @@
               <TableHeadCell>Content of Discussion</TableHeadCell>
               <TableHeadCell>Discussion Starter</TableHeadCell>
               <TableHeadCell>Start Time</TableHeadCell>
+              <TableHeadCell>Votes</TableHeadCell>
               
               <TableHeadCell>
                   <span class="sr-only"> Join </span>
@@ -34,8 +35,9 @@
                   <TableBodyCell>{forum.contentofdiscussion.slice(0,50)+"..."}</TableBodyCell>
                   <TableBodyCell><Avatar src={'http://localhost:5000/uploads/images/'+forum.pictureid}></Avatar>{forum.userid}</TableBodyCell>
                   <TableBodyCell>{forum.starttime.slice(0,10)}</TableBodyCell>
+                  <TableBodyCell>{forum.votes}</TableBodyCell>
                   <TableBodyCell>
-                      <a href="/" class="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                      <a href="/discussion/{forum.discussionheadid}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">
                          Join Discussion
                       </a>
                   </TableBodyCell>
