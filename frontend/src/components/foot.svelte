@@ -9,8 +9,8 @@
 	} from 'flowbite-svelte';
 </script>
 
-<Footer footerType="socialmedia" >
-	<div class="md:flex md:justify-between h-4 ">
+<Footer footerType="socialmedia" class= "bg-solarizedBase3" >
+	<div class="md:flex md:justify-between h-4 bg-solarizedBase3">
 		<div class="mb-4 md:mb-0">
 			<FooterBrand
 				href="http://127.0.0.1:5173/"
@@ -21,7 +21,7 @@
 		</div>
 		<div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
 			<div>
-				<h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+				<h2 class="mb-6 text-sm font-semibold text-solarizedBase00 uppercase dark:text-white">
 					Resources
 				</h2>
 				<FooterLinkGroup>
@@ -29,7 +29,7 @@
 				</FooterLinkGroup>
 			</div>
 			<div>
-				<h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+				<h2 class="mb-6 text-sm font-semibold uppercase text-solarizedBase00 dark:text-white">
 					Follow us
 				</h2>
 				<FooterLinkGroup>
