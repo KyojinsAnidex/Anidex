@@ -165,10 +165,6 @@ const loginUser = async (req, res, next) => {
     );
   }
 
-  // if (existingUser.rows[0].security_key === password) {
-  //   isValidPassword = true;
-  // }
-
   if (!isValidPassword) {
     return next(
       new HttpError("Invalid credentials, could not log you in.", 401)
@@ -328,11 +324,6 @@ const editUser = async (req, res, next) => {
   }
 
   const { email, password, name, bio, newUserid } = req.body;
-
-  // if (req.userData && req.userData.userId != name) {
-  //   console.log(req + " " + name);
-  //   return next(new HttpError("User trying to change other users data.", 403));
-  // }
 
   if (req.userData.userId != name.replace(/'/g, "''")) {
     return next(new HttpError("User trying to edit another user", 403));

@@ -169,13 +169,6 @@ const getAllAnimePictures = async (req, res, next) => {
   }
 };
 
-/**
- *
- * @param {*} req               request to process
- * @param {*} res               response to send, will have the anime's studios,
- *                              character, personnel and genre ids
- * @param {*} next              next middleware/router callback
- */
 const getAllAnimeItems = async (req, res, next) => {
   const animeid = req.params.aid;
   let animeItems = {
@@ -470,7 +463,7 @@ const addAnime = async (req, res, next) => {
     if (studioStatus === false || studioStatus.rowCount === 0) {
       return next(
         new HttpError(
-          "Added anime and genre. Adding anime genre failed, please try again later",
+          "Added anime and genre. Adding anime studio failed, please try again later",
           500
         )
       );
@@ -574,6 +567,8 @@ const deleteAnime = async (req, res, next) => {
       )
     );
   }
+
+
 
   res.status(201).json({
     success: true,
