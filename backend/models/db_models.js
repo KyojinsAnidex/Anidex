@@ -176,6 +176,7 @@ const discussionEntries = {
   entryTime: "entrytime",
   votesNOTNULL: "votes",
   discussionHeadIdNOTNULL: "discussionheadid",
+  discussionEntryIdNOTNULL: "discussionentryid",
 };
 
 const discussionHead = {
@@ -227,6 +228,6 @@ module.exports = {
   animeDiscussion,
   discussionEntries,
   discussionHead,
-  discussionTags, 
-  tagCloud
+  discussionTags,
+  tagCloud,
 };

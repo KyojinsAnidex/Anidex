@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   - url: "http://localhost:5000"
-    description: hosted locally, for now
+    description: hosted locally
 
 tags:
   - name: anime
@@ -38,6 +38,8 @@ tags:
     description: search endpoints
   - name: admin
     description: admin endpoints, mainly deletion
+  - name: discussion
+    description: discussion endpoints
 
 paths:
   "/anime":
@@ -1668,6 +1670,314 @@ paths:
         "500":
           $ref: "#/components/responses/500ServerSideError"
 
+  "/discussion/anime/{aid}": 
+    get:
+      summary: get all related discussions of an anime, use to show review and watchroom
+      tags:
+        - discussion
+      parameters:
+        - $ref: "#/components/parameters/aid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  animeTagDiscussions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/discussionHeadOutput"
+                  reviewTagDiscussions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/discussionHeadOutput"
+                  watchroomTagDiscussions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/discussionHeadOutput"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/discussion/tags":
+    get:
+      summary: get list of all tags with info
+      tags:
+        - discussion
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  tagData:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/tagData"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/discussion/tags/{tagid}":
+    get:
+      summary: get list of all discussions of tag, animeids are of review, anime and watchroom discussions in same serial
+      tags:
+        - discussion
+      parameters:
+        - $ref: "#/components/parameters/tagid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  allDiscussionHeads:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/discussionHeadOutput"
+                  animeids:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        discussionheadid: 
+                          type: integer
+                        animeid:
+                          type: integer
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/discussion/discussionhead": 
+    post:
+      summary: Start discussion, animeid optional, only for anime, review and watchroom tags
+      tags:
+        - discussion
+      security:
+       - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/DiscussionHeadInputBody"
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newDiscussionHead:
+                    $ref: "#/components/schemas/discussionHead"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+  "/discussion/discussionhead/{dhid}":
+    get:
+      summary: get the discussion head and all disscussion entries of it
+      tags:
+        - discussion
+      parameters:
+        - $ref: "#/components/parameters/dhid"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  discussionhead: 
+                    $ref: "#/components/schemas/discussionHeadOutput"
+                  discussionEntries:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/discussionEntryElaborate"          
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    post:
+      summary: add entry to a disscussion head
+      tags:
+        - discussion
+      parameters:
+        - $ref: "#/components/parameters/dhid"
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/DiscussionEntryInputBody"
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  newDiscussionEntry:
+                    $ref: "#/components/schemas/discussionEntry"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    patch:
+      summary: vote a discussion head
+      tags:
+        - discussion
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/dhid"
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vote:
+                  type: boolean
+              required:
+                - vote
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  votedEntry:
+                    $ref: "#/components/schemas/discussionHead"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    delete:
+      summary: delete a discussion head written by user
+      tags:
+        - discussion
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/dhid"
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  deletedEntry:
+                    $ref: "#/components/schemas/discussionEntry"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+  
+  "/discussion/discussionentry/{deid}": 
+    post:
+      summary: vote a discussion entry
+      tags:
+        - discussion
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/deid"
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vote:
+                  type: boolean
+              required:
+                - vote
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  votedEntry:
+                    $ref: "#/components/schemas/discussionEntry"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
+
+    delete:
+      summary: delete a discussion entry written by user
+      tags:
+        - discussion
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/deid"
+      responses:
+        "201":
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  deletedEntry:
+                    $ref: "#/components/schemas/discussionEntry"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "401":
+          $ref: "#/components/responses/401AuthFailure"
+        "422":
+          $ref: "#/components/responses/422InvalidInput"
+        "500":
+          $ref: "#/components/responses/500ServerSideError"
 components:
   # Reusable schemas (data models)
   schemas:
@@ -2128,6 +2438,106 @@ components:
         role:
           type: string
 
+    tagData:
+      type: object
+      properties:
+        tagname: 
+          type: string
+        description:
+          type: string
+        totaldiscussions: 
+          type: integer
+
+    discussionHead:
+      type: object
+      properties:
+        discussionheadid:
+          type: integer
+        contentofdiscussion:
+          type: string
+        votes:
+          type: integer
+        starttime: 
+          type: string
+          format: date-time
+        userid:
+          type: string
+
+    discussionHeadOutput:
+      type: object
+      properties:
+        discussionheadid:
+          type: integer
+        contentofdiscussion:
+          type: string
+        votes:
+          type: integer
+        starttime: 
+          type: string
+          format: date-time
+        userid:
+          type: string
+        pictureid: 
+          type: string
+
+    discussionEntryElaborate: 
+      type: object
+      properties:
+        discussionentryid:
+          type: integer
+        contentofdiscussion:
+          type: string
+        votes:
+          type: integer   
+        starttime: 
+          type: integer
+        userid:
+          type: string
+        pictureid:
+          type: string
+    
+    discussionEntry: 
+      type: object
+      properties:
+        discussionentryid:
+          type: integer
+        discussionentry:
+          type: string
+        votes:
+          type: integer   
+        starttime: 
+          type: integer
+        userid:
+          type: string
+        discussionheadid:
+          type: integer
+
+    discussionHeadInput:
+      type: object
+      properties: 
+        content: 
+          type: string
+        userid: 
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        animeid:
+          type: integer
+      required:
+        - content
+        - userid
+        - tags
+
+    discussionEntryInput:
+      type: object
+      properties:
+        content: 
+          type: string
+        userid:
+          type: string
+
   requestBodies:
     searchItem:
       description: search string
@@ -2422,6 +2832,51 @@ components:
             required:
               - episodeid
               - rating
+    
+    DiscussionHeadInputBody:
+      description: data for a new discussionhead 
+      required: true
+      content:
+        application/json:
+          schema: 
+            $ref: "#/components/schemas/discussionHeadInput"
+      
+    DiscussionEntryInputBody:
+      description: data for a new discussionentry 
+      required: true
+      content:
+        application/json:
+          schema: 
+            $ref: "#/components/schemas/discussionEntryInput"
+            required:
+              - content
+              - userid
+
+    DiscussionEntryVoteBody:
+      description: data for a new discussionentry vote
+      required: true
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties: 
+              vote:
+                type: boolean
+            required:
+              - vote
+
+    DiscussionHeadVoteBody:
+      description: data for a new discussionhead vote
+      required: true
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties: 
+              vote:
+                type: boolean
+            required:
+              - vote
 
   # Reusable path, query, header and cookie parameters
   parameters:
@@ -2494,6 +2949,30 @@ components:
       schema:
         type: string
       description: id of the studio, may contain spaces and hiphens
+
+    tagid:
+      in: path
+      name: tagid
+      required: true
+      schema:
+        type: string
+      description: name of the tag of discussion
+
+    dhid:
+      in: path
+      name: dhid
+      required: true
+      schema:
+        type: integer
+      description: id of the discussionhead
+
+    deid:
+      in: path
+      name: deid
+      required: true
+      schema:
+        type: integer
+      description: id of the discussionentry
 
   securitySchemes:
     BearerAuth:
