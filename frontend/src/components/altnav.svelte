@@ -30,13 +30,16 @@
 			txt: '',
 			type: ''
 		});
-		goto('/');
+		resetalert();
 	}
 	function logout()
 	{
 		logchoice=1;
 	}
-	
+	function resetalert()
+	{
+		logchoice=0;
+	}
 	
 	
 	$: {
@@ -59,8 +62,9 @@
 {#if logchoice==1}
 <Alert>
 	<div class="flex justify-center"></div>
-	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">This is a info alert</span>
-	<Button size="xs" outline color="blue"></Button>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
+	<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 </Alert>
 {/if}
 <Navbar let:hidden let:toggle rounded={true}>
