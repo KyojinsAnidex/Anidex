@@ -86,11 +86,11 @@
 	<div class="h-screen w-1/2">
 		{#await peranime() then}
 			<AccordionFlush>
-				<h2 slot="header">Worked On</h2>
+				<h2 slot="header" class = "text-xl">Worked On</h2>
 				<div slot="body">
 					{#each resanime as anime}
 						<AccordionFlush>
-							<h2 slot="header">{anime.anime.title}</h2>
+							<h2 slot="header" class="text-lg">{anime.anime.title}</h2>
 							<div slot="body">
 								<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 									<img
