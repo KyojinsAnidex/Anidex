@@ -67,7 +67,7 @@
 	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 </Alert>
 {/if}
-<Navbar let:hidden let:toggle rounded={true} >
+<Navbar let:hidden let:toggle rounded={true} class="flex-auto" >
 	<NavBrand href="/">
 		<img
 			src="http://localhost:5000/uploads/images/anidex.jpg"
