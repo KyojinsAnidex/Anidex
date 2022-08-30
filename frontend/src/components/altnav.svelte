@@ -127,6 +127,7 @@
 
 		<NavLi href="/ratedanime">Top Rated</NavLi>
 		<NavLi href="/aboutus">About</NavLi>
+		<NavLi href="/forumhome">Forum</NavLi>
 	</NavUl>
 	<div class="flex  justify-end z-50">
 		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible">
