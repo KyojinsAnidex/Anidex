@@ -91,7 +91,7 @@
 				>
 			</a>
 		{:else if $search.type == 'user'}
-			<a href="http://127.0.0.1:5173/usersearchresult">
+			<a href="http://127.0.0.1:5173/usersearch">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
