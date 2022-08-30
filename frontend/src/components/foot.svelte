@@ -9,9 +9,9 @@
 	} from 'flowbite-svelte';
 </script>
 
-<Footer footerType="socialmedia" class= "bg-solarizedBase3" >
-	<div class="md:flex md:justify-between h-4 bg-solarizedBase3">
-		<div class="mb-4 md:mb-0">
+<Footer footerType="socialmedia" class= "bg-solarizedBase3 text-solarizedBase02" >
+	<div class="md:flex md:justify-between h-4 ">
+		<div class="mb-4 md:mb-0 ">
 			<FooterBrand
 				href="http://127.0.0.1:5173/"
 				src="http://localhost:5000/uploads/images/anidex.jpg"

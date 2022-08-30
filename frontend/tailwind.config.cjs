@@ -13,7 +13,8 @@ const config = {
 			'solarizedBase3' : '#fdf6e3',
 			'solarizedBase00' : '#657b83',
 			'solarizedBase01' : '#586e75',
-			'solarizedRed' : '#dc322f'
+			'solarizedRed' : '#dc322f',
+			'solarizedYellow':'#b58900'
 		}
 	},
 

@@ -38,9 +38,6 @@
 	function resetalert() {
 		logchoice = 0;
 	}
-	
-	
-
 </script>
 
 {#if logchoice == 1}
@@ -53,8 +50,8 @@
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 	</Alert>
 {/if}
-<Navbar let:hidden let:toggle rounded={true} class="flex-auto" >
-	<NavBrand href="/">
+<Navbar let:hidden let:toggle rounded={true} class=" bg-solarizedBase02 text-solarizedYellow flex-auto">
+	<NavBrand  href="/">
 		<img
 			src="http://localhost:5000/uploads/images/anidex.jpg"
 			class="mr-3 h-6 sm:h-9"
@@ -64,75 +61,83 @@
 			Anidex
 		</span>
 	</NavBrand>
-	<NavUl>
-	  <Dropdown label={$search.type} class="w-48">
-		<ul slot="content" class="p-3 space-y-1">
-			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-				<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
-			</DropdownItem>
-			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-				<Radio bind:group={$search.type} value={'character'}>Character</Radio>
-			</DropdownItem>
-			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-				<Radio bind:group={$search.type} value={'user'}>User</Radio>
-			</DropdownItem>
-			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-				<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
-			</DropdownItem>
-			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-				<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
-			</DropdownItem>
-		</ul>
-	</Dropdown>
-		<Input  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
-		<p> &nbsp</p>
+	<NavUl >
+		<Dropdown label={$search.type} class="w-48 z-50">
+			<ul slot="content" class="p-3 space-y-1">
+				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+					<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
+				</DropdownItem>
+				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+					<Radio bind:group={$search.type} value={'character'}>Character</Radio>
+				</DropdownItem>
+				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+					<Radio bind:group={$search.type} value={'user'}>User</Radio>
+				</DropdownItem>
+				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+					<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
+				</DropdownItem>
+				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+					<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
+				</DropdownItem>
+			</ul>
+		</Dropdown>
+		<Input bind:value={$search.txt} noBorder id="search" placeholder="Search Text" />
+		<p>&nbsp</p>
 		{#if $search.type == 'anime'}
-		<a href='/animesearchresult'>
-			<button
-			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-			>Search</button
-		>
-	</a>
-	{:else if $search.type == 'user'}
-	<a href='/usersearchresult'>
-		<button
-			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-			>Search</button>
-	</a>
-	{:else if $search.type == 'character'}
-	<a href='/charactersearch'>
-		<button
-		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-		>Search</button></a>
-	{:else if $search.type == 'studio'}
-	<a href='/studiosearch'>
-		<button
-		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-		>Search</button></a>
-	{:else if $search.type == 'personnel'}
-	<a href='/personnelsearch'>
-		<button
-		class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-		>Search</button></a>
-	{:else}
-	<a href="/">
-		<button
-			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-			>Search</button></a>
-	{/if}
-		
+			<a href="/animesearchresult">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				>
+			</a>
+		{:else if $search.type == 'user'}
+			<a href="/usersearchresult">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				>
+			</a>
+		{:else if $search.type == 'character'}
+			<a href="/charactersearch">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				></a
+			>
+		{:else if $search.type == 'studio'}
+			<a href="/studiosearch">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				></a
+			>
+		{:else if $search.type == 'personnel'}
+			<a href="/personnelsearch">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				></a
+			>
+		{:else}
+			<a href="/">
+				<button
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					>Search</button
+				></a
+			>
+		{/if}
 	</NavUl>
-	<NavUl {hidden} >
+	<NavUl {hidden}>
 		<Dropdown label="Database" inline={true}>
 			<a href="allanime">
-			<DropdownItem>Anime</DropdownItem>
-		</a>
-		<a href="allcharacters">
-			<DropdownItem>Character</DropdownItem>
-		</a>
-		<a href="allpersonnel">
-			<DropdownItem>Personnel</DropdownItem>
-		</a>
+				<DropdownItem>Anime</DropdownItem>
+			</a>
+			<a href="allcharacters">
+				<DropdownItem>Character</DropdownItem>
+			</a>
+			<a href="allpersonnel">
+				<DropdownItem>Personnel</DropdownItem>
+			</a>
 		</Dropdown>
 
 		<NavLi href="/ratedanime">Top Rated</NavLi>

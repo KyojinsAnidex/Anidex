@@ -365,7 +365,8 @@
 						<div class="flex justify-center">
 							<button
 								on:click={epdel}
-								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-red-600 active:bg-red-600 hover:bg-red-700"
+								class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
+						
 								>Delete Chosen Episode</button
 							>
 						</div>

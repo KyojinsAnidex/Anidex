@@ -1,31 +1,27 @@
 <script>
 	import { curruser } from './../stores/store.js';
-	import {  Helper, Input } from 'flowbite-svelte';
+	import { Helper, Input } from 'flowbite-svelte';
 	let user = {
 		oldname: '',
-        newname:'',
+		newname: '',
 		password: '',
-		con_password:'',
+		con_password: '',
 		email: '',
 		bio: ''
 	};
 	let image;
-	let check=false;
-	$:
-	{
-		if(user.password==user.con_password)
-		{
-			check=true;
-		}
-		else
-		{
-			check=false;
+	let check = false;
+	$: {
+		if (user.password == user.con_password) {
+			check = true;
+		} else {
+			check = false;
 		}
 	}
 	async function proxyedit() {
 		const dataArray = new FormData();
 		dataArray.append('name', user.oldname);
-        dataArray.append('newUserid', user.newname);
+		dataArray.append('newUserid', user.newname);
 		dataArray.append('password', user.password);
 		dataArray.append('email', user.email);
 		dataArray.append('bio', user.bio);
@@ -35,11 +31,11 @@
 		}
 		console.log(user);
 		//console.log(dataArray);
-		let endpoint = 'http://localhost:5000/users/'+$curruser.name;
+		let endpoint = 'http://localhost:5000/users/' + $curruser.name;
 		const response = await fetch(endpoint, {
 			method: 'POST',
 			headers: {
-                Authorization: 'Bearer ' + $curruser.token
+				Authorization: 'Bearer ' + $curruser.token
 				// like application/json or text/xml
 			},
 			body: dataArray
@@ -59,7 +55,7 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			$curruser.name=user.newname;
+			$curruser.name = user.newname;
 			console.log(temp);
 		}
 	}
@@ -68,13 +64,13 @@
 <svelte:head>
 	<title>Edit Account</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleedit}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title"> Old User ID</label>
+						<label class="mb-2.5 block font-bold" for="title"> Old User ID</label>
 						<input
 							type="text"
 							id="oldname"
@@ -83,8 +79,8 @@
 							placeholder="Old Name"
 						/>
 					</div>
-                    <div>
-						<label class="mb-2.5 block font-extrabold" for="title">New User ID</label>
+					<div>
+						<label class="mb-2.5 block font-bold" for="title">New User ID</label>
 						<input
 							type="text"
 							id="newname"
@@ -94,7 +90,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Email</label>
+						<label class="mb-2.5 block font-bold" for="release date">Email</label>
 						<input
 							type="email"
 							id="email"
@@ -104,7 +100,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Create Password</label>
+						<label class="mb-2.5 block font-bold" for="release date">Create Password</label>
 						<input
 							type="password"
 							id="password"
@@ -114,7 +110,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Confirm Password</label>
+						<label class="mb-2.5 block font-bold" for="release date">Confirm Password</label>
 						<input
 							type="password"
 							id="con_password"
@@ -123,29 +119,37 @@
 							placeholder="Confirm Password"
 						/>
 					</div>
-					{#if check==false}
-					<Helper class='mt-2' color='red'><span class="font-medium">Passwords Do Not Match</span></Helper>
+					{#if check == false}
+						<Helper class="mt-2" color="red"
+							><span class="font-medium">Passwords Do Not Match</span></Helper
+						>
 					{/if}
 					<div>
-						<label for="sys" class="mb-2.5 block font-extrabold ">Bio</label>
+						<label for="sys" class="mb-2.5 block font-bold ">Bio</label>
 						<Input bind:value={user.bio} id="sys" size="lg" placeholder="Bio" />
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="File">Upload Picture</label>
-						<input type="file" bind:files={image} id="avatar" name="avatar" accept="image/png, image/jpeg" />
+						<label class="mb-2.5 block font-bold" for="File">Upload Picture</label>
+						<input
+							type="file"
+							bind:files={image}
+							id="avatar"
+							name="avatar"
+							accept="image/png, image/jpeg"
+						/>
 					</div>
-					<div class="my-10">
+					<div class="my-10 flex justify-center">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
 						/>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-blue-600">
+	<div class="h-full w-1/2 bg-blue-600">
 		<img
 			src="http://localhost:5000/uploads/images/signup.jpg"
 			class="object-cover h-full w-full"
