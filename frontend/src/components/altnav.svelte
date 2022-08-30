@@ -42,15 +42,15 @@
 
 {#if logchoice == 1}
 	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-red-700 dark:text-blue-800"
-			>Do You Really Want To Log Out?</span
+		<div class="flex justify-center text-solarizedYellow bg-solarizedBase02" />
+		<span class="text-lg text-center font-medium text-solarizedRed dark:text-blue-800"
+			>Do You Really Wish To Log Out?</span
 		>
 		<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 	</Alert>
 {/if}
-<Navbar let:hidden let:toggle rounded={true} class=" bg-solarizedBase02 text-solarizedYellow flex-auto">
+<Navbar let:hidden let:toggle rounded={true} class="text-solarizedYellow bg-solarizedBase02 flex-auto">
 	<NavBrand  href="/">
 		<img
 			src="http://localhost:5000/uploads/images/anidex.jpg"
@@ -62,7 +62,7 @@
 		</span>
 	</NavBrand>
 	<NavUl >
-		<Dropdown label={$search.type} class="w-48 z-50">
+		<Dropdown label={$search.type} class="w-48 z-50 rounded-3xl">
 			<ul slot="content" class="p-3 space-y-1">
 				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 					<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
@@ -86,49 +86,49 @@
 		{#if $search.type == 'anime'}
 			<a href="http://127.0.0.1:5173/animesearchresult">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				>
 			</a>
 		{:else if $search.type == 'user'}
 			<a href="http://127.0.0.1:5173/usersearch">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				>
 			</a>
 		{:else if $search.type == 'character'}
 			<a href="http://127.0.0.1:5173/charactersearch">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{:else if $search.type == 'studio'}
 			<a href="http://127.0.0.1:5173/studiosearch">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{:else if $search.type == 'personnel'}
 			<a href="http://127.0.0.1:5173/personnelsearch">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{:else}
 			<a href="/">
 				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{/if}
 	</NavUl>
 	<NavUl {hidden}>
-		<Dropdown label="Database" inline={true}>
+		<Dropdown label="Database" inline={true} class="z-50">
 			<a href="http://127.0.0.1:5173/allanime">
 				<DropdownItem>Anime</DropdownItem>
 			</a>
