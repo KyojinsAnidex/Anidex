@@ -25,7 +25,6 @@ export let studiosearch=writable('studiosearch',{success: false,
     resultAnime: [],}) 
 export let studioresanimes=writable('studioresanimes',[]);
 export let studiorespics=writable('studiorespics',[]);
-export let searchdest=writable('searchdest','/');
 export let persearch= writable('charsearch',{success: false,
     resultPersonnel: []});
 export let perpics=  writable('picturelinks',[]);
@@ -37,3 +36,5 @@ export let charshowchoice=writable('charshowchoice',0);
 export let allchar=writable('allchar',[]);
 export let allper=writable('allper',[]);
 export let pershowchoice=writable('pershowchoice',0);
+export let allan=writable("allan",[]);
+export let anshowchoice=writable('anshowchoice',0);

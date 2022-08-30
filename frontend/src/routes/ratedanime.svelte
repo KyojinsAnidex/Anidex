@@ -1,5 +1,5 @@
 <script>
-	import { state, topanimes } from '../stores/store';
+	import { state, topanimes,anshowchoice } from '../stores/store';
 	import { Spinner,Rating } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
@@ -50,6 +50,7 @@
 		}
 		//console.log(resanimes);
 		$topanimes = resanimes;
+		$anshowchoice=0;
 		//console.log($allanimes);
 	}
 	function showmore()

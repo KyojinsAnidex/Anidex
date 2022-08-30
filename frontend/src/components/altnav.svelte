@@ -1,5 +1,5 @@
 <script>
-	import { state, curruser, search, searchdest } from './../stores/store.js';
+	import { state, curruser, search } from './../stores/store.js';
 	import {
 		Navbar,
 		NavBrand,
@@ -38,23 +38,9 @@
 	function resetalert() {
 		logchoice = 0;
 	}
+	
+	
 
-	$: {
-		//	console.log($search.txt);
-		//	console.log($search.type);
-		//	console.log($curruser);
-		if ($search.type == 'anime') {
-			$searchdest = '/animesearchresult';
-		} else if ($search.type == 'user') {
-			$searchdest = '/usersearch';
-		} else if ($search.type == 'character') {
-			$searchdest = '/charactersearch';
-		} else if ($search.type == 'studio') {
-			$searchdest = '/studiosearch';
-		} else if ($search.type == 'personnel') {
-			$searchdest = '/personnelsearch';
-		}
-	}
 </script>
 
 {#if logchoice == 1}
@@ -79,38 +65,52 @@
 		</span>
 	</NavBrand>
 	<NavUl>
-		<Dropdown label={$search.type} class="w-48">
-			<ul slot="content" class="p-3 space-y-1">
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'character'}>Character</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'user'}>User</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
-				</DropdownItem>
-				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-					<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
-				</DropdownItem>
-			</ul>
-		</Dropdown>
-		<form>
-			<div class="flex relative">
-				<Iconinput bind:value={$search.txt} noBorder id="search" placeholder="Search Text" />
-				<p>&nbsp</p>
-				<a href={$searchdest}>
-					<Button
-						textSize="text-sm"
-						class="text-white absolute right-5.5 bottom-0 flex md:order-1"
-						type="submit">Search</Button
-					>
-				</a>
-			</div>
-		</form>
+	  <Dropdown label={$search.type} class="w-48">
+		<ul slot="content" class="p-3 space-y-1">
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'character'}>Character</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'user'}>User</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'studio'}>Studio</Radio>
+			</DropdownItem>
+			<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+				<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
+			</DropdownItem>
+		</ul>
+	</Dropdown>
+	<form>
+		<div class="flex relative">
+		<Iconinput  bind:value={$search.txt} noBorder id="search"  placeholder="Search Text"  />
+		<p> &nbsp</p>
+		{#if $search.type == 'anime'}
+		<a href='/animesearchresult'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'user'}
+	<a href='/usersearchresult'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'character'}
+	<a href='/charactersearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'studio'}
+	<a href='/studiosearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{:else if $search.type == 'personnel'}
+	<a href='/personnelsearch'>
+		<Button textSize="text-sm" class="text-white absolute right-5.5 bottom-0 flex md:order-1" type="submit">Search</Button>
+	</a>
+	{/if}
+		</div>
+	  </form>
 	</NavUl>
 	<NavUl {hidden} >
 		<Dropdown label="Database" inline={true}>
