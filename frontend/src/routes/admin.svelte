@@ -89,6 +89,7 @@
 		} else {		
 			console.log(temp);
 			refresh();
+			resetalert();
 		}
 	}
     async function proxydeletecharacters()
@@ -117,6 +118,7 @@
 		} else {		
 			console.log(temp);
 			refresh();
+			resetalert();
 		}
 	}
     async function proxydeletepersonnel()
@@ -145,6 +147,7 @@
 		} else {		
 			console.log(temp);
 			refresh();
+			resetalert();
 		}
 	}
     async function proxydeleteepisode()
@@ -173,6 +176,7 @@
 		} else {		
 			console.log(temp);
 			refresh();
+			resetalert();
 		}
 	}
 	let animedelchoice=0,chardelchoice=0,perdelchoice=0,epdelchoice=0;
