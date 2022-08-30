@@ -81,13 +81,11 @@
 			alert('Could not Add Review');
 		} else {
 			console.log(temp);
+      review='';
       refresh();
 		}
 	}
-  $:
-  {
-    console.log(review);
-  }
+ 
 </script>
 
 {#await fetchanime() then}
@@ -100,9 +98,11 @@
 		<h2 class="mt-2 text-3xl font-medium text-black dark:text-red-700">
 			{anime.anime.title}
 		</h2>
+		{#if discussion.reviewTagDiscussions.length!=0}
 		<h2 class="mt-2 text-3xl font-medium text-black dark:text-red-700">
 			No. Of Reviews : {discussion.reviewTagDiscussions.length}
 		</h2>
+		{/if}
 	</div>
 {/await}
 {#if discussion.reviewTagDiscussions.length==0}

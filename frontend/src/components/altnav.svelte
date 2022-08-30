@@ -84,35 +84,35 @@
 		<Input bind:value={$search.txt} noBorder id="search" placeholder="Search Text" />
 		<p>&nbsp</p>
 		{#if $search.type == 'anime'}
-			<a href="/animesearchresult">
+			<a href="http://127.0.0.1:5173/animesearchresult">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				>
 			</a>
 		{:else if $search.type == 'user'}
-			<a href="/usersearchresult">
+			<a href="http://127.0.0.1:5173/usersearchresult">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				>
 			</a>
 		{:else if $search.type == 'character'}
-			<a href="/charactersearch">
+			<a href="http://127.0.0.1:5173/charactersearch">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{:else if $search.type == 'studio'}
-			<a href="/studiosearch">
+			<a href="http://127.0.0.1:5173/studiosearch">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
 		{:else if $search.type == 'personnel'}
-			<a href="/personnelsearch">
+			<a href="http://127.0.0.1:5173/personnelsearch">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
@@ -128,21 +128,21 @@
 		{/if}
 	</NavUl>
 	<NavUl {hidden}>
-		<Dropdown label="Database" inline={true} class = "z-50">
-			<a href="allanime">
+		<Dropdown label="Database" inline={true}>
+			<a href="http://127.0.0.1:5173/allanime">
 				<DropdownItem>Anime</DropdownItem>
 			</a>
-			<a href="allcharacters">
+			<a href="http://127.0.0.1:5173/allcharacters">
 				<DropdownItem>Character</DropdownItem>
 			</a>
-			<a href="allpersonnel">
+			<a href="http://127.0.0.1:5173/allpersonnel">
 				<DropdownItem>Personnel</DropdownItem>
 			</a>
 		</Dropdown>
 
-		<NavLi href="/ratedanime">Top Rated</NavLi>
-		<NavLi href="/aboutus">About</NavLi>
-		<NavLi href="/forumhome">Forum</NavLi>
+		<NavLi href="http://127.0.0.1:5173/ratedanime">Top Rated</NavLi>
+		<NavLi href="http://127.0.0.1:5173/aboutus">About</NavLi>
+		<NavLi href="http://127.0.0.1:5173/forumhome">Forum</NavLi>
 	</NavUl>
 	<div class="flex  justify-end z-50">
 		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible">
@@ -166,25 +166,25 @@
 				</a>
 				<DropdownItem>
 					<Dropdown label="Add" inline={true} placement="left-start" class="ml-16 w-44">
-						<a href="/addanime">
+						<a href="http://127.0.0.1:5173/addanime">
 							<DropdownItem>Add Anime</DropdownItem>
 						</a>
-						<a href="/addpersonnel">
+						<a href="http://127.0.0.1:5173/addpersonnel">
 							<DropdownItem>Add Personnel</DropdownItem>
 						</a>
-						<a href="/addcharacter">
+						<a href="http://127.0.0.1:5173/addcharacter">
 							<DropdownItem>Add Character</DropdownItem>
 						</a>
-						<a href="/addstudio">
+						<a href="http://127.0.0.1:5173/addstudio">
 							<DropdownItem>Add Studio</DropdownItem>
 						</a>
-						<a href="/addgenre">
+						<a href="http://127.0.0.1:5173/addgenre">
 							<DropdownItem>Add Genre</DropdownItem>
 						</a>
 					</Dropdown>
 				</DropdownItem>
 				{#if $curruser.admin == true}
-					<a href="/admin">
+					<a href="http://127.0.0.1:5173/admin">
 						<DropdownItem>Admin Page</DropdownItem>
 					</a>
 				{/if}
@@ -192,10 +192,10 @@
 
 				<DropdownItem on:click={logout}>Log out</DropdownItem>
 			{:else}
-				<a href="/login">
+				<a href="http://127.0.0.1:5173/login">
 					<DropdownItem>Log in</DropdownItem>
 				</a>
-				<a href="/signup">
+				<a href="http://127.0.0.1:5173/signup">
 					<DropdownItem>Sign up</DropdownItem>
 				</a>
 			{/if}
