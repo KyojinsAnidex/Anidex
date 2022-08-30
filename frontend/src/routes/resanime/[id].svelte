@@ -137,9 +137,9 @@
 				<Rating count rating={refanime.anime.averagerating}>
 					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 					<a
-						href="/"
+						href="../reviewanime/{refanime.anime.animeid}"
 						class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white"
-						>69 reviews</a
+						>Reviews</a
 					>
 				</Rating>
 
