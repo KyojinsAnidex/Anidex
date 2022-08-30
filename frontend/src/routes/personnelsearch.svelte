@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search, perpics, persearch,pershowchoice } from '../stores/store';
+	import { state, search, perpics, persearch, pershowchoice } from '../stores/store';
 	let animes = {
 		success: false,
 		resultPersonnel: []
@@ -24,11 +24,9 @@
 		});
 		if (response.status === 200) {
 			return await response.json();
-		} 
-		else if(response.status === 404) 
-		{
+		} else if (response.status === 404) {
 			alert('No Personnel Found');
-		}else {
+		} else {
 			alert('An error Try Again');
 			throw new Error(response.statusText);
 		}
@@ -44,7 +42,7 @@
 			addperpic();
 			$perpics = pictures;
 			$persearch = animes;
-			$pershowchoice=0;
+			$pershowchoice = 0;
 		}
 	}
 
@@ -55,7 +53,9 @@
 	}
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchperinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
@@ -64,7 +64,7 @@
 				<a href="/personnel/{i}">
 					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
 				</a>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{animes.resultPersonnel[i].firstname + ' ' + animes.resultPersonnel[i].lastname}
 				</h4>
 			</div>

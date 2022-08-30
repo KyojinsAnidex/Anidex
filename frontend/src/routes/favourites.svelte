@@ -1,11 +1,11 @@
 <script>
-	import { Spinner,Checkbox } from 'flowbite-svelte';
+	import { Spinner, Checkbox } from 'flowbite-svelte';
 	import { curruser, wlanimes, state } from '../stores/store';
 
 	let watchlist = {
 		success: false,
 		watchlist_anime: [],
-		watchlist_favourite:[]
+		watchlist_favourite: []
 	};
 	let resanimes = [];
 	//console.log($curruser);
@@ -17,9 +17,7 @@
 		const response = await fetch(watchlistendpoint);
 		if (response.status === 200) {
 			return await response.json();
-		}
-		else if(response.status === 404) 
-		{
+		} else if (response.status === 404) {
 			alert('No Favourites Found');
 		} else {
 			console.log('An error Try Again');
@@ -35,7 +33,6 @@
 			//console.log(temp);
 			//console.log(watchlist);
 			return temp;
-		    
 		}
 	}
 	let anime;
@@ -70,57 +67,51 @@
 		check_favourite();
 	}
 	//fetchanimeinfo();
-	let fav=[];
-	
-	function check_favourite()
-	{  
-		for(let i=0;i<watchlist.watchlist_anime.length;i++)
-		{    let flag=0;
-			for(let j=0;j<watchlist.watchlist_favourite.length;j++)
-			{
-				if(watchlist.watchlist_anime[i].animeid==watchlist.watchlist_favourite[j].animeid)
-				{
-					flag=1;
+	let fav = [];
+
+	function check_favourite() {
+		for (let i = 0; i < watchlist.watchlist_anime.length; i++) {
+			let flag = 0;
+			for (let j = 0; j < watchlist.watchlist_favourite.length; j++) {
+				if (watchlist.watchlist_anime[i].animeid == watchlist.watchlist_favourite[j].animeid) {
+					flag = 1;
 				}
 			}
-			if(flag==0)
-			{
+			if (flag == 0) {
 				fav.push(false);
-			}
-			else
-			{
+			} else {
 				fav.push(true);
 			}
 		}
-
-
 	}
 </script>
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
-	
 		{#each resanimes as prop, i}
-		{#if fav[i]==true } 
-			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/wlanime/{i}">
-					<img
-						class="h-52 rounded-full mb-4"
-						src={image + resanimes[i].animepicture[0].pictureid}
-						alt="Anime Pic"
-					/>
-				</a>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					{resanimes[i].anime.title}
-				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					{resanimes[i].anime.releaseseason}
-				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-					{resanimes[i].anime.releasedate.slice(0, 4)}
-				</h4>
-			</div>
+			{#if fav[i] == true}
+				<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+					<a href="/wlanime/{i}">
+						<img
+							class="h-52 rounded-full mb-4"
+							src={image + resanimes[i].animepicture[0].pictureid}
+							alt="Anime Pic"
+						/>
+					</a>
+					<h4 class="mt-2 text-2xl font-semibold  dark:text-red-700">
+						{resanimes[i].anime.title}
+					</h4>
+					<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+						{resanimes[i].anime.releaseseason}
+					</h4>
+					<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+						{resanimes[i].anime.releasedate.slice(0, 4)}
+					</h4>
+				</div>
 			{/if}
 		{/each}
 	{/await}

@@ -1,23 +1,19 @@
 <script>
-	import {  Helper, Input } from 'flowbite-svelte';
+	import { Helper, Input } from 'flowbite-svelte';
 	let user = {
 		name: '',
 		password: '',
-		con_password:'',
+		con_password: '',
 		email: '',
 		bio: ''
 	};
 	let image;
-	let check=false;
-	$:
-	{
-		if(user.password==user.con_password)
-		{
-			check=true;
-		}
-		else
-		{
-			check=false;
+	let check = false;
+	$: {
+		if (user.password == user.con_password) {
+			check = true;
+		} else {
+			check = false;
 		}
 	}
 	async function proxysignup() {
@@ -63,16 +59,16 @@
 <svelte:head>
 	<title>Sign up</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-black">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
 			<div>
-				<p class="text-2xl">Add User Info And Picture</p>
+				<p class="text-2xl font-bold">Sign up with Anidex</p>
 			</div>
 			<div class="mt-10">
 				<form on:submit|preventDefault={handlesignup}>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="title">User ID</label>
+						<label class="mb-2.5 block font-bold" for="title">User ID</label>
 						<input
 							type="text"
 							id="name"
@@ -82,7 +78,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Email</label>
+						<label class="mb-2.5 block font-bold" for="release date">Email</label>
 						<input
 							type="email"
 							id="email"
@@ -92,7 +88,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Create Password</label>
+						<label class="mb-2.5 block font-bold" for="release date">Create Password</label>
 						<input
 							type="password"
 							id="password"
@@ -102,7 +98,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="release date">Confirm Password</label>
+						<label class="mb-2.5 block font-bold" for="release date">Confirm Password</label>
 						<input
 							type="password"
 							id="con_password"
@@ -111,29 +107,37 @@
 							placeholder="Confirm Password"
 						/>
 					</div>
-					{#if check==false}
-					<Helper class='mt-2' color='red'><span class="font-medium">Passwords Do Not Match</span></Helper>
+					{#if check == false}
+						<Helper class="mt-2" color="red"
+							><span class="font-medium">Passwords Do Not Match</span></Helper
+						>
 					{/if}
 					<div>
-						<label for="sys" class="mb-2.5 block font-extrabold ">Bio</label>
+						<label for="sys" class="mb-2.5 block font-bold ">Bio</label>
 						<Input bind:value={user.bio} id="sys" size="lg" placeholder="Bio" />
 					</div>
 					<div>
-						<label class="mb-2.5 block font-extrabold" for="File">Upload Picture</label>
-						<input type="file" bind:files={image} id="avatar" name="avatar" accept="image/png, image/jpeg" />
+						<label class="mb-2.5 block font-bold" for="File">Upload Picture</label>
+						<input
+							type="file"
+							bind:files={image}
+							id="avatar"
+							name="avatar"
+							accept="image/png, image/jpeg"
+						/>
 					</div>
-					<div class="my-10">
+					<div class="my-10 flex justify-center">
 						<input
 							type="submit"
 							id="submit"
-							class="w-full rounded-full bg-orange-600 p-5 hover:bg-orange-800"
+							class=" rounded-2xl text-xl font-medium text-solarizedBase2 bg-solarizedRed px-3 py-1 hover:bg-red-500"
 						/>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-blue-600">
+	<div class="h-full w-1/2 bg-blue-600">
 		<img
 			src="http://localhost:5000/uploads/images/signup.jpg"
 			class="object-cover h-full w-full"

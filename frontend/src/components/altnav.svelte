@@ -128,7 +128,7 @@
 		{/if}
 	</NavUl>
 	<NavUl {hidden}>
-		<Dropdown label="Database" inline={true}>
+		<Dropdown label="Database" inline={true} class = "z-50">
 			<a href="allanime">
 				<DropdownItem>Anime</DropdownItem>
 			</a>
