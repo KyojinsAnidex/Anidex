@@ -62,7 +62,7 @@
 {#if logchoice==1}
 <Alert>
 	<div class="flex justify-center"></div>
-	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
+	<span class="text-lg font-medium text-red-700 dark:text-blue-800">Do You Really Want To Log Out?</span>
 	<Button on:click={handlelogout} size="xs" outline color="blue">Yes</Button>
 	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 </Alert>
@@ -166,7 +166,7 @@
 					</DropdownItem>
 					{#if $curruser.admin==true}
 					<a href="/admin">
-				<DropdownItem>Admin Rights</DropdownItem>
+				<DropdownItem>Admin Page</DropdownItem>
 			</a>
 			{/if}
 				<DropdownDivider />
