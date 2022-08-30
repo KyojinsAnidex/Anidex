@@ -33,7 +33,7 @@
 </svelte:head>
 <script>
     export let animes,personnels,characters;
-    import {AccordionFlush} from "flowbite-svelte";
+    import {AccordionFlush,Alert,Button} from "flowbite-svelte";
     import {curruser} from '../stores/store';
     //console.log(animes);
     //console.log(personnels);
@@ -88,6 +88,7 @@
 			alert('Could not Delete');
 		} else {		
 			console.log(temp);
+			refresh();
 		}
 	}
     async function proxydeletecharacters()
@@ -115,6 +116,7 @@
 			alert('Could not Delete');
 		} else {		
 			console.log(temp);
+			refresh();
 		}
 	}
     async function proxydeletepersonnel()
@@ -142,6 +144,7 @@
 			alert('Could not Delete');
 		} else {		
 			console.log(temp);
+			refresh();
 		}
 	}
     async function proxydeleteepisode()
@@ -169,9 +172,100 @@
 			alert('Could not Delete');
 		} else {		
 			console.log(temp);
+			refresh();
 		}
 	}
+	let animedelchoice=0,chardelchoice=0,perdelchoice=0,epdelchoice=0;
+	function animedel()
+	{
+		animedelchoice=1;
+	}
+	function chardel()
+	{
+		chardelchoice=1;
+	}
+	function perdel()
+	{
+		perdelchoice=1;
+	}
+	function epdel()
+	{
+		epdelchoice=1;
+	}
+	function resetalert()
+	{
+		animedelchoice=0;
+		chardelchoice=0;
+		perdelchoice=0;
+		epdelchoice=0;
+	}
+	async function refresh()
+	{
+		let response;
+		response = await fetch("http://localhost:5000/anime");
+		if (response.status === 200) {
+			animes = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		response = await fetch("http://localhost:5000/personnel");
+		if (response.status === 200) {
+			personnels = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+        response = await fetch("http://localhost:5000/characters");
+		if (response.status === 200) {
+			characters = await  response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+
 </script>
+{#if animedelchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Delete The Chosen Anime?</span>
+	<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+</Alert>
+{/if}
+{#if chardelchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Delete The Chosen Character?</span>
+	<Button on:click={handledeletecharacter} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+</Alert>
+{/if}
+{#if perdelchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Delete The Chosen Personnel?</span>
+	<Button on:click={handledeletepersonnel} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+</Alert>
+{/if}
+{#if epdelchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Delete The Chosen Episode?</span>
+	<Button on:click={handledeleteepisode} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+</Alert>
+{/if}
+{#if animedelchoice==1}
+<Alert>
+	<div class="flex justify-center"></div>
+	<span class="text-lg font-medium text-blue-700 dark:text-blue-800">Do You Really Want To Delete The Chosen Anime?</span>
+	<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
+	<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+</Alert>
+{/if}
 <div class="relative flex h-full w-full">
 	<div class="h-screen w-1/2 bg-black">
 		<AccordionFlush id="1">
@@ -189,7 +283,7 @@
 		  <div class="flex justify-center">
 		
 		  <button
-						  on:click={handledeleteanime}
+						  on:click={animedel}
 						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 						  >Delete Chosen Anime</button
 					  >
@@ -214,7 +308,7 @@
 		  <div class="flex justify-center">
 		
 		  <button
-						  on:click={handledeletecharacter}
+						  on:click={chardel}
 						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 						  >Delete Chosen Character</button
 					  >
@@ -239,7 +333,7 @@
             <div class="flex justify-center">
           
             <button
-                            on:click={handledeletepersonnel}
+                            on:click={perdel}
                             class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
                             >Delete Chosen Personnel</button
                         >
@@ -278,7 +372,7 @@
 		  <div class="flex justify-center">
 		
 		  <button
-						  on:click={handledeleteepisode}
+						  on:click={epdel}
 						  class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 						  >Delete Chosen Episode</button
 					  >
