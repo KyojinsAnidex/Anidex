@@ -61,19 +61,19 @@
 <svelte:head>
 	<title>{char.firstname}</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class=" h-full w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<img class="h-52 rounded-full mb-4" src={picture} alt="Char Pic" />
 
-			<h2 class="mt-2 text-3xl font-medium text-center text-black dark:text-red-700">
+			<h2 class="mt-2 text-3xl font-medium text-center dark:text-red-700">
 				{char.firstname + ' ' + char.lastname}
 			</h2>
 
-			<h4 class="mt-2 text-lg font-medium text-center  text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg font-medium text-center dark:text-red-700">
 				{char.gender === 'F' ? 'Female' : char.gender === 'M' ? 'Male' : 'Other'}
 			</h4>
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				{char.age + ' Years old'}
 			</h4>
 			<!-- <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
@@ -90,7 +90,7 @@
 			</AccordionFlush>
 		</div>
 	</div>
-	<div class="h-screen w-1/2">
+	<div class="h-full  w-1/2">
 		{#await charanime() then}
 			<AccordionFlush>
 				<h2 slot="header">Anime</h2>
@@ -104,10 +104,10 @@
 						<h4 class="mt-2 text-xl font-medium text-black dark:text-red-700">
 							{anime.anime.title}
 						</h4>
-						<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Year: {anime.anime.releasedate.slice(0, 4)}
 						</h4>
-						<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Season: {anime.anime.releaseseason}
 						</h4>
 						
@@ -115,19 +115,19 @@
 							<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 						</Rating>
 
-						<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Anime Rank: {anime.anime.animerank}
 						</h4>
-						<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Genre:
 							{#each anime.animegenres as genre}
 								{genre.genrename + ' '}
 							{/each}
 						</h4>
-						<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Studio:
 							{#each anime.animestudio as studio}
-								{studio.studioname}
+								{studio.studioname + ' | '}
 							{/each}
 						</h4>
 					</div>
@@ -147,7 +147,7 @@
 							{person.person.firstname + ' ' + person.person.lastname}
 						</h2>
 
-						<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 							{person.person.gender === 'F'
 								? 'Female'
 								: person.person.gender === 'M'
@@ -157,14 +157,14 @@
 						<!-- <h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
 					{per.age + ' Years old'}
 				</h4> -->
-						<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 							Birthday : {person.person.birthday.slice(0, 10)}
 						</h4>
-						<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+						<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 							Address: {person.person.address}
 						</h4>
 						<a href={person.person.website}>
-							<h4 class="mt-2 text-lg text-center font-medium text-blue-700 dark:text-red-700">
+							<h4 class="mt-2 text-lg text-center font-medium text-solarizedBlue dark:text-red-700">
 								Website
 							</h4>
 						</a>

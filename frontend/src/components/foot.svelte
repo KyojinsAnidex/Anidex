@@ -9,7 +9,7 @@
 	} from 'flowbite-svelte';
 </script>
 
-<Footer footerType="socialmedia" class= "bg-solarizedBase3 text-solarizedBase02" >
+<Footer footerType="socialmedia" class= "bg-solarizedBase3 text-solarizedBase02 sticky bottom-0 " >
 	<div class="md:flex md:justify-between h-4 ">
 		<div class="mb-4 md:mb-0 ">
 			<FooterBrand

@@ -70,7 +70,9 @@
 	//fetchanimeinfo();
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
@@ -83,13 +85,13 @@
 						alt="Anime Pic"
 					/>
 				</a>
-				<h4 class="mt-2 text-2xl font-medium text-black dark:text-red-700">
+				<h4 class="mt-2 text-2xl font-medium  dark:text-red-700">
 					{resanimes[i].anime.title}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{resanimes[i].anime.releaseseason}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{resanimes[i].anime.releasedate.slice(0, 4)}
 				</h4>
 			</div>
