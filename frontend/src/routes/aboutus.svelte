@@ -7,7 +7,7 @@
 			<div class="flex justify-center">
 				<img
 					class="h-52 rounded-full mb-4"
-					src="http://localhost:5000/uploads/images/sadif.jpg"
+					src="http://localhost:5000/uploads/images/sadif.png"
 					alt="person1 pic"
 				/>
 			</div>
