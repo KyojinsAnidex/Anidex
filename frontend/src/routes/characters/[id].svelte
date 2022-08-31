@@ -93,7 +93,7 @@
 	<div class="h-full  w-1/2">
 		{#await charanime() then}
 			<AccordionFlush>
-				<h2 slot="header">Anime</h2>
+				<h2 slot="header" class=" text-xl font-medium">Anime</h2>
 				<div slot="body">
 					<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 						<img
@@ -121,7 +121,7 @@
 						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 							Genre:
 							{#each anime.animegenres as genre}
-								{genre.genrename + ' '}
+								{genre.genrename + ' | '}
 							{/each}
 						</h4>
 						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
@@ -134,7 +134,7 @@
 				</div>
 			</AccordionFlush>
 			<AccordionFlush>
-				<h2 slot="header">Voice Actor</h2>
+				<h2 slot="header" class="text-xl font-medium">Voice Actor</h2>
 				<div slot="body">
 					<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 						<img

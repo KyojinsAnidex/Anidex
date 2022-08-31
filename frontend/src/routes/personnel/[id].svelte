@@ -55,38 +55,38 @@
 <svelte:head>
 	<title>{per.firstname}</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2">
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<img class="h-52 rounded-full mb-4" src={picture} alt="Char Pic" />
 
-			<h2 class="mt-2 text-3xl text-center font-medium text-black dark:text-red-700">
+			<h2 class="mt-2 text-3xl text-center font-medium  dark:text-red-700">
 				{per.firstname + ' ' + per.lastname}
 			</h2>
 
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				{per.gender === 'F' ? 'Female' : per.gender === 'M' ? 'Male' : 'Other'}
 			</h4>
 			<!-- <h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
 		{per.age + ' Years old'}
 	</h4> -->
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				Birthday : {per.birthday.slice(0, 10)}
 			</h4>
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				Address: {per.address}
 			</h4>
 			<a href={per.website}>
-				<h4 class="mt-2 text-lg text-center font-medium text-blue-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg text-center font-medium text-solarizedBlue dark:text-red-700">
 					Website
 				</h4>
 			</a>
 		</div>
 	</div>
-	<div class="h-screen w-1/2">
+	<div class="h-full w-1/2">
 		{#await peranime() then}
 			<AccordionFlush>
-				<h2 slot="header" class = "text-xl">Worked On</h2>
+				<h2 slot="header" class="text-xl">Worked In Following Anime</h2>
 				<div slot="body">
 					{#each resanime as anime}
 						<AccordionFlush>
