@@ -60,12 +60,22 @@
 			body: dataArray
 		});
 		console.log(response);
+		anime = {
+		title: '',
+		releasedate: '',
+		synopsis: '',
+		releaseseason: '',
+		genre: [],
+		studio: []
+	};
 		if (response.status === 201) {
 			return await response.json();
+			
 		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
+			
 
 			throw new Error(response.statusText);
 		}

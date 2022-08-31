@@ -1,6 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { curruser, state } from '../stores/store';
+	import { curruser, state,search } from '../stores/store';
 	let user = {
 		name: '',
 		email: '',
@@ -87,6 +87,12 @@
 			$curruser.mail = temp.email;
 			$curruser.token = temp.token;
 			$curruser.admin = temp.admin;
+			
+		search.set({
+			txt: '',
+			type: ''
+		});
+		
 			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();

@@ -65,6 +65,16 @@
 			body: dataArray
 		});
 		console.log(response);
+		character = {
+		lastname: '',
+		firstname: '',
+		gender: '',
+		role: '',
+		age: 0,
+		description: '',
+		voiceactors: [],
+		anime: []
+	};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -86,6 +96,7 @@
 			goto('http://127.0.0.1:5173/allcharacters')
 			console.log(temp);
 		}
+
 	}
 </script>
 

@@ -20,6 +20,9 @@
 				// etc.
 			})
 		});
+		genre = {
+		genre: ''
+	};
 		if (response.status === 201) {
 			return await response.json();
 		}else {

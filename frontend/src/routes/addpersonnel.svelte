@@ -56,6 +56,15 @@
 		});
 		// console.log(response);
 		// console.log(await response.json());
+		personnel = {
+		lastname: '',
+		firstname: '',
+		gender: '',
+		birthday: '',
+		address: '',
+		website: '',
+		anime: []
+	};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
