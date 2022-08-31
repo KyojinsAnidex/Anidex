@@ -25,6 +25,11 @@
 				// etc.
 			})
 		});
+		studio = {
+		studioname: '',
+		office_address: '',
+		website: ''
+	};
 		if (response.status === 201) {
 			return await response.json();
 		} else {

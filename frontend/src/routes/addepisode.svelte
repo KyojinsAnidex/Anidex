@@ -30,6 +30,13 @@
 				// etc.
 			})
 		});
+		episode = {
+		episode: '',
+		season: '',
+		title: '',
+		airingdate: '',
+		runtime: ''
+	};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
