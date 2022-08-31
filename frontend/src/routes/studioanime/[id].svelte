@@ -128,20 +128,20 @@
 	<title>{anime.title}</title>
 </svelte:head>
 {#await refresh() then}
-	<div class="relative flex h-full w-full">
-		<div class="h-screen w-1/2">
+	<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+		<div class="h-full w-1/2">
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<img class="h-52 rounded-full mb-4" src={picture} alt="Anime Pic" />
-				<h4 class="mt-2 text-3xl font-medium text-black dark:text-red-700">
+				<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
 					{anime.title}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{anime.releasedate.slice(0, 4)}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					{anime.releaseseason}
 				</h4>
-				
+
 				<Rating count rating={refanime.anime.averagerating}>
 					<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 					<a
@@ -151,16 +151,16 @@
 					>
 				</Rating>
 
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					Rank: {refanime.anime.animerank}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					Anime Genre:
 					{#each refanime.animegenres as genre}
 						{genre.genrename + ' | '}
 					{/each}
 				</h4>
-				<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
+				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 					Studio:
 					{#each refanime.animestudio as studio}
 						{studio.studioname + ' | '}
@@ -168,7 +168,7 @@
 				</h4>
 			</div>
 		</div>
-		<div class="h-screen w-1/2">
+		<div class="h-full w-1/2">
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 				<AccordionFlush id="1">
 					<h2 slot="header" class="text-xl">Synopsis</h2>
@@ -179,7 +179,7 @@
 							<a href="/episodes">
 								<button
 									on:click={fetchepisodes()}
-									class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+									class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 									>Episodes</button
 								>
 							</a>
@@ -196,8 +196,8 @@
 								<br />
 								<button
 									on:click={checkrate}
-									class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-									>Rate</button
+									class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+							>Rate</button
 								>
 							{/if}
 							{#if giverating == true}
@@ -209,7 +209,7 @@
 							{/if}
 							<button
 								on:click={rate}
-								class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+								class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 								>Submit</button
 							>
 						</div>
