@@ -52,8 +52,8 @@ app.use((req, res, next) => {
 // deletes associated file as this req could not be processed
 app.use((error, req, res, next) => {
   if (req.file) {
-    fs.unlink( ".\\" + path.join("./", req.file.path), (err) => {
-      console.log("ERROR UNLINKING FILE FROM FAILED REQUEST\n" + err + " " + path.join("./", req.file.path));
+    fs.unlink( "./uploads/images/" + req.file.path.split('\\')[2], (err) => {
+      console.log("ERROR UNLINKING FILE FROM FAILED REQUEST\n" + err + " " );
     });
   }
   if (res.headerSent) {
