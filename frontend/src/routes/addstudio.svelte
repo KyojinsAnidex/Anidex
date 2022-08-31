@@ -56,11 +56,12 @@
 <svelte:head>
 	<title>Add Studio</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+<div class="relative flex h-screen w-full">
+	<div class="h-screen w-1/2 items-center bg-solarizedBase3 text-solarizedBase02">
+		<div class="mx-auto flex h-screen w-2/3 flex-col justify-center  xl:w-1/2">
+			<h2 class="text-2xl flex justify-center font-bold">		Add Studio </h2>		
+		
 			<div class="mt-10">
-				<h2 class="text-2xl font-bold">		Add Studio </h2>
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.0 block text-lg font-bold" for="title">Studio Name</label>
@@ -97,7 +98,7 @@
 						<input
 							type="submit"
 							id="submit"
-							class="px-4 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
+							class="px-5 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
 						/>
 					</div>
 				</form>

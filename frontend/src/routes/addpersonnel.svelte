@@ -92,9 +92,9 @@
 <svelte:head>
 	<title>Add Personnel</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
 			<div class="mt-10">
 				<h2 class="text-2xl font-bold">Add Personnel</h2>
 
@@ -159,7 +159,7 @@
 							id="Birthdate"
 							bind:value={personnel.birthday}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
-							placeholder="YEAR-MM-DATE"
+							placeholder="YYYY-MM-DD"
 						/>
 					</div>
 					<br />
@@ -177,9 +177,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
-			<div class="mt-10">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
+			<div class="mt-10 text-xl">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block text-lg font-bold" for="title">Select Anime</label>
@@ -195,7 +195,7 @@
 						<input
 							type="submit"
 							id="submit"
-							class="px-3 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
+							class="px-5 py-2 rounded-2xl text-xl font-bold text-white bg-red-900  hover:bg-red-500"
 						/>
 					</div>
 				</form>

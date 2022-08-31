@@ -49,9 +49,9 @@
 <svelte:head>
 	<title>Add Genre</title>
 </svelte:head>
-<div class="relative flex h-full w-full">
-	<div class="h-screen w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center xl:w-1/2">
 			<div class="mt-10">
 				<h2 class="text-2xl font-bold">Add Genre</h2>
 		
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 bg-blue-600">
+	<div class="h-full w-1/2 bg-blue-600">
 		<img
 			src="http://localhost:5000/uploads/images/signup.jpg"
 			class="object-cover h-full w-full"

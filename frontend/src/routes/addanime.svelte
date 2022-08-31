@@ -124,7 +124,7 @@
 							id="Releasedate"
 							bind:value={anime.releasedate}
 							class="inline-block w-full rounded-full p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
-							placeholder="YEAR-MM-DATE"
+							placeholder="YYYY-MM-DD"
 						/>
 					</div>
 					<div>
@@ -132,7 +132,7 @@
 						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" />
 					</div>
 					<br />
-					<Dropdown label="Season" class="w-60 font-bold" size="xl" color="black">
+					<Dropdown label="Season" class="w-60 text-xl font-bold" size="xl" color="black">
 						<ul slot="content" class="p-3 ">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={anime.releaseseason} name="dropdown" value={'Spring'} tinted
