@@ -109,8 +109,8 @@
 {/await}
 {#if discussion.reviewTagDiscussions.length == 0}
 	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
-		<h2 class="mt-2 text-3xl font-medium text-black dark:text-red-700">
-			No Review Of This Anime Yet
+		<h2 class="mt-2 text-xl font-medium text-black dark:text-red-700">
+			No Review Of This Anime Yet, Why not start now?
 		</h2>
 	</div>
 {:else}
@@ -157,7 +157,7 @@
 		<Textarea bind:value={review} class="mb-4 " placeholder="Write a Review" />
 		<br />
 	</div>
-	<div class="flex justify-center">
+	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
 		<button
 			on:click={addreview}
 			class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
