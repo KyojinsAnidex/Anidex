@@ -28,7 +28,10 @@
 		} else if (response.status === 404) {
 			alert('No anime Found');
 		} else {
-			alert('An error Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}
@@ -48,8 +51,11 @@
 		const response = await fetch(source);
 		if (response.status === 200) {
 			return await response.json();
-		} else {
-			alert('An error Try Again');
+		}else {
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

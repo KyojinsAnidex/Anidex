@@ -97,7 +97,10 @@
 		if (response.status === 201) {
 			return await response.json();
 		} else {
-			alert('Could Not Add Studio Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

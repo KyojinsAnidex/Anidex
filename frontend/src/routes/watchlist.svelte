@@ -20,7 +20,10 @@
 		} else if (response.status === 404) {
 			alert('No Watchlist Found');
 		} else {
-			console.log('An error Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

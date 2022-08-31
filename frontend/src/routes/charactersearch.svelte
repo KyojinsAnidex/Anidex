@@ -27,7 +27,10 @@
 		} else if (response.status === 404) {
 			alert('No Character Found');
 		} else {
-			alert('An error Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

@@ -19,8 +19,11 @@
 			return await response.json();
 		} else if (response.status === 404) {
 			alert('No Favourites Found');
-		} else {
-			console.log('An error Try Again');
+		}else {
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

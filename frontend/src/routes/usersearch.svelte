@@ -27,8 +27,11 @@
 		} else if (response.status === 404) {
 			alert('No user found.');
 			throw new Error(response.statusText);
-		} else {
-			alert('An error happened, please try again');
+		}else {
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}

@@ -17,7 +17,10 @@
 		if (response.status === 200) {
 			return await response.json();
 		} else {
-			alert('An error occured Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}
@@ -51,11 +54,15 @@
 		});
 		if (response.status === 200) {
 			return await response.json();
-		} else {
+		}
+		else {
 			user.name = '';
 			user.email = '';
 			user.password = '';
-			alert('Could Not log in Try Again');
+			let errorMessage = await response.json();
+			// console.log();
+			alert('An error occurred: ' + errorMessage.message);
+
 			throw new Error(response.statusText);
 		}
 	}
