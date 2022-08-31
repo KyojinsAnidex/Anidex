@@ -15,7 +15,13 @@
 			const response = await fetch(studioendpoint);
 			if (response.status === 200) {
 				return await response.json();
-			} else {
+			}
+			else if(response.status === 404) 
+			{
+				alert("No Anime Of That Studio Found");
+				return await response.json();
+			}
+			else {
 				console.log('An error Try Again');
 				throw new Error(response.statusText);
 			}
