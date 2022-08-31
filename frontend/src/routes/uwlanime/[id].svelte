@@ -107,11 +107,50 @@
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
+			fetchrating()
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
 	}
+	let rateendpoint='http://localhost:5000/animerating/anime/'+$curruser.name;
+	let userrating;
+	async function proxyfetchrating() {
+		const response = await fetch(rateendpoint, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Bearer ' + $curruser.token,
+				'Content-Type': 'application/json'
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				animeid:anime.animeid 
+				// etc.
+			})
+		});
+		if (response.status === 200) {
+			return await response.json();
+		} else if (response.status === 404) {
+			return await response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetchrating() {
+		let temp = await proxyfetchrating();
+
+		if (temp.success == false) {
+			console.log('No Rating Found');
+		} else {
+			console.log(temp);
+			userrating=temp.rating;
+		}
+	
+	}
+	console.log(userrating);
 </script>
 
 <svelte:head>
@@ -183,6 +222,11 @@
 				<AccordionFlush id="2">
 					<h2 slot="header" class="text-xl">Add To Watchlist</h2>
 					<div slot="body">
+						{#if userrating!=0}
+						<p>Previous Rating: {userrating}</p>
+						{:else}
+						<p>User Has Not Rated This Anime Yet</p>
+						{/if}
 						<Radio bind:group={favourite} value="true">Favourite</Radio>
 						<Radio bind:group={favourite} value="false">Not Favourite</Radio>
 						{#if giverating == false}
