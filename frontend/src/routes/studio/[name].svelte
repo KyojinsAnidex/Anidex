@@ -92,19 +92,20 @@
 	console.log($studiorespics);
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+
+<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#each animeresults as prop, i}
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
 			<a href="../studioanime/{i}">
 				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
 			</a>
-			<h2 class="mt-2 text-2xl text-center font-medium text-black dark:text-red-700">
+			<h2 class="mt-2 text-2xl text-center font-medium dark:text-red-700">
 				{animeresults[i].title}
 			</h2>
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				{animeresults[i].releaseseason}
 			</h4>
-			<h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
+			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				{animeresults[i].releasedate.slice(0, 4)}
 			</h4>
 			<!--
