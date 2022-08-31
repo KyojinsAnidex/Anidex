@@ -86,12 +86,12 @@
 <svelte:head>
 	<title>Add Character</title>
 </svelte:head>
-<div class="flex h-full w-full items-stretch">
-	<div class="h-full w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+<div class="flex h-full w-full items-stretch bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center xl:w-1/2">
 			<div class="mt-10">
 				<h2 class="text-2xl font-bold">Add Character</h2>
-		
+
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">First Name</label>
@@ -99,7 +99,7 @@
 							type="text"
 							id="firstname"
 							bind:value={character.firstname}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="First Name"
 						/>
 					</div>
@@ -109,7 +109,7 @@
 							type="text"
 							id="lastname"
 							bind:value={character.lastname}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Last Name"
 						/>
 					</div>
@@ -119,7 +119,7 @@
 							type="number"
 							id="firstname"
 							bind:value={character.age}
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-gray-900 placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Age"
 						/>
 					</div>
@@ -195,13 +195,13 @@
 		</div>
 	</div>
 
-	<div class="h-full w-1/2 bg-white items-center justify-center">
-		<div class="mx-auto flex h-full w-2/3 flex-col  justify-center text-gray-900 xl:w-1/2">
+	<div class="h-full w-1/2 bg-solarizedBase3 text-solarizedBase02 items-center justify-center">
+		<div class="mx-auto flex h-full w-2/3 flex-col  justify-center  xl:w-1/2">
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Anime</label>
-						<select multiple bind:value={character.anime} class="text-gray-900">
+						<select multiple bind:value={character.anime} class="text-solarizedBase02">
 							{#each animes.results as an}
 								<option value={an.animeid}>
 									{an.title}
@@ -211,7 +211,7 @@
 					</div>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Voice Actor</label>
-						<select multiple bind:value={character.voiceactors} class="text-gray-900">
+						<select multiple bind:value={character.voiceactors} class="text-solarizedBase02">
 							{#each personnels.personnels as per}
 								<option value={per.personnelid}>
 									{per.firstname + '  ' + per.lastname}
@@ -219,11 +219,11 @@
 							{/each}
 						</select>
 					</div>
-					<div class="my-10 text-xl font-bold text-white align-middle">
+					<div class="my-10 text-xl font-bold  align-middle">
 						<input
 							type="submit"
 							id="submit"
-							class="w-2/5 align-middle rounded-2xl bg-red-900 p-2 hover:bg-red-600"
+							class="w-2/5 align-middle rounded-2xl text-white bg-solarizedRed p-2 hover:bg-red-500"
 						/>
 					</div>
 				</form>

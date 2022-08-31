@@ -72,16 +72,16 @@
 {#await fetchuserinfo()}
 	<div class="text-center"><Spinner size="10" color="red" /></div>
 {:then}
-	<div class="flex justify-center text-center">
+	<div class="flex justify-center text-center bg-solarizedBase3 text-solarizedBase02">
 		<div class="grid grid-cols-1 md:grid-cols-2 text-center">
 			<div class="mt-10">
 				<div class="flex justify-center">
 					<img class="h-52 rounded-full mb-4" src={image} alt="person pic" />
 				</div>
-				<div class="animate-fade-in-down mb-1 text-center text-2xl text-black">
+				<div class="animate-fade-in-down mb-1 text-center text-2xl">
 					{res.user.userid}
 				</div>
-				<div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">
+				<div class="animate-fade-in-down mb-1 text-center text-lg text-solarizedBlue">
 					{res.user.email}
 				</div>
 				<blockquote>

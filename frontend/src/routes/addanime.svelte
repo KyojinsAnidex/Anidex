@@ -81,16 +81,14 @@
 <svelte:head>
 	<title>Add Anime</title>
 </svelte:head>
-<div class=" flex justify-center  text-black">
-	<h1 class="text-2xl">Anime Information</h1>
+<div class=" flex justify-center  bg-solarizedBase3 text-solarizedBase02">
+	<h1 class="text-3xl font-medium">Anime Information</h1>
 </div>
-<div class="relative flex h-full w-full">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
+			<h2 class="text-2xl font-bold">Add Anime</h2>
 
-	<div class="h-screen w-1/2 ">
-			
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
-			<h2 class="text-2xl font-bold">Add Anime </h2>
-		
 			<div class="mt-10">
 				<form>
 					<div>
@@ -104,7 +102,7 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block text-black font-bold" for="release date">Release Date</label>
+						<label class="mb-2.5 block  font-bold" for="release date">Release Date</label>
 						<input
 							type="text"
 							id="Releasedate"
@@ -114,7 +112,7 @@
 						/>
 					</div>
 					<div>
-						<label for="sys" class="mb-2.5 block text-black font-bold ">Synopsis</label>
+						<label for="sys" class="mb-2.5 block  font-bold ">Synopsis</label>
 						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" />
 					</div>
 					<br />
@@ -157,8 +155,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="h-screen w-1/2 ">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
+	<div class="h-full w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center xl:w-1/2">
 			<div class="mt-10 ">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
@@ -185,7 +183,7 @@
 						<input
 							type="submit"
 							id="submit"
-							class="w-2/5 rounded-2xl text-white text-xl font-bold bg-red-900 p-1 align-center hover:bg-red-500"
+							class="w-2/5 rounded-2xl text-white text-xl font-bold bg-solarizedRed p-1 align-center hover:bg-red-500"
 						/>
 					</div>
 				</form>
