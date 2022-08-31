@@ -18,7 +18,6 @@ const getAllPerson = async (req, res, next) => {
   );
 };
 
-
 const getSinglePerson = async (req, res, next) => {
   let searchedPerson;
   let workedOnAnime = false;
@@ -198,24 +197,27 @@ const addPerson = async (req, res, next) => {
     .replace(/"/g, "")
     .split(",");
 
-  let newRoles = role
-    .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
-    .replace(/"/g, "")
-    .split(",");
+  // let newRoles = role
+  //   .replace(/[\[\]']+/g, "")
+  //   .replace(/\s+/g, "")
+  //   .replace(/"/g, "")
+  //   .split(",");
   let i = 0;
 
   newAnime.forEach(async (element) => {
-    personnelRole = newRoles[i++];
+    // personnelRole = newRoles[i++];
     queryText6 =
       "INSERT INTO " +
       dbModels.tables.animestaff +
-      " VALUES ('" +
+      " ( " +
+      dbModels.animestaff.personnelID +
+      " , " +
+      dbModels.animestaff.animeIDNOTNULL +
+      " ) ";
+    " VALUES ('" +
       createdPerson.rows[0].personnelid +
       "' , '" +
       element +
-      "' , '" +
-      personnelRole +
       "') RETURNING *;";
 
     animeStatus = false;

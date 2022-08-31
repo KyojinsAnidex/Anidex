@@ -24,7 +24,8 @@
 				season: episode.season,
 				animeid: $epanime,
 				title: episode.title,
-				runtime: episode.runtime
+				runtime: episode.runtime,
+				airingdate: episode.airingdate
 				// etc.
 			})
 		});
@@ -49,12 +50,11 @@
 	<title>Add Episode</title>
 </svelte:head>
 
-<div class="relative flex h-full w-full">
-	 
-	<div class="h-screen w-1/2 bg-white">
-		<div class="mx-auto flex h-full w-2/3 flex-col justify-center text-black xl:w-1/2">
-			<h2 class="text-xl font-bold">Add Anime Episodes</h2>
-			<div class="mt-10 text-black">
+<div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
+	<div class="h-screen w-1/2 ">
+		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
+			<h2 class="text-2xl font-bold">Add Anime Episodes</h2>
+			<div class="mt-10 ">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block text-lg font-bold" for="Tile">Title</label>
@@ -62,7 +62,7 @@
 							type="text"
 							bind:value={episode.title}
 							id="title"
-							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
+							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Title"
 						/>
 					</div>
@@ -77,7 +77,8 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.5 block text-lg font-bold" for="Episode Number">Episode Number</label>
+						<label class="mb-2.5 block text-lg font-bold" for="Episode Number">Episode Number</label
+						>
 						<input
 							type="number"
 							bind:value={episode.episode}
@@ -87,17 +88,17 @@
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block text-lg font-bold" for="release date">Airing Date</label>
+						<label class="mb-2.5 block text-lg font-bold" for="release date">Airing Date</label>
 						<input
 							type="text"
 							id="AirDate"
 							bind:value={episode.airingdate}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
-							placeholder="YY-MM-DD"
+							placeholder="YYYY-MM-DD"
 						/>
 					</div>
 					<div>
-						<label class="mb-2.0 block text-lg font-bold" for="release date">Runtime</label>
+						<label class="mb-2.5 block text-lg font-bold" for="release date">Runtime</label>
 						<input
 							type="text"
 							id="Runtime"
@@ -111,7 +112,7 @@
 						<input
 							type="submit"
 							id="submit"
-							class="w-2/5 rounded-2xl bg-red-900 p-2 hover:bg-red-500"
+							class="w-2/5 rounded-2xl bg-solarizedRed p-2 hover:bg-red-500"
 						/>
 					</div>
 				</form>

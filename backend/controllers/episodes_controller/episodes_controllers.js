@@ -94,6 +94,7 @@ const getSingleEpisode = async (req, res, next) => {
 const addEpisode = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log(req.body);
     return next(
       new HttpError("Invalid inputs provided, please check your inputs", 422)
     );

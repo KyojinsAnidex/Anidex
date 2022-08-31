@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { state, curruser, search } from './../stores/store.js';
 	import {
 		Navbar,
@@ -30,6 +31,7 @@
 			txt: '',
 			type: ''
 		});
+		goto('/');
 		resetalert();
 	}
 	function logout() {
@@ -50,8 +52,13 @@
 		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
 	</Alert>
 {/if}
-<Navbar let:hidden let:toggle rounded={true} class="text-solarizedYellow bg-solarizedBase02 flex-auto">
-	<NavBrand  href="/">
+<Navbar
+	let:hidden
+	let:toggle
+	rounded={true}
+	class="text-solarizedYellow bg-solarizedBase02 flex-auto"
+>
+	<NavBrand href="/">
 		<img
 			src="http://localhost:5000/uploads/images/anidex.jpg"
 			class="mr-3 h-6 sm:h-9"
@@ -61,7 +68,7 @@
 			Anidex
 		</span>
 	</NavBrand>
-	<NavUl >
+	<NavUl>
 		<Dropdown label={$search.type} class="w-48 z-50 rounded-3xl">
 			<ul slot="content" class="p-3 space-y-1">
 				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
