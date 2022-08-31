@@ -138,6 +138,9 @@
 			<a href="http://127.0.0.1:5173/allpersonnel">
 				<DropdownItem>Personnel</DropdownItem>
 			</a>
+			<a href="http://127.0.0.1:5173/allstudio">
+				<DropdownItem>Studio</DropdownItem>
+			</a>
 		</Dropdown>
 
 		<NavLi href="http://127.0.0.1:5173/ratedanime">Top Rated</NavLi>

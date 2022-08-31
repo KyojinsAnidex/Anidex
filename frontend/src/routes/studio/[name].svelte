@@ -1,5 +1,5 @@
 <script context="module">
-	export async function load({ fetch, params }) {
+	export async function load({ params }) {
 		let name = params.name;
 		//  console.log(name);
 		let animes = {
