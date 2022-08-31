@@ -70,7 +70,7 @@
 </script>
 
 {#if $eps.length != 0}
-	<div class="flex justify-center">
+	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
 		<table class="table-auto border-separate" cellpadding="20"cellspacing="20">
 			<tr>
 				<th>Title </th>

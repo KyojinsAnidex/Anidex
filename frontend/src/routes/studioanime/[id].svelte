@@ -126,7 +126,7 @@
 			throw new Error(response.statusText);
 		}
 	}
-	let rateendpoint='http://localhost:5000/animerating/anime/'+$curruser.name;
+	let rateendpoint = 'http://localhost:5000/animerating/anime/' + $curruser.name;
 	let userrating;
 	async function proxyfetchrating() {
 		const response = await fetch(rateendpoint, {
@@ -139,7 +139,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				animeid:anime.animeid 
+				animeid: anime.animeid
 				// etc.
 			})
 		});
@@ -159,9 +159,8 @@
 			console.log('No Rating Found');
 		} else {
 			console.log(temp);
-			userrating=temp.rating;
+			userrating = temp.rating;
 		}
-	
 	}
 	console.log(userrating);
 </script>
@@ -231,10 +230,11 @@
 				{#if $state == 1}
 					<AccordionFlush id="2">
 						<h2 slot="header" class="text-xl">Add To Watchlist</h2>
-						<div slot="body">{#if userrating!=0}
-							<p>Previous Rating: {userrating}</p>
+						<div slot="body">
+							{#if userrating != 0}
+								<p>Previous Rating: {userrating}</p>
 							{:else}
-							<p>User Has Not Rated This Anime Yet</p>
+								<p>User Has Not Rated This Anime Yet</p>
 							{/if}
 							<Radio bind:group={favourite} value="true">Favourite</Radio>
 							<Radio bind:group={favourite} value="false">Not Favourite</Radio>
@@ -243,7 +243,7 @@
 								<button
 									on:click={checkrate}
 									class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-							>Rate</button
+									>Rate</button
 								>
 							{/if}
 							{#if giverating == true}
