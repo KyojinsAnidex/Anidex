@@ -1,4 +1,5 @@
 <script context="module">
+	
 	export async function load({ params }) {
 		let discussionheadid = params.discussionheadid;
 		let discussion;
@@ -19,6 +20,7 @@
 	// console.log(discussion);
 	import { Card, Avatar, AccordionFlush, Textarea } from 'flowbite-svelte';
 	import { state, curruser } from './../../stores/store.js';
+	import { goto } from '$app/navigation';
 	async function refresh() {
 		let response;
 		response = await fetch('http://localhost:5000/discussion/discussionhead/' + discussionheadid);
@@ -174,6 +176,62 @@
 			checkthread = 2;
 		}
 	}
+	async function proxydeletediscussion() {
+		let endpoint = 'http://localhost:5000/discussion/discussionhead/' + discussionheadid;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+				Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			}
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function handledeletediscussion() {
+		let temp = await proxydeletediscussion();
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {
+			console.log(temp);
+			goto("http://127.0.0.1:5173/forumhome")
+			
+		}
+	}
+	async function proxydeletediscussionentry(eid) {
+		let endpoint = 'http://localhost:5000/discussion/discussionentry/' + eid;
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: {
+				Authorization: 'Bearer ' + $curruser.token
+				// like application/json or text/xml
+			}
+		});
+		console.log(response);
+		if (response.status === 201) {
+			return await response.json();
+		} else {
+			alert('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function handledeletediscussionentry(eid) {
+		let temp = await proxydeletediscussionentry(eid);
+
+		if (temp.success == false) {
+			alert('Could not Delete');
+		} else {
+			console.log(temp);
+			refresh();
+			
+		}
+	}
 </script>
 
 <svelte:head>
@@ -225,6 +283,19 @@
 					/></svg
 				>
 			</button>
+			{#if discussion.discussionHead.userid==$curruser.name}
+			<br>
+			<div class="flex justify-left">	
+			<button
+							on:click={handledeletediscussion}
+							class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+							>Delete Thread</button
+						>
+					
+						
+					</div>
+					<br>
+			{/if}
 		{/if}
 		<h5 class="mb-2 text-sm font-bold tracking-tight  dark:text-white">
 			Votes: {discussion.discussionHead.votes}
@@ -280,6 +351,7 @@
 									</button>
 									Votes: {forum.votes}
 								{/if}
+
 							</div>
 						</AccordionFlush>
 					</td>
@@ -288,6 +360,21 @@
 							src={'http://localhost:5000/uploads/images/' + forum.pictureid}
 						/>{forum.userid} On {forum.starttime.slice(12, 19)}, {forum.starttime.slice(0, 10)}</td
 					>
+					<td>
+						{#if forum.userid==$curruser.name}
+			<br>
+			<div class="flex justify-left">	
+			<button
+							on:click={handledeletediscussionentry(forum.discussionentryid)}
+							class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+							>Delete Thread</button
+						>
+					
+						
+					</div>
+					<br>
+			{/if}
+					</td>
 					
 				</tr>
 			{/each}
