@@ -56,7 +56,7 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
-			goto('/');
+			goto('/login');
 		}
 	}
 </script>

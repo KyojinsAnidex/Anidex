@@ -72,6 +72,9 @@
 		console.log(animeinfos);
 	}
 </script>
+<svelte:head>
+	<title>All anime</title>
+</svelte:head>
 
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#await fetchanimeinfo()}
