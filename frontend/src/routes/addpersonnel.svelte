@@ -17,6 +17,7 @@
 <script>
 	import { Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
 	import { curruser } from '../stores/store';
+	import { goto } from '$app/navigation';
 	export let animes;
 	console.log(animes);
 	let personnel = {
@@ -72,6 +73,8 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
+			alert('Successfully Added');
+			goto('http://127.0.0.1:5173/allpersonnel');
 			console.log(temp);
 		}
 	}

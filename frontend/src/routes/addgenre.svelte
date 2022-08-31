@@ -1,5 +1,6 @@
 <script>
 	import { curruser } from './../stores/store.js';
+	import { goto } from '$app/navigation';
 	let genre = {
 		genre: ''
 	};
@@ -36,6 +37,8 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+			alert('Successfully Added Genre');
+			goto('/')
 		}
 	}
 </script>

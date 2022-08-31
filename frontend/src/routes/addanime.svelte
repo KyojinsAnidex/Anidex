@@ -23,6 +23,7 @@
 <script>
 	import { Input, Dropdown, DropdownItem, Radio, Select } from 'flowbite-svelte';
 	import { curruser } from '../stores/store';
+	import { goto } from '$app/navigation';
 	export let genres, studios;
 	console.log(genres);
 	console.log(studios);
@@ -76,6 +77,8 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
+			alert('Successfully Added Anime');
+			goto('/allanime');
 			console.log(temp);
 		}
 	}

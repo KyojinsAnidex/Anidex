@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { curruser, epanime } from '../stores/store';
 	let episode = {
 		episode: '',
@@ -44,6 +45,8 @@
 		if (temp.success == false) {
 			alert('Could not Add Episode. Try Again');
 		} else if (temp.success == true) {
+			alert("Successfully Added Episode");
+			goto('http://127.0.0.1:5173/allanime');
 			console.log(temp);
 		}
 	}

@@ -1,5 +1,6 @@
 <script>
 	import { curruser } from './../stores/store.js';
+	import { goto } from '$app/navigation';
 	let studio = {
 		studioname: '',
 		office_address: '',
@@ -41,6 +42,8 @@
 			alert('Could not Add');
 		} else {
 			console.log(temp);
+			alert('Successfully Added');
+			goto('http://127.0.0.1:5173/allstudio');
 		}
 	}
 </script>
