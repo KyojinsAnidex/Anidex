@@ -82,7 +82,7 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			alert('Successfully Added');
+			alert('Successfully Added Personnel');
 			goto('http://127.0.0.1:5173/allpersonnel');
 			console.log(temp);
 		}
