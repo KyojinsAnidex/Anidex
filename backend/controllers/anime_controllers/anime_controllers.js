@@ -435,6 +435,8 @@ const addAnime = async (req, res, next) => {
     .replace(/[\[\]']+/g, "")
     .replace(/"/g, "")
     .split(",");
+    console.log(newStudios);
+    console.log(studios);
   newStudios.forEach(async (element) => {
     queryText5 =
       "INSERT INTO " +
@@ -447,7 +449,8 @@ const addAnime = async (req, res, next) => {
 
     studioStatus = false;
 
-    try {
+    try { 
+
       studioStatus = await db.query(queryText5);
     } catch (err) {
       return next(
