@@ -11,8 +11,12 @@ const getAnimeByName = async (req, res, next) => {
   let searchedAnime;
 
   const { searchString } = req.body;
-  let newSearchString = searchString.trim().replace(/ /g, " | ");
-  // console.log(testString);
+  let newSearchString = "";
+
+  if (searchString != undefined) {
+    newSearchString = searchString.trim().replace(/ /g, " | ");
+    // console.log(testString);
+  }
 
   let queryText = "SELECT * FROM search_anime( '" + newSearchString + "' ) ;";
   try {
@@ -49,7 +53,7 @@ const getUserByName = async (req, res, next) => {
   // console.log(testString);
 
   let queryText = "SELECT * FROM search_users( '" + newSearchString + "' ) ;";
-  
+
   try {
     searchedUser = await db.query(queryText);
   } catch (err) {
@@ -84,8 +88,9 @@ const getCharByName = async (req, res, next) => {
   let newSearchString = searchString.trim().replace(/ /g, " | ");
   // console.log(testString);
 
-  let queryText = "SELECT * FROM search_characters( '" + newSearchString + "' ) ;";
-  
+  let queryText =
+    "SELECT * FROM search_characters( '" + newSearchString + "' ) ;";
+
   try {
     searchedCharacter = await db.query(queryText);
   } catch (err) {
@@ -122,7 +127,7 @@ const getPersonnelByName = async (req, res, next) => {
   // console.log(testString);
 
   let queryText = "SELECT * FROM search_person( '" + newSearchString + "' ) ;";
-  
+
   try {
     searchedPersonnel = await db.query(queryText);
   } catch (err) {
@@ -159,7 +164,7 @@ const getStudioByName = async (req, res, next) => {
   // console.log(testString);
 
   let queryText = "SELECT * FROM search_studio( '" + newSearchString + "' ) ;";
-  
+
   try {
     searchedStudio = await db.query(queryText);
   } catch (err) {
@@ -196,7 +201,7 @@ const getEpisodeByName = async (req, res, next) => {
   // console.log(testString);
 
   let queryText = "SELECT * FROM search_episode( '" + newSearchString + "' ) ;";
-    try {
+  try {
     searchedEpisode = await db.query(queryText);
   } catch (err) {
     return next(

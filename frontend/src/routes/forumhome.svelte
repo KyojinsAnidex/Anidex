@@ -32,7 +32,6 @@
 	<title>Forum</title>
 </svelte:head>
 
-<svelte:head><title>Forum</title></svelte:head>
 
 <div class="flex-col justify-center relative h-full w-full bg-solarizedBase3 text-solarizedBase02">
 	<div>
