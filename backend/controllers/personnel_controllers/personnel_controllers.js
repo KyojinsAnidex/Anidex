@@ -193,7 +193,6 @@ const addPerson = async (req, res, next) => {
     animeStatus = false;
   let newAnime = anime
     .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
 

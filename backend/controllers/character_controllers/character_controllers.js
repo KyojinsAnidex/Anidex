@@ -226,7 +226,6 @@ const addAChar = async (req, res, next) => {
 
   let newVoiceActors = voiceActors
     .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
 
@@ -237,7 +236,7 @@ const addAChar = async (req, res, next) => {
       " VALUES ('" +
       createdChar.rows[0].characterid +
       "' , '" +
-      element +
+      element.trim() +
       "') RETURNING *;";
 
     voiceActorStatus = false;
@@ -257,7 +256,6 @@ const addAChar = async (req, res, next) => {
   // insert the anime of the characters
   let newAnime = anime
     .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
 
@@ -266,7 +264,7 @@ const addAChar = async (req, res, next) => {
       "INSERT INTO " +
       dbModels.tables.animecharacter +
       " VALUES ('" +
-      element +
+      element.trim() +
       "' , '" +
       createdChar.rows[0].characterid +
       "') RETURNING *;";

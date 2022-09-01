@@ -394,7 +394,6 @@ const addAnime = async (req, res, next) => {
 
   let newgenres = genres
     .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
 
@@ -405,7 +404,7 @@ const addAnime = async (req, res, next) => {
       " VALUES ( " +
       animeid +
       ", '" +
-      element +
+      element.trim() +
       "' ) RETURNING * ;";
 
     genreStatus = false;
@@ -434,7 +433,6 @@ const addAnime = async (req, res, next) => {
   //insert studios
   let newStudios = studios
     .replace(/[\[\]']+/g, "")
-    .replace(/\s+/g, "")
     .replace(/"/g, "")
     .split(",");
   newStudios.forEach(async (element) => {
@@ -444,7 +442,7 @@ const addAnime = async (req, res, next) => {
       " VALUES ( " +
       animeid +
       ", '" +
-      element +
+      element.trim() +
       "' ) RETURNING * ;";
 
     studioStatus = false;
