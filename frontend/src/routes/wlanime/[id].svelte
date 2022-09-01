@@ -9,6 +9,7 @@
 	export let id;
 	import { wlanimes, state, curruser, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
+	import { goto } from '$app/navigation';
 	let anime = $wlanimes[id].anime;
 	$animeofinterest[0]=anime;
 		let picture = 'http://localhost:5000/uploads/images/' + $wlanimes[id].animepicture[0].pictureid;
@@ -48,7 +49,9 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
+			alert("Successfully Removed From Watchlist");
 			console.log(temp);
+			goto('http://127.0.0.1:5173/watchlist');
 		}
 	}
 

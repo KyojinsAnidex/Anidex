@@ -13,10 +13,10 @@
 			</div>
 			<div class="animate-fade-in-down mb-1 text-center text-lg text-sky-600">Sadif Ahmed</div>
 			<div class="animate-fade-in-down mb-8 text-center text-lg text-sky-800">
-				Wanna Be frontend designer
+				Just A Normal Guy
 			</div>
 			<blockquote>
-				<p class="animate-fade-in-down mx-12 mb-9 text-center text-sm">I am Sadif.</p>
+				<p class="animate-fade-in-down mx-12 mb-9 text-center text-sm">...</p>
 			</blockquote>
 		</div>
 		<div class="mt-10">
