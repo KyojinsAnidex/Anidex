@@ -47,7 +47,7 @@
 		dataArray.append('role', character.role);
 		dataArray.append('age', character.age);
 		dataArray.append('description', character.description);
-		dataArray.append('voiceactors', character.voiceactors);
+		dataArray.append('voiceActors', character.voiceactors);
 		dataArray.append('anime', character.anime);
 		dataArray.append('image', image[0]);
 		for (var key of dataArray.entries()) {

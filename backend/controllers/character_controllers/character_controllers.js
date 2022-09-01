@@ -223,11 +223,13 @@ const addAChar = async (req, res, next) => {
   let queryText6 = "",
     voiceActorStatus = false,
     animeStatus = false;
-
+    console.log(voiceActors);
   let newVoiceActors = voiceActors
     .replace(/[\[\]']+/g, "")
     .replace(/"/g, "")
     .split(",");
+   
+    console.log(newVoiceActors);
 
   newVoiceActors.forEach(async (element) => {
     queryText6 =
