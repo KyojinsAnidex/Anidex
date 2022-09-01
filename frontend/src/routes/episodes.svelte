@@ -1,5 +1,5 @@
 <script>
-	import { eps, state, epanime, curruser,animeofinterest } from '../stores/store';
+	import { eps, state, epanime, curruser,animeofinterest,userepratings } from '../stores/store';
 	import { Rating, Range, AccordionFlush } from 'flowbite-svelte';
 	//console.log($eps);
 	//console.log($epanime);
@@ -66,8 +66,57 @@
 			console.log(temp);
 			$eps = temp;
 		}
+		if($state==1)
+		{
+			await storerating();
+		}
+	
 	}
 	let anime=$animeofinterest[0];
+	let eprateendpoint='http://localhost:5000/episoderating/episode/'+$curruser.name;
+	async function proxyfetcheprating(id) {
+		const response = await fetch(eprateendpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				episodeid:id 
+				// etc.
+			})
+		});
+		if (response.status === 200) {
+			return await response.json();
+		} else if (response.status === 404) {
+			return await response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetcheprating(id) {
+		let temp = await proxyfetcheprating(id);
+
+		if (temp.success == false) {
+			console.log('No Rating Found');
+		} else {
+			//console.log(temp);
+			return temp.rating;
+		}
+	
+	}
+	async function storerating()
+	{  let tempratings=[];
+		
+		for(let i=0;i<$eps.episodes.length;i++)
+		{    console.log($eps.episodes[i].episodeid); 
+             tempratings[i]=await fetcheprating($eps.episodes[i].episodeid);	
+		}
+		$userepratings=tempratings;
+	}
 </script>
 <div class= "flex justify-center bg-solarizedBase3 text-solarizedBase02">
 <div class=" bg-solarizedBase3 text-solarizedBase02">
@@ -93,6 +142,7 @@
 				<th>Runtime</th>
 				<th>Rating</th>
 				{#if $state == 1}
+				     <th>User Rating</th>
 					<th>Rate</th>
 				{/if}
 			</tr>
@@ -105,6 +155,11 @@
 					<td><Rating count rating={prop.episoderating} /></td>
 
 					{#if $state == 1}
+					<td>{#if $userepratings[i]!=0}
+						Prev Rating:{$userepratings[i]}
+					{:else}
+					No Rating Yet
+				{/if}</td>
 						<td>
 							<AccordionFlush id="1">
 								<h2 slot="header">Give Rating</h2>

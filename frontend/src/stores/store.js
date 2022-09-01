@@ -39,3 +39,4 @@ export let pershowchoice=writable('pershowchoice',0);
 export let allan=writable("allan",[]);
 export let anshowchoice=writable('anshowchoice',0);
 export let studio=writable('studio','');
+export let userepratings=writable('userepratings',[]);
