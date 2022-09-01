@@ -29,6 +29,8 @@
 	console.log(tags);
 </script>
 
+<svelte:head><title>Forum</title></svelte:head>
+
 <div class="flex-col justify-center relative h-full w-full bg-solarizedBase3 text-solarizedBase02">
 	<div>
 		<h2 class="text-3xl flex justify-center font-bold ">Welcome to Anidex forum!</h2>
