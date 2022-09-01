@@ -19,6 +19,9 @@
 	$allper = personnels;
 	$pershowchoice = 1;
 </script>
+<svelte:head>
+	<title>All Personnel</title>
+</svelte:head>
 
 <div
 	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6  text-solarizedBase02 bg-solarizedBase3"
@@ -29,6 +32,7 @@
 				<img
 					class="h-52 rounded-full mb-4"
 					src={'http://localhost:5000/uploads/images/' + per.pictureid}
+					
 					alt="Char Pic"
 				/>
 			</a>

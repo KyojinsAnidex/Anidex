@@ -19,7 +19,9 @@
 	$allchar = characters;
 	$charshowchoice = 1;
 </script>
-
+<svelte:head>
+	<title>All Characters</title>
+</svelte:head>
 <div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
 	{#each characters.results as char, i}
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">

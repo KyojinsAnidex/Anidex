@@ -28,6 +28,9 @@
 	export let tags;
 	console.log(tags);
 </script>
+<svelte:head>
+	<title>Forum</title>
+</svelte:head>
 
 <svelte:head><title>Forum</title></svelte:head>
 
