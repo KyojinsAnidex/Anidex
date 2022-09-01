@@ -75,7 +75,7 @@
 	<title>Anidex Home Page</title>
 </svelte:head>
 <div
-	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+	class="h-full grid grid-cols- gap-8  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02 p-3"
 >
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
