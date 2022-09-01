@@ -1,5 +1,5 @@
 <script>
-	import { eps, state, epanime, curruser } from '../stores/store';
+	import { eps, state, epanime, curruser,animeofinterest } from '../stores/store';
 	import { Rating, Range, AccordionFlush } from 'flowbite-svelte';
 	//console.log($eps);
 	//console.log($epanime);
@@ -67,7 +67,21 @@
 			$eps = temp;
 		}
 	}
+	let anime=$animeofinterest[0];
 </script>
+<div class= "flex justify-center bg-solarizedBase3 text-solarizedBase02">
+<div class=" bg-solarizedBase3 text-solarizedBase02">
+	<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
+		{anime.title}
+	</h4>
+	<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+		Release Date: {anime.releasedate.slice(0, 4)}
+	</h4>
+	<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+		Relese Season: {anime.releaseseason}
+	</h4>
+</div>
+</div>
 
 {#if $eps.length != 0}
 	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">

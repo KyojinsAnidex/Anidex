@@ -7,10 +7,11 @@
 
 <script>
 	export let id;
-	import { wlanimes, state, curruser, eps, epanime } from '../../stores/store';
+	import { wlanimes, state, curruser, eps, epanime,animeofinterest } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime = $wlanimes[id].anime;
-	let picture = 'http://localhost:5000/uploads/images/' + $wlanimes[id].animepicture[0].pictureid;
+	$animeofinterest[0]=anime;
+		let picture = 'http://localhost:5000/uploads/images/' + $wlanimes[id].animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
 	let rating = 0;
@@ -168,7 +169,7 @@
 		}
 	
 	}
-	console.log(userrating);
+	//console.log(userrating);
 </script>
 
 <svelte:head>

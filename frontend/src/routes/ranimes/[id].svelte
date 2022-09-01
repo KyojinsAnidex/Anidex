@@ -14,7 +14,8 @@
 		eps,
 		epanime,
 		allan,
-		anshowchoice
+		anshowchoice,
+		animeofinterest
 	} from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime;
@@ -26,6 +27,7 @@
 		anime = $allan[id].anime;
 		picture = 'http://localhost:5000/uploads/images/' + $allan[id].animepicture[0].pictureid;
 	}
+	$animeofinterest[0]=anime;
 	//   console.log(anime);
 	//  console.log(picture);
 	let giverating = false;
@@ -169,7 +171,7 @@
 		}
 	
 	}
-	console.log(userrating);
+	//console.log(userrating);
 </script>
 
 <svelte:head>

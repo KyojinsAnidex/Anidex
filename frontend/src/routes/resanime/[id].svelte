@@ -7,11 +7,12 @@
 
 <script>
 	export let id;
-	import { animesearch, animepics, state, curruser, eps, epanime } from '../../stores/store';
+	import { animesearch, animepics, state, curruser, eps, epanime,animeofinterest } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 
 	let anime = $animesearch.resultAnime[id];
 	let picture = $animepics[id];
+	$animeofinterest[0]=anime;
 	//  console.log(anime);
 	// console.log(picture);
 	let giverating = false;
@@ -155,7 +156,7 @@
 		}
 	
 	}
-	console.log(userrating);
+	//console.log(userrating);
 </script>
 
 <svelte:head>

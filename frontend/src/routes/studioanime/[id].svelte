@@ -13,12 +13,14 @@
 		state,
 		curruser,
 		eps,
-		epanime
+		epanime,
+		animeofinterest,
 	} from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 
 	let anime = $studioresanimes[id];
 	let picture = $studiorespics[id];
+	$animeofinterest[0]=anime;
 	//  console.log(anime);
 	// console.log(picture);
 	let giverating = false;
@@ -162,7 +164,7 @@
 			userrating = temp.rating;
 		}
 	}
-	console.log(userrating);
+	//console.log(userrating);
 </script>
 
 <svelte:head>
