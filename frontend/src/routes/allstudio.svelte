@@ -34,7 +34,7 @@
 						{prop.studioname}
 					</h2>
 					<h4 class="mt-2 text-lg font-medium text-center  dark:text-red-700">
-						Founded In {prop.foundingdate.slice(0, 4)}
+						Founded In { (prop.foundingdate) ? prop.foundingdate.slice(0, 4) : 'Sometime Ago'}
 					</h4>
 					<h4 class="mt-2 text-lg font-medium text-center  dark:text-red-700">
 						Office Address: {prop.office_address}
