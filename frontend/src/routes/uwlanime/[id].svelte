@@ -7,9 +7,10 @@
 
 <script>
 	export let id;
-	import { wlanimes, state, curruser, eps, epanime } from '../../stores/store';
+	import { wlanimes, state, curruser, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime = $wlanimes[id].anime;
+	$animeofinterest[0]=anime;
 	let picture = 'http://localhost:5000/uploads/images/' + $wlanimes[id].animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
@@ -101,6 +102,10 @@
 			console.log(temp);
 			$eps = temp;
 		}
+		if($state==1)
+		{
+		await storerating();
+	}
 		$epanime = anime.animeid;
 	}
 	let refanime;
@@ -110,7 +115,10 @@
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
+			if($state==1)
+			{
 			fetchrating()
+			}
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
@@ -153,7 +161,51 @@
 		}
 	
 	}
-	console.log(userrating);
+	//console.log(userrating);
+	let eprateendpoint='http://localhost:5000/episoderating/episode/'+$curruser.name;
+	async function proxyfetcheprating(id) {
+		const response = await fetch(eprateendpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+				// like application/json or text/xml
+			},
+			body: JSON.stringify({
+				// Example: Update JSON file with
+				//          local data properties
+				episodeid:id 
+				// etc.
+			})
+		});
+		if (response.status === 200) {
+			return await response.json();
+		} else if (response.status === 404) {
+			return await response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
+	async function fetcheprating(id) {
+		let temp = await proxyfetcheprating(id);
+
+		if (temp.success == false) {
+			console.log('No Rating Found');
+		} else {
+			console.log(temp);
+			return temp.rating;
+		}
+	
+	}
+	async function storerating()
+	{  let tempratings=[];
+		
+		for(let i=0;i<$eps.episodes.length;i++)
+		{    console.log($eps.episodes[i].episodeid); 
+             tempratings[i]=await fetcheprating($eps.episodes[i].episodeid);	
+		}
+		$userepratings=tempratings;
+	}
 </script>
 
 <svelte:head>

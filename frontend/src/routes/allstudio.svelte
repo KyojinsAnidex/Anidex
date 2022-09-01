@@ -14,6 +14,12 @@
 </script>
 <script>
     export let studios;
+	import {studio} from '../stores/store';
+	function storestudio(i)
+	{
+		console.log(studios.results[i].studioname);
+		$studio=studios.results[i].studioname;
+	}
     console.log(studios);
 </script>
 <svelte:head>
@@ -43,6 +49,7 @@
 						href="/studio/{prop.studioname}"
 					>
 						<button
+						on:click={storestudio(i)}
 							class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 							>Show Produced Animes</button
 						></a

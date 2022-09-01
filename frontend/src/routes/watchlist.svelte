@@ -1,6 +1,6 @@
 <script>
-	import { Spinner, Checkbox } from 'flowbite-svelte';
-	import { curruser, wlanimes, state } from '../stores/store';
+	import { Spinner } from 'flowbite-svelte';
+	import { curruser, wlanimes } from '../stores/store';
 
 	let watchlist = {
 		success: false,
