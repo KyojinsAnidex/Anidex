@@ -212,8 +212,8 @@ const addPerson = async (req, res, next) => {
       dbModels.animestaff.personnelID +
       " , " +
       dbModels.animestaff.animeIDNOTNULL +
-      " ) ";
-    " VALUES ('" +
+      " ) " +
+      " VALUES ('" +
       createdPerson.rows[0].personnelid +
       "' , '" +
       element +

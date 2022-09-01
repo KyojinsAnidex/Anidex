@@ -59,9 +59,9 @@ const getSingleStudio = async (req, res, next) => {
           "." +
           dbModels.anime.animeIDNOTNULL +
           " WHERE " +
-          dbModels.tables.animestudio + 
+          dbModels.tables.animestudio +
           "." +
-          dbModels.animestudio.studioIDNOTNULL + 
+          dbModels.animestudio.studioIDNOTNULL +
           " = '" +
           studioname +
           "' ; "
@@ -187,16 +187,12 @@ const addStudio = async (req, res, next) => {
     dbModels.studio.office_address +
     ", " +
     dbModels.studio.website +
-    ", " + 
-    dbModels.studio.foundingdate +
     " ) VALUES ( '" +
     studioname.replace(/'/g, "''") +
     "', '" +
     office_address.replace(/'/g, "''") +
     "', '" +
     website.replace(/'/g, "''") +
-    "', '" +
-    foundingdate +
     "' ) RETURNING * ;";
   try {
     createdStudio = await db.query(queryText);
