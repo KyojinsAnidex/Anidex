@@ -55,7 +55,7 @@
 		console.log($search.txt);
 		// goto(next);
 	}
-	let MagnifyingGlass = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 dark:text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>`;
+	
 </script>
 
 {#if logchoice == 1}
@@ -109,50 +109,12 @@
 		</Dropdown> 
 		<!-- <Search bind:value = {$search.txt} on:submit={handleSearch} /> --> 
 		 <Input bind:value={$search.txt} noBorder id="search" placeholder="Search..." />
-		{#if $search.type == 'anime'}
-			<a href="http://127.0.0.1:5173/animesearchresult">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				>
-				
-			</a>
-		{:else if $search.type == 'user'}
-			<a href="http://127.0.0.1:5173/usersearch">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				>
-			</a>
-		{:else if $search.type == 'character'}
-			<a href="http://127.0.0.1:5173/charactersearch">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				></a
-			>
-		{:else if $search.type == 'studio'}
-			<a href="http://127.0.0.1:5173/studiosearch">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				></a
-			>
-		{:else if $search.type == 'personnel'}
-			<a href="http://127.0.0.1:5173/personnelsearch">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				></a
-			>
-		{:else}
-			<a href="/">
-				<button
-					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
-					>Search</button
-				></a
-			>
-		{/if}
+		 <a href="http://127.0.0.1:5173/loadingpage">
+			<button
+				class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
+				>Search</button
+			></a
+		>
 		<!-- <form >
 			<div class="flex">
 				<label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Your Email</label>

@@ -16,7 +16,8 @@
 		allan,
 		anshowchoice,
 		animeofinterest,
-		userepratings
+		userepratings,
+		studio
 	} from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime;
@@ -224,6 +225,11 @@
 		}
 		$userepratings=tempratings;
 	}
+	function storestudio(i)
+	{
+		$studio=$topanimes[id].animestudio[i].studioname;
+		console.log(studio);
+	}
 </script>
 
 <svelte:head>
@@ -265,8 +271,11 @@
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Studio:
-				{#each $topanimes[id].animestudio as studio}
+				{#each $topanimes[id].animestudio as studio,i}
+				<a href="/studio/{studio.studioname}"
+				on:click={storestudio(i)}>
 					{studio.studioname + ' | '}
+				</a>
 				{/each}
 			</h4>
 		</div>

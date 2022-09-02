@@ -7,7 +7,7 @@
 
 <script>
 	export let id;
-	import { wlanimes, state, curruser, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
+	import { wlanimes, state, curruser, eps, epanime,animeofinterest,userepratings,studio } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	let anime = $wlanimes[id].anime;
@@ -224,6 +224,11 @@
 		}
 		$userepratings=tempratings;
 	}
+	function storestudio(i)
+	{
+		$studio=$wlanimes[id].animestudio[i].studioname;
+		console.log(studio);
+	}
 </script>
 
 <svelte:head>
@@ -266,8 +271,11 @@
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Studio:
-				{#each $wlanimes[id].animestudio as studio}
+				{#each $wlanimes[id].animestudio as studio,i}
+				<a href="/studio/{studio.studioname}"
+				on:click={storestudio(i)}>
 					{studio.studioname + ' | '}
+				</a>
 				{/each}
 			</h4>
 		</div>
