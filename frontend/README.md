@@ -1,37 +1,35 @@
-### Running the Frontend DOM
+### Installing Anidex Frontend
 
 #### Clone the repo
 
-In a suitable folder, clone the repo:
+In a suitable folder, clone the **Anidex** repo:
 
-` git clone https://github.com/Mohaimin41/Anidex.git `
+` git clone https://github.com/KyojinsAnidex/Anidex.git `
 
 #### Install dependencies
 
-Move to \\backend folder, install dependencies:
+Move to ` /backend ` folder, install dependencies:
 
-` cd ./backend`
+` cd ./backend `
 
 ` npm install `
 
-## Developing
+### Running the server
 
-Once you've cloned the project and installed dependencies with `npm install` , start a development server:
+Once you've cloned the project and installed dependencies with `npm install`, start a development server:
 
-```bash
-'npm run dev'
+` npm run dev `
 
-# or start the server and open the app in a new browser tab
-'npm run dev -- --open'
-```
+or start the server and open **Anidex** in a new browser tab
+` npm run dev -- --open `
 
-## Building
+To quit the server, press ` Ctrl + C ` and then type ` y `
 
-To create a production version of your app:
+### Building
 
-```bash
-'npm run build'
-```
+To create a production version of **Anidex** frontend:
+
+` npm run build `
 
 You can preview the production build with `npm run preview`.
 
