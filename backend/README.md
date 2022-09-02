@@ -8,7 +8,7 @@ In a suitable folder, clone the repo:
 
 #### Install dependencies
 
-Move to \\backend folder, install dependencies:
+Move to /backend folder, install dependencies:
 
 ` cd ./backend`
 
@@ -37,11 +37,11 @@ JWT_KEY='sup3r_s3cr3t_d0nt_shar3'
 
 #### Configuring the database
 
-Go to `./sql` folder, follow the [instructions](https://github.com/Mohaimin41/Anidex/tree/main/backend/sql)
+Go to `./sql` folder, follow the [instructions](https://github.com/KyojinsAnidex/Anidex/tree/main/backend/sql)
 
 #### Running the server: 
 
-We are using nodemon to have a continuously running server. To start: 
+We are using nodemon to have a continuously running development server. To start: 
 
 ` npm start `
 
