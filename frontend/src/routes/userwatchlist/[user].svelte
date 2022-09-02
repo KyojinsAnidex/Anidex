@@ -7,7 +7,8 @@
 
 <script>
 	import { Spinner, Checkbox } from 'flowbite-svelte';
-	import { wlanimes, state } from '../../stores/store';
+import { prop_dev } from 'svelte/internal';
+	import { wlanimes, curruser } from '../../stores/store';
 	export let user;
 
 	let watchlist = {
@@ -78,13 +79,23 @@
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/uwlanime/{i}">
+				{#if user!=$curruser.name}
+				<a href="/anime/{prop.anime.animeid}">
 					<img
 						class="h-52 rounded-full mb-4"
 						src={image + resanimes[i].animepicture[0].pictureid}
 						alt="Anime Pic"
 					/>
 				</a>
+				{:else}
+				<a href="/wlanime/{i}">
+					<img
+						class="h-52 rounded-full mb-4"
+						src={image + resanimes[i].animepicture[0].pictureid}
+						alt="Anime Pic"
+					/>
+				</a>
+				{/if}
 				<h4 class="mt-2 text-2xl font-medium  dark:text-red-700">
 					{resanimes[i].anime.title}
 				</h4>

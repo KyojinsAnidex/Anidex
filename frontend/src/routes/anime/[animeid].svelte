@@ -1,17 +1,28 @@
 <script context="module">
 	export async function load({ params }) {
-		let id = params.id;
-		return { props: { id } };
+		let animeid = params.animeid;
+        let response;
+        let refanime;
+		let endpoint = 'http://localhost:5000/anime/' + animeid;
+		response = await fetch(endpoint);
+		if (response.status === 200) {
+			refanime = await response.json();
+			
+        } else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+		return { props: { refanime } };
 	}
 </script>
 
 <script>
-	export let id;
-	import { allanimes, curruser, state, eps, epanime,animeofinterest,userepratings,studio } from '../../stores/store';
+	export let refanime;
+	import {  curruser, state, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
 	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
-	let anime = $allanimes[id].anime;
+	let anime = refanime.anime;
 	$animeofinterest[0]=anime;
-	let picture = 'http://localhost:5000/uploads/images/' + $allanimes[id].animepicture[0].pictureid;
+	let picture = 'http://localhost:5000/uploads/images/' + refanime.animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
 	let rating = 0;
@@ -109,11 +120,10 @@
 		await storerating();
 	}
 		
-	}
-	let refanime;
+}
 	async function refresh() {
 		let response;
-		let endpoint = 'http://localhost:5000/anime/' + $allanimes[id].anime.animeid;
+		let endpoint = 'http://localhost:5000/anime/' + refanime.anime.animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
@@ -209,11 +219,7 @@
 		$userepratings=tempratings;
 	}
 	//console.log(userrating);
-	function storestudio(i)
-	{
-		$studio=$allanimes[id].animestudio[i].studioname;
-		console.log(studio);
-	}
+	
 </script>
 
 <svelte:head>
@@ -249,15 +255,15 @@
 			{/await}
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Genre:
-				{#each $allanimes[id].animegenres as genre}
+				{#each refanime.animegenres as genre}
 					{genre.genrename + ' | '}
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Studio:
-				{#each $allanimes[id].animestudio as studio,i}
-				<a href='/studio/{studio.studioname}'
-				on:click={storestudio(i)}>
+				{#each refanime.animestudio as studio,i}
+				<a href='/studio/{studio.studioname}'>
+				
 					{studio.studioname + ' | '}
 				</a>
 				{/each}

@@ -184,18 +184,22 @@
 	<div class="flex justify-center p-20 w-full bg-solarizedBase3 text-solarizedBase02">
 		<Table hoverable={true} class="w-full bg-solarizedBase3 text-solarizedBase02">
 			<TableHead>
-				<TableHeadCell>Thread</TableHeadCell>
-				<TableHeadCell>Original poster</TableHeadCell>
-				<TableHeadCell>Votes</TableHeadCell>
+				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Thread</TableHeadCell>
+				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Original poster</TableHeadCell>
+				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Votes</TableHeadCell>
 
-				<TableHeadCell>
-					<span class="sr-only"> Join </span>
-				</TableHeadCell>
 			</TableHead>
 			<TableBody class="divide-y">
 				{#each foruminfo.allDiscussionHeads as forum}
 					<TableBodyRow>
-						<TableBodyCell>{forum.contentofdiscussion.slice(0, 50) + '...'}</TableBodyCell>
+						<a
+								href="/discussion/{forum.discussionheadid}"
+								class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+							>
+								
+							
+						<TableBodyCell class="text-xl bg-solarizedBase3 text-solarizedBase02">{forum.contentofdiscussion.slice(0, 50) + '...'}</TableBodyCell>
+					</a>
 						<TableBodyCell
 							><Avatar
 								src={'http://localhost:5000/uploads/images/' + forum.pictureid}
@@ -205,14 +209,7 @@
 							)}</TableBodyCell
 						>
 						<TableBodyCell>{forum.votes}</TableBodyCell>
-						<TableBodyCell>
-							<a
-								href="/discussion/{forum.discussionheadid}"
-								class="font-medium text-solarizedBlue hover:underline dark:text-blue-500"
-							>
-								Visit thread
-							</a>
-						</TableBodyCell>
+						
 					</TableBodyRow>
 				{/each}
 			</TableBody>

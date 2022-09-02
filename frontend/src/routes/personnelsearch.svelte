@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search, perpics, persearch, pershowchoice } from '../stores/store';
+	import {  search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultPersonnel: []
@@ -43,9 +43,7 @@
 			animes = temp;
 			//			console.log(animes);
 			addperpic();
-			$perpics = pictures;
-			$persearch = animes;
-			$pershowchoice = 0;
+			
 		}
 	}
 
@@ -64,7 +62,7 @@
 	{:then}
 		{#each animes.resultPersonnel as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/personnel/{i}">
+				<a href="/personnel/{prop.personnelid}">
 					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
 				</a>
 				<h4 class="mt-2 text-lg font-medium  dark:text-red-700">

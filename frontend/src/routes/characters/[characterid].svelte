@@ -1,31 +1,10 @@
 <script context="module">
 	export async function load({ params }) {
-		let id = params.id;
-		return { props: { id } };
-	}
-</script>
-
-<script>
-	export let id;
-	import { AccordionFlush, Rating } from 'flowbite-svelte';
-	import { charsearch, charpics, charshowchoice, allchar } from '../../stores/store';
-
-	let char;
-	let picture;
-	if ($charshowchoice == 0) {
-		char = $charsearch.resultCharacter[id];
-		picture = $charpics[id];
-	} else {
-		char = $allchar.results[id];
-		picture = 'http://localhost:5000/uploads/images/' + $allchar.results[id].pictureid;
-	}
-
-	//  console.log(anime);
-	// console.log(picture);
-	let anime, character, person;
-	async function charinfo() {
+		let characterid = params.characterid;
+		let anime,character,person;
+		async function charinfo() {
 		let response;
-		response = await fetch('http://localhost:5000/characters/' + char.characterid);
+		response = await fetch('http://localhost:5000/characters/' + id);
 		if (response.status === 200) {
 			return response.json();
 		} else {
@@ -52,10 +31,31 @@
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
-		console.log(anime);
-		console.log(person);
-		console.log(character);
+		
 	}
+	await charanime();
+		
+		return { props: { anime,character,person } };
+	}
+</script>
+
+<script>
+	import { AccordionFlush, Rating } from 'flowbite-svelte';
+	
+	export let anime;
+	export let  person;
+	export let character;
+
+	let char;
+	let picture;
+	
+		char = character.character;
+		picture = 'http://localhost:5000/uploads/images/' + char.pictureid;
+	
+
+	//  console.log(anime);
+	// console.log(picture);
+
 </script>
 
 <svelte:head>
@@ -91,16 +91,17 @@
 		</div>
 	</div>
 	<div class="h-full  w-1/2">
-		{#await charanime() then}
 			<AccordionFlush>
 				<h2 slot="header" class=" text-xl font-medium">Anime</h2>
 				<div slot="body">
 					<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+						<a href="/anime/{anime.anime.animeid}">
 						<img
 							class="h-52 rounded-full mb-4"
 							src={'http://localhost:5000/uploads/images/' + anime.animepicture[0].pictureid}
 							alt="Anime Pic"
 						/>
+					</a>
 						<h4 class="mt-2 text-xl font-medium text-black dark:text-red-700">
 							{anime.anime.title}
 						</h4>
@@ -115,21 +116,6 @@
 							<span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
 						</Rating>
 
-						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
-							Anime Rank: {anime.anime.animerank}
-						</h4>
-						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
-							Genre:
-							{#each anime.animegenres as genre}
-								{genre.genrename + ' | '}
-							{/each}
-						</h4>
-						<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
-							Studio:
-							{#each anime.animestudio as studio}
-								{studio.studioname + ' | '}
-							{/each}
-						</h4>
 					</div>
 				</div>
 			</AccordionFlush>
@@ -171,6 +157,5 @@
 					</div>
 				</div>
 			</AccordionFlush>
-		{/await}
 	</div>
 </div>

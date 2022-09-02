@@ -1,5 +1,5 @@
 <script>
-	import { state, allanimes } from '../stores/store';
+	
 	import { Spinner } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
@@ -64,10 +64,9 @@
 				//	console.log(anime);
 			}
 		}
-		//console.log(resanimes);
+		
 		shuffle(resanimes);
-		$allanimes = resanimes;
-		//console.log($allanimes);
+	
 	}
 </script>
 
@@ -82,7 +81,7 @@
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/animes/{i}">
+				<a href="/anime/{prop.anime.animeid}">
 					<img
 						class="h-52 rounded-full mb-4"
 						src={image + resanimes[i].animepicture[0].pictureid}

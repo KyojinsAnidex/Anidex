@@ -1,6 +1,7 @@
 <script>
 	import { Spinner, Checkbox } from 'flowbite-svelte';
-	import { curruser, wlanimes, state } from '../stores/store';
+import { stop_propagation } from 'svelte/internal';
+	import { curruser,  state } from '../stores/store';
 
 	let watchlist = {
 		success: false,
@@ -64,9 +65,7 @@
 				//console.log(anime);
 			}
 		}
-		//console.log(resanimes);
-		$wlanimes = resanimes;
-		//console.log($wlanimes);
+		
 		check_favourite();
 	}
 	//fetchanimeinfo();
@@ -98,7 +97,7 @@
 		{#each resanimes as prop, i}
 			{#if fav[i] == true}
 				<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-					<a href="/wlanime/{i}">
+					<a href="/wlanime/{prop.anime.animeid}">
 						<img
 							class="h-52 rounded-full mb-4"
 							src={image + resanimes[i].animepicture[0].pictureid}

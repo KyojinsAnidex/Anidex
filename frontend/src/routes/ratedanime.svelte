@@ -1,5 +1,5 @@
 <script>
-	import { state, topanimes, anshowchoice } from '../stores/store';
+	import { state} from '../stores/store';
 	import { Spinner, Rating } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
@@ -48,10 +48,7 @@
 				//	console.log(anime);
 			}
 		}
-		//console.log(resanimes);
-		$topanimes = resanimes;
-		$anshowchoice = 0;
-		//console.log($allanimes);
+		
 	}
 	function showmore() {
 		search = search * 2;
@@ -68,7 +65,7 @@
 		{#each resanimes as prop, i}
 			{#if i <= search}
 				<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-					<a href="/ranimes/{i}">
+					<a href="/anime/{prop.anime.animeid}">
 						<img
 							class="h-52 rounded-full mb-4"
 							src={image + resanimes[i].animepicture[0].pictureid}

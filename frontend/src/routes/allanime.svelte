@@ -1,5 +1,4 @@
 <script>
-	import { allan, anshowchoice } from './../stores/store.js';
 	import { Spinner, AccordionFlush, Rating } from 'flowbite-svelte';
 
 	let animes;
@@ -50,26 +49,7 @@
 				//	console.log(anime);
 			}
 		}
-		//console.log(resanimes);
-		fetchanime();
-	}
-	async function fetchanime() {
-		for (let i = 0; i < resanimes.length; i++) {
-			let response;
-			response = await fetch('http://localhost:5000/anime/' + resanimes[i].anime.animeid);
-			let anime;
-			if (response.status === 200) {
-				anime = await response.json();
-				console.log(anime);
-			} else {
-				console.log('An error Try Again');
-				throw new Error(response.statusText);
-			}
-			animeinfos.push(anime);
-		}
-		$allan = animeinfos;
-		$anshowchoice = 1;
-		console.log(animeinfos);
+		
 	}
 </script>
 <svelte:head>
@@ -82,7 +62,7 @@
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/ranimes/{i}">
+				<a href="/anime/{prop.anime.animeid}">
 					<img
 						class="h-52 rounded-full mb-4"
 						src={image + resanimes[i].animepicture[0].pictureid}

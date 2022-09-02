@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { curruser, wlanimes } from '../stores/store';
+	import { curruser } from '../stores/store';
 
 	let watchlist = {
 		success: false,
@@ -64,9 +64,8 @@
 				//console.log(anime);
 			}
 		}
-		//console.log(resanimes);
-		$wlanimes = resanimes;
-		//console.log($wlanimes);
+	
+		
 	}
 	//fetchanimeinfo();
 </script>
@@ -77,7 +76,7 @@
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto bg-solarizedBase3 text-solarizedBase02">
-				<a href="/wlanime/{i}">
+				<a href="/wlanime/{prop.anime.animeid}">
 					<img
 						class="h-52 rounded-full mb-4"
 						src={image + resanimes[i].animepicture[0].pictureid}

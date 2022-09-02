@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, animesearch, animepics, search } from '../stores/store';
+	import {  search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultAnime: []
@@ -44,7 +44,7 @@
 			animes = temp;
 			//  console.log(animes);
 			fetchanimepic();
-			$animesearch = animes;
+		
 		}
 	}
 	async function proxyfetchanimepic(source) {
@@ -73,7 +73,7 @@
 				//  console.log(ntemp);
 			}
 		}
-		$animepics = pictures;
+	
 	}
 </script>
 
@@ -83,7 +83,7 @@
 	{:then}
 		{#each animes.resultAnime as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/resanime/{i}">
+				<a href="/anime/{prop.animeid}">
 					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
 				</a>
 				<h4 class="mt-2 text-lg font-medium text-solarizedBase02 dark:text-red-700">

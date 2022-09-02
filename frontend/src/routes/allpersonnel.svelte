@@ -28,7 +28,7 @@
 >
 	{#each personnels.personnels as per, i}
 		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-			<a href="/personnel/{i}">
+			<a href="/personnel/{per.personnelid}">
 				<img
 					class="h-52 rounded-full mb-4"
 					src={'http://localhost:5000/uploads/images/' + per.pictureid}

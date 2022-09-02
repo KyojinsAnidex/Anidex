@@ -25,8 +25,8 @@
 	import { curruser } from '../stores/store';
 	import { goto } from '$app/navigation';
 	export let genres, studios;
-	console.log(genres);
-	console.log(studios);
+	//console.log(genres);
+	//console.log(studios);
 	let anime = {
 		title: '',
 		releasedate: '',

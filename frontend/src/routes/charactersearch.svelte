@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { charshowchoice, search, charpics, charsearch } from '../stores/store';
+	import { search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultCharacter: []
@@ -43,9 +43,7 @@
 			animes = temp;
 			//			console.log(animes);
 			addcharpic();
-			$charpics = pictures;
-			$charsearch = animes;
-			$charshowchoice = 0;
+			
 		}
 	}
 
@@ -62,7 +60,7 @@
 	{:then}
 		{#each animes.resultCharacter as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				<a href="/characters/{i}">
+				<a href="/characters/{prop.characterid}">
 					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Char Pic" />
 				</a>
 				<h4 class="mt-2 text-lg font-medium text-solarizedBase02 dark:text-red-700">

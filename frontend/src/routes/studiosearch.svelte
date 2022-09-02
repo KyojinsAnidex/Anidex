@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import { state, search, studiosearch,studio } from '../stores/store';
+	import { search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultStudio: []
@@ -39,15 +39,11 @@
 			alert('No Character Found');
 		} else {
 			animes = temp;
-			$studiosearch = animes;
+		
 			
 		}
 	}
-	function storestudio(i)
-	{
-		$studio=animes.resultStudio[i].studioname;
-		console.log(studio);
-	}
+	
 </script>
 
 <div class="felx justify-center bg-solarizedBase3 text-solarizedBase02">
@@ -76,7 +72,7 @@
 						href="/studio/{animes.resultStudio[i].studioname}"
 					>
 						<button
-						on:click={storestudio(i)}
+						
 							class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 							>Show Produced Animes</button
 						></a
