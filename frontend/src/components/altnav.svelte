@@ -55,7 +55,6 @@
 		console.log($search.txt);
 		// goto(next);
 	}
-	
 </script>
 
 {#if logchoice == 1}
@@ -88,7 +87,7 @@
 		ulClass="text-base font-bold text-solarizedYellow bg-solarizedBase02 flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-xl md:font-medium"
 		{hidden}
 	>
-		 <Dropdown labelClass="rounded-3xl" label={$search.type} class=" z-50 rounded-3xl">
+		<Dropdown labelClass="rounded-3xl" label={$search.type} class=" z-50 rounded-3xl">
 			<ul slot="content" class="p-3 space-y-1">
 				<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 					<Radio bind:group={$search.type} value={'anime'}>Anime</Radio>
@@ -106,10 +105,10 @@
 					<Radio bind:group={$search.type} value={'personnel'}>Personnel</Radio>
 				</DropdownItem>
 			</ul>
-		</Dropdown> 
-		<!-- <Search bind:value = {$search.txt} on:submit={handleSearch} /> --> 
-		 <Input bind:value={$search.txt} noBorder id="search" placeholder="Search..." />
-		 <a href="http://127.0.0.1:5173/loadingpage">
+		</Dropdown>
+		<!-- <Search bind:value = {$search.txt} on:submit={handleSearch} /> -->
+		<Input bind:value={$search.txt} noBorder id="search" placeholder="Search..." />
+		<a href="http://127.0.0.1:5173/loadingpage">
 			<button
 				class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 				>Search</button
