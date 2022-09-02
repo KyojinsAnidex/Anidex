@@ -9,7 +9,10 @@
 	} from 'flowbite-svelte';
 </script>
 
-<Footer footerType="socialmedia" customClass= "bg-solarizedBase3 text-solarizedBase02 sticky bottom-0 " >
+<!-- <Footer
+	footerType="socialmedia"
+	customClass="bg-solarizedBase3 text-solarizedBase02 sticky bottom-0 "
+>
 	<div class="md:flex md:justify-between h-4 ">
 		<div class="mb-4 md:mb-0 ">
 			<FooterBrand
@@ -33,17 +36,29 @@
 					Follow us
 				</h2>
 				<FooterLinkGroup>
-					<FooterLink liClass="mb-4" href="https://github.com/Mohaimin41/Anidex">GitHub</FooterLink>
-					<!-- <FooterLink liClass="mb-4" href="/">Discord</FooterLink> -->
+					<FooterLink liClass="mb-4" href="https://github.com/KyojinsAnidex/Anidex"
+						>GitHub</FooterLink
+					>
+					 <FooterLink liClass="mb-4" href="/">Discord</FooterLink> 
 				</FooterLinkGroup>
 			</div>
-			<!-- <div>
-          <h2 class="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">Legal</h2>
-          <FooterLinkGroup>
-            <FooterLink liClass="mb-4" href="/">Privacy Policy</FooterLink>
-            <FooterLink liClass="mb-4" href="/">Terms & Conditions</FooterLink>
-          </FooterLinkGroup>
-        </div> -->
 		</div>
 	</div>
+</Footer> -->
+<Footer class=" bottom-0 left-0 z-20 w-full text-base bg-solarizedBase3 text-solarizedBase02">
+	<FooterCopyright
+		spanClass="block text-base font-semibold text-gray-500 sm:text-center dark:text-gray-400"
+		href="https://github.com/KyojinsAnidex/"
+		by="Kyojins"
+		year={2022}
+	/>
+	<FooterLinkGroup
+		ulClass="flex flex-wrap items-center mt-3 text-base font-semibold text-solarizedBase02 dark:text-gray-400 sm:mt-0"
+	>
+		<FooterLink href="https://github.com/KyojinsAnidex/Anidex/tree/main/resources"
+			>Resources</FooterLink
+		>
+		<FooterLink href="/aboutus">About</FooterLink>
+		<FooterLink href="https://github.com/KyojinsAnidex/Anidex">Github</FooterLink>
+	</FooterLinkGroup>
 </Footer>
