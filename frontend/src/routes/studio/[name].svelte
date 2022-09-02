@@ -33,16 +33,16 @@
 				console.log('No anime Found');
 			} else {
 				animes = temp;
-				console.log(animes);
+				// console.log(animes);
 				return animes;
 			}
 		}
 		async function fetchanimes() {
 			animes = await fetchstudioinfo();
-			console.log(animes);
+			// console.log(animes);
 			for (let i = 0; i < animes.animeOfStudio.length; i++) {
 				let animeid = animes.animeOfStudio[i].animeid;
-				console.log(animeid);
+				// console.log(animeid);
 				const response = await fetch('http://localhost:5000/anime/' + animeid);
 				if (response.status === 200) {
 					let temp = await response.json();
@@ -66,9 +66,9 @@
 		async function fetchanimepic() {
 			let animeresults = await fetchanimes();
 			for (let i = 0; i < animeresults.length; i++) {
-				console.log(animeresults[i].animeid);
+				// console.log(animeresults[i].animeid);
 				let nendpoint = endpoint + animeresults[i].animeid;
-				console.log(nendpoint);
+				// console.log(nendpoint);
 
 				let ntemp = await proxyfetchanimepic(nendpoint);
 
@@ -93,6 +93,7 @@
 	export let name;
 
 </script>
+
 <div class=" bg-solarizedBase3 text-solarizedBase02">
 <div class= "flex justify-center">
 	<div class=" bg-solarizedBase3 text-solarizedBase02">
@@ -126,7 +127,7 @@
          </h4>
        <p class="text-blue-500">{animes.results[i].synopsis}</p>
        -->
-		</div>
-	{/each}
-</div>
+			</div>
+		{/each}
+	</div>
 </div>
