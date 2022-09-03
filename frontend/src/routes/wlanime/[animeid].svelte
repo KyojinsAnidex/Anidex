@@ -63,7 +63,7 @@
 		} else {
 			alert("Successfully Removed From Watchlist");
 			console.log(temp);
-			goto('http://127.0.0.1:5173/watchlist');
+			goto('/watchlist');
 		}
 	}
 

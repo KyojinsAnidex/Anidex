@@ -88,7 +88,7 @@
 </script>
 
 <svelte:head>
-	<title>Reviews of {animeid}</title>
+	<title>Reviews of anime {animeid}</title>
 </svelte:head>
 
 {#await fetchanime() then}

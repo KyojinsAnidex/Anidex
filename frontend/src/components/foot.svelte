@@ -16,7 +16,7 @@
 	<div class="md:flex md:justify-between h-4 ">
 		<div class="mb-4 md:mb-0 ">
 			<FooterBrand
-				href="http://127.0.0.1:5173/"
+				href="/"
 				src="http://localhost:5000/uploads/images/anidex.jpg"
 				alt="Anidex Logo"
 				name="Anidex"

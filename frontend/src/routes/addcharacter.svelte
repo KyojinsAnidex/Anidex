@@ -93,7 +93,7 @@
 			alert('Could not Add');
 		} else {
 			alert('SuccessFully Added Character');
-			goto('http://127.0.0.1:5173/allcharacters');
+			goto('/allcharacters');
 			console.log(temp);
 		}
 	}
