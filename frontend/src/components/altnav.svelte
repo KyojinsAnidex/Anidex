@@ -17,8 +17,7 @@
 		Input,
 		Alert
 	} from 'flowbite-svelte';
-	import { Search, SimpleSearch, VoiceSearch } from 'flowbite-svelte';
-
+	
 	let logchoice = 0;
 	function handlelogout() {
 		state.set(0);
@@ -42,19 +41,7 @@
 	function resetalert() {
 		logchoice = 0;
 	}
-	function handleSearch() {
-		let next = '';
-		if ($search.type === 'anime') {
-			next = '/animesearchresult';
-		} else {
-			next = '/' + $search.type + 'search';
-		}
-		// console.log("ki hocce ");
-		// console.log($search.type);
-		// console.log(next);
-		console.log($search.txt);
-		// goto(next);
-	}
+	
 	let genres;
 	async function getgenres() {
 		let response;
@@ -128,7 +115,7 @@
 					>Search</button
 				></a
 			>
-		
+
 			<Dropdown
 				label="Database"
 				inline={true}

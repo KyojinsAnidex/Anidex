@@ -73,9 +73,6 @@
 			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 				{char.age + ' Years old'}
 			</h4>
-			<!-- <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-        Date of Birth: {char.dateofbirth}
-    </h4> -->
 			<h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
 				Role: {char.role}
 			</h4>
@@ -136,9 +133,6 @@
 							? 'Male'
 							: 'Other'}
 					</h4>
-					<!-- <h4 class="mt-2 text-lg text-center font-medium text-gray-700 dark:text-red-700">
-					{per.age + ' Years old'}
-				</h4> -->
 					<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 						Birthday : {person.person.birthday.slice(0, 10)}
 					</h4>

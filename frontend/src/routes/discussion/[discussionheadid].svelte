@@ -1,5 +1,4 @@
 <script context="module">
-	
 	export async function load({ params }) {
 		let discussionheadid = params.discussionheadid;
 		let discussion;
@@ -56,7 +55,7 @@
 		);
 		if (response.status === 201) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -194,7 +193,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -211,9 +210,8 @@
 		if (temp.success == false) {
 			alert('Could not Delete');
 		} else {
-			console.log(temp);
-			goto("/forumhome")
-			
+			// console.log(temp);
+			goto('/forumhome');
 		}
 	}
 	async function proxydeletediscussionentry(eid) {
@@ -225,7 +223,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -242,9 +240,8 @@
 		if (temp.success == false) {
 			alert('Could not Delete');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			refresh();
-			
 		}
 	}
 </script>
@@ -253,8 +250,10 @@
 	<title>Forum Thread {discussionheadid}</title>
 </svelte:head>
 <div class="relative flex justify-center w-full bg-solarizedBase2 text-solarizedBase02">
-	<h2 class="text-2xl font-medium text-center flex justify-center"> Discussion Thread: {discussionheadid} </h2>
-	<Card size=xl class="w-full bg-solarizedBase3 text-solarizedBase02">
+	<h2 class="text-2xl font-medium text-center flex justify-center">
+		Discussion Thread: {discussionheadid}
+	</h2>
+	<Card size="xl" class="w-full bg-solarizedBase3 text-solarizedBase02">
 		<Avatar src={'http://localhost:5000/uploads/images/' + discussion.discussionHead.pictureid} />
 		<h5 class="mb-2 text-xl font-bold tracking-tight text-black dark:text-white">
 			{discussion.discussionHead.userid}
@@ -298,18 +297,16 @@
 					/></svg
 				>
 			</button>
-			{#if discussion.discussionHead.userid==$curruser.name}
-			<br>
-			<div class="flex justify-left">	
-			<button
-							on:click={handledeletediscussion}
-							class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-							>Delete Thread</button
-						>
-					
-						
-					</div>
-					<br>
+			{#if discussion.discussionHead.userid == $curruser.name}
+				<br />
+				<div class="flex justify-left">
+					<button
+						on:click={handledeletediscussion}
+						class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+						>Delete Thread</button
+					>
+				</div>
+				<br />
 			{/if}
 		{/if}
 		<h5 class="mb-2 text-sm font-bold tracking-tight  dark:text-white">
@@ -366,7 +363,6 @@
 									</button>
 									Votes: {forum.votes}
 								{/if}
-
 							</div>
 						</AccordionFlush>
 					</td>
@@ -376,21 +372,18 @@
 						/>{forum.userid} On {forum.starttime.slice(12, 19)}, {forum.starttime.slice(0, 10)}</td
 					>
 					<td>
-						{#if forum.userid==$curruser.name}
-			<br>
-			<div class="flex justify-left">	
-			<button
-							on:click={handledeletediscussionentry(forum.discussionentryid)}
-							class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-							>Delete Thread</button
-						>
-					
-						
-					</div>
-					<br>
-			{/if}
+						{#if forum.userid == $curruser.name}
+							<br />
+							<div class="flex justify-left">
+								<button
+									on:click={handledeletediscussionentry(forum.discussionentryid)}
+									class="px-5 inline py-3 text-xl font-medium leading-5 text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
+									>Delete Thread</button
+								>
+							</div>
+							<br />
+						{/if}
 					</td>
-					
 				</tr>
 			{/each}
 		</table>

@@ -12,7 +12,7 @@
 		const response = await fetch(endpoint);
 		if (response.status === 200) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -40,7 +40,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -65,7 +65,7 @@
 				token: '',
 				admin: false
 			});
-			console.log(temp);
+			// console.log(temp);
 			goto('/');
 		}
 	}

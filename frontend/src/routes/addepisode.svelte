@@ -8,7 +8,7 @@
 		airingdate: '',
 		runtime: ''
 	};
-	console.log($epanime);
+	// console.log($epanime);
 	let endpoint = 'http://localhost:5000/episodes/' + $epanime;
 	async function proxyadd() {
 		const response = await fetch(endpoint, {
@@ -54,7 +54,7 @@
 		} else if (temp.success == true) {
 			alert('Successfully Added Episode');
 			goto('/allanime');
-			console.log(temp);
+			// console.log(temp);
 		}
 	}
 </script>

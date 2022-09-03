@@ -1,14 +1,13 @@
 <script context="module">
 	export async function load({ params }) {
 		let animeid = params.animeid;
-        let response;
-        let refanime;
+		let response;
+		let refanime;
 		let endpoint = 'http://localhost:5000/anime/' + animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
-			
-        } else {
+		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
@@ -18,10 +17,17 @@
 
 <script>
 	export let refanime;
-	import {  curruser, state, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
-	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
+	import {
+		curruser,
+		state,
+		eps,
+		epanime,
+		animeofinterest,
+		userepratings
+	} from '../../stores/store';
+	import { Range, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	let anime = refanime.anime;
-	$animeofinterest[0]=anime;
+	$animeofinterest[0] = anime;
 	let picture = 'http://localhost:5000/uploads/images/' + refanime.animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
@@ -68,7 +74,7 @@
 		}
 		if (response.status === 201) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -83,7 +89,7 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 		}
 	}
@@ -110,33 +116,29 @@
 		if (temp.success == false) {
 			console.log('No episodes Found');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			$eps = temp;
-			
 		}
 		$epanime = anime.animeid;
-		if($state==1)
-		{
-		await storerating();
+		if ($state == 1) {
+			await storerating();
+		}
 	}
-		
-}
 	async function refresh() {
 		let response;
 		let endpoint = 'http://localhost:5000/anime/' + refanime.anime.animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
-			if($state==1)
-			{
-			fetchrating()
+			if ($state == 1) {
+				fetchrating();
 			}
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
 	}
-	let rateendpoint='http://localhost:5000/animerating/anime/'+$curruser.name;
+	let rateendpoint = 'http://localhost:5000/animerating/anime/' + $curruser.name;
 	let userrating;
 	async function proxyfetchrating() {
 		const response = await fetch(rateendpoint, {
@@ -149,7 +151,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				animeid:anime.animeid 
+				animeid: anime.animeid
 				// etc.
 			})
 		});
@@ -168,13 +170,12 @@
 		if (temp.success == false) {
 			console.log('No Rating Found');
 		} else {
-			console.log(temp);
-			userrating=temp.rating;
+			// console.log(temp);
+			userrating = temp.rating;
 		}
-	
 	}
 
-	let eprateendpoint='http://localhost:5000/episoderating/episode/'+$curruser.name;
+	let eprateendpoint = 'http://localhost:5000/episoderating/episode/' + $curruser.name;
 	async function proxyfetcheprating(id) {
 		const response = await fetch(eprateendpoint, {
 			method: 'POST',
@@ -185,7 +186,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				episodeid:id 
+				episodeid: id
 				// etc.
 			})
 		});
@@ -207,19 +208,17 @@
 			//console.log(temp);
 			return temp.rating;
 		}
-	
 	}
-	async function storerating()
-	{  let tempratings=[];
-		
-		for(let i=0;i<$eps.episodes.length;i++)
-		{    console.log($eps.episodes[i].episodeid); 
-             tempratings[i]=await fetcheprating($eps.episodes[i].episodeid);	
+	async function storerating() {
+		let tempratings = [];
+
+		for (let i = 0; i < $eps.episodes.length; i++) {
+			// console.log($eps.episodes[i].episodeid);
+			tempratings[i] = await fetcheprating($eps.episodes[i].episodeid);
 		}
-		$userepratings=tempratings;
+		$userepratings = tempratings;
 	}
 	//console.log(userrating);
-	
 </script>
 
 <svelte:head>
@@ -256,18 +255,17 @@
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Genre:
 				{#each refanime.animegenres as genre}
-				<a href="/genre/{genre.genrename}">
-					{genre.genrename + ' | '}
-				</a>
+					<a href="/genre/{genre.genrename}">
+						{genre.genrename + ' | '}
+					</a>
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Studio:
-				{#each refanime.animestudio as studio,i}
-				<a href='/studio/{studio.studioname}'>
-				
-					{studio.studioname + ' | '}
-				</a>
+				{#each refanime.animestudio as studio, i}
+					<a href="/studio/{studio.studioname}">
+						{studio.studioname + ' | '}
+					</a>
 				{/each}
 			</h4>
 		</div>
@@ -295,10 +293,10 @@
 				<AccordionFlush id="2">
 					<h2 slot="header" class=" text-xl ">Add To Watchlist</h2>
 					<div slot="body">
-						{#if userrating!=0}
-						<p>Previous Rating: {userrating}</p>
+						{#if userrating != 0}
+							<p>Previous Rating: {userrating}</p>
 						{:else}
-						<p>User Has Not Rated This Anime Yet</p>
+							<p>User Has Not Rated This Anime Yet</p>
 						{/if}
 						<Radio bind:group={favourite} value="true">Favourite</Radio>
 						<Radio bind:group={favourite} value="false">Not Favourite</Radio>

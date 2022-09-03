@@ -1,11 +1,11 @@
 <script>
-	import { eps, state, epanime, curruser,animeofinterest,userepratings } from '../stores/store';
+	import { eps, state, epanime, curruser, animeofinterest, userepratings } from '../stores/store';
 	import { Rating, Range, AccordionFlush } from 'flowbite-svelte';
 	//console.log($eps);
 	//console.log($epanime);
 	let rating = 0;
 	let endpoint = 'http://localhost:5000/episoderating/' + $curruser.name;
-	console.log($curruser);
+	// console.log($curruser);
 	async function proxyrate(epid) {
 		let response;
 
@@ -40,7 +40,7 @@
 		if (temp.success == false) {
 			alert('Could not Rate');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			rating = 0;
 			fetchepisodes();
 		}
@@ -63,17 +63,15 @@
 		if (temp.success == false) {
 			console.log('No episodes Found');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			$eps = temp;
 		}
-		if($state==1)
-		{
+		if ($state == 1) {
 			await storerating();
 		}
-	
 	}
-	let anime=$animeofinterest[0];
-	let eprateendpoint='http://localhost:5000/episoderating/episode/'+$curruser.name;
+	let anime = $animeofinterest[0];
+	let eprateendpoint = 'http://localhost:5000/episoderating/episode/' + $curruser.name;
 	async function proxyfetcheprating(id) {
 		const response = await fetch(eprateendpoint, {
 			method: 'POST',
@@ -84,7 +82,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				episodeid:id 
+				episodeid: id
 				// etc.
 			})
 		});
@@ -106,35 +104,35 @@
 			//console.log(temp);
 			return temp.rating;
 		}
-	
 	}
-	async function storerating()
-	{  let tempratings=[];
-		
-		for(let i=0;i<$eps.episodes.length;i++)
-		{    console.log($eps.episodes[i].episodeid); 
-             tempratings[i]=await fetcheprating($eps.episodes[i].episodeid);	
+	async function storerating() {
+		let tempratings = [];
+
+		for (let i = 0; i < $eps.episodes.length; i++) {
+			// console.log($eps.episodes[i].episodeid);
+			tempratings[i] = await fetcheprating($eps.episodes[i].episodeid);
 		}
-		$userepratings=tempratings;
+		$userepratings = tempratings;
 	}
 </script>
-<div class= "flex justify-center bg-solarizedBase3 text-solarizedBase02">
-<div class=" bg-solarizedBase3 text-solarizedBase02">
-	<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
-		{anime.title}
-	</h4>
-	<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
-		Release Date: {anime.releasedate.slice(0, 4)}
-	</h4>
-	<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
-		Relese Season: {anime.releaseseason}
-	</h4>
-</div>
+
+<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
+	<div class=" bg-solarizedBase3 text-solarizedBase02">
+		<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
+			{anime.title}
+		</h4>
+		<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+			Release Date: {anime.releasedate.slice(0, 4)}
+		</h4>
+		<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
+			Relese Season: {anime.releaseseason}
+		</h4>
+	</div>
 </div>
 
 {#if $eps.length != 0}
 	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
-		<table class="table-auto border-separate" cellpadding="20"cellspacing="20">
+		<table class="table-auto border-separate" cellpadding="20" cellspacing="20">
 			<tr>
 				<th>Title </th>
 				<th>Season </th>
@@ -142,7 +140,7 @@
 				<th>Runtime</th>
 				<th>Rating</th>
 				{#if $state == 1}
-				     <th>User Rating</th>
+					<th>User Rating</th>
 					<th>Rate</th>
 				{/if}
 			</tr>
@@ -155,11 +153,13 @@
 					<td><Rating count rating={prop.episoderating} /></td>
 
 					{#if $state == 1}
-					<td>{#if $userepratings[i]!=0}
-						Prev Rating:{$userepratings[i]}
-					{:else}
-					No Rating Yet
-				{/if}</td>
+						<td
+							>{#if $userepratings[i] != 0}
+								Prev Rating:{$userepratings[i]}
+							{:else}
+								No Rating Yet
+							{/if}</td
+						>
 						<td>
 							<AccordionFlush id="1">
 								<h2 slot="header">Give Rating</h2>
@@ -191,7 +191,6 @@
 	<div class="flex justify-center bg-solarizedBase3 text-solarizedBase02">
 		<a href="/addepisode">
 			<button
-			
 				class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
 				>Add Episodes</button
 			>

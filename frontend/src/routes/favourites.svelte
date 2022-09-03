@@ -1,7 +1,6 @@
 <script>
-	import { Spinner, Checkbox } from 'flowbite-svelte';
-import { stop_propagation } from 'svelte/internal';
-	import { curruser,  state } from '../stores/store';
+	import { Spinner } from 'flowbite-svelte';
+	import { curruser } from '../stores/store';
 
 	let watchlist = {
 		success: false,
@@ -20,7 +19,7 @@ import { stop_propagation } from 'svelte/internal';
 			return await response.json();
 		} else if (response.status === 404) {
 			alert('No Favourites Found');
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -65,7 +64,7 @@ import { stop_propagation } from 'svelte/internal';
 				//console.log(anime);
 			}
 		}
-		
+
 		check_favourite();
 	}
 	//fetchanimeinfo();

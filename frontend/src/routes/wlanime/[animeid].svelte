@@ -1,14 +1,13 @@
 <script context="module">
 	export async function load({ params }) {
 		let animeid = params.animeid;
-        let response;
-        let refanime;
+		let response;
+		let refanime;
 		let endpoint = 'http://localhost:5000/anime/' + animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
-			
-        } else {
+		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
@@ -17,14 +16,20 @@
 </script>
 
 <script>
-	
-	import { state, curruser, eps, epanime,animeofinterest,userepratings } from '../../stores/store';
-	import { Range, Label, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
+	import {
+		state,
+		curruser,
+		eps,
+		epanime,
+		animeofinterest,
+		userepratings
+	} from '../../stores/store';
+	import { Range, Radio, AccordionFlush, Rating } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	export let refanime;
-	let anime=refanime.anime;
-	$animeofinterest[0]=anime;
-		let picture = 'http://localhost:5000/uploads/images/' + refanime.animepicture[0].pictureid;
+	let anime = refanime.anime;
+	$animeofinterest[0] = anime;
+	let picture = 'http://localhost:5000/uploads/images/' + refanime.animepicture[0].pictureid;
 	//   console.log(anime);
 	//  console.log(picture);
 	let rating = 0;
@@ -61,8 +66,8 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			alert("Successfully Removed From Watchlist");
-			console.log(temp);
+			alert('Successfully Removed From Watchlist');
+			// console.log(temp);
 			goto('/watchlist');
 		}
 	}
@@ -102,7 +107,7 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 		}
 	}
@@ -129,32 +134,30 @@
 		if (temp.success == false) {
 			console.log('No episodes Found');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			$eps = temp;
 		}
-		if($state==1)
-		{
-		await storerating();
-	}
+		if ($state == 1) {
+			await storerating();
+		}
 		$epanime = anime.animeid;
 	}
-	
+
 	async function refresh() {
 		let response;
 		let endpoint = 'http://localhost:5000/anime/' + refanime.anime.animeid;
 		response = await fetch(endpoint);
 		if (response.status === 200) {
 			refanime = await response.json();
-			if($state==1)
-			{
-			fetchrating()
+			if ($state == 1) {
+				fetchrating();
 			}
 		} else {
 			console.log('An error Try Again');
 			throw new Error(response.statusText);
 		}
 	}
-	let rateendpoint='http://localhost:5000/animerating/anime/'+$curruser.name;
+	let rateendpoint = 'http://localhost:5000/animerating/anime/' + $curruser.name;
 	let userrating;
 	async function proxyfetchrating() {
 		const response = await fetch(rateendpoint, {
@@ -167,7 +170,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				animeid:anime.animeid 
+				animeid: anime.animeid
 				// etc.
 			})
 		});
@@ -186,13 +189,12 @@
 		if (temp.success == false) {
 			console.log('No Rating Found');
 		} else {
-			console.log(temp);
-			userrating=temp.rating;
+			// console.log(temp);
+			userrating = temp.rating;
 		}
-	
 	}
 	//console.log(userrating);
-	let eprateendpoint='http://localhost:5000/episoderating/episode/'+$curruser.name;
+	let eprateendpoint = 'http://localhost:5000/episoderating/episode/' + $curruser.name;
 	async function proxyfetcheprating(id) {
 		const response = await fetch(eprateendpoint, {
 			method: 'POST',
@@ -203,7 +205,7 @@
 			body: JSON.stringify({
 				// Example: Update JSON file with
 				//          local data properties
-				episodeid:id 
+				episodeid: id
 				// etc.
 			})
 		});
@@ -222,21 +224,19 @@
 		if (temp.success == false) {
 			console.log('No Rating Found');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			return temp.rating;
 		}
-	
 	}
-	async function storerating()
-	{  let tempratings=[];
-		
-		for(let i=0;i<$eps.episodes.length;i++)
-		{    console.log($eps.episodes[i].episodeid); 
-             tempratings[i]=await fetcheprating($eps.episodes[i].episodeid);	
+	async function storerating() {
+		let tempratings = [];
+
+		for (let i = 0; i < $eps.episodes.length; i++) {
+			// console.log($eps.episodes[i].episodeid);
+			tempratings[i] = await fetcheprating($eps.episodes[i].episodeid);
 		}
-		$userepratings=tempratings;
+		$userepratings = tempratings;
 	}
-	
 </script>
 
 <svelte:head>
@@ -279,11 +279,10 @@
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Studio:
-				{#each refanime.animestudio as studio,i}
-				<a href="/studio/{studio.studioname}">
-			
-					{studio.studioname + ' | '}
-				</a>
+				{#each refanime.animestudio as studio, i}
+					<a href="/studio/{studio.studioname}">
+						{studio.studioname + ' | '}
+					</a>
 				{/each}
 			</h4>
 		</div>
@@ -300,7 +299,7 @@
 							<button
 								on:click={fetchepisodes()}
 								class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700"
-							>Episodes</button
+								>Episodes</button
 							>
 						</a>
 					</div>
@@ -311,10 +310,10 @@
 				<AccordionFlush id="2">
 					<h2 slot="header" class="text-xl">Change Rating</h2>
 					<div slot="body">
-						{#if userrating!=0}
-						<p>Previous Rating: {userrating}</p>
+						{#if userrating != 0}
+							<p>Previous Rating: {userrating}</p>
 						{:else}
-						<p>User Has Not Rated This Anime Yet</p>
+							<p>User Has Not Rated This Anime Yet</p>
 						{/if}
 						<br />
 						<Radio bind:group={favourite} value="true">Favourite</Radio>
@@ -337,7 +336,7 @@
 				<button
 					on:click={removeanime}
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-600 hover:bg-red-600"
-							>Remove Anime From List</button
+					>Remove Anime From List</button
 				>
 			{/if}
 		</div>

@@ -1,5 +1,4 @@
 <script>
-	import { state} from '../stores/store';
 	import { Spinner, Rating } from 'flowbite-svelte';
 	let animes;
 	let endpoint = 'http://localhost:5000/anime';
@@ -48,7 +47,6 @@
 				//	console.log(anime);
 			}
 		}
-		
 	}
 	function showmore() {
 		search = search * 2;
@@ -58,7 +56,9 @@
 <svelte:head>
 	<title>Top Rated Anime</title>
 </svelte:head>
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}

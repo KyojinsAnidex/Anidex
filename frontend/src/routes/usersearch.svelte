@@ -1,7 +1,7 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
 
-	import {  search } from '../stores/store';
+	import { search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultUser: []
@@ -27,7 +27,7 @@
 		} else if (response.status === 404) {
 			alert('No user found.');
 			throw new Error(response.statusText);
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -45,6 +45,9 @@
 		}
 	}
 </script>
+<svelte:head>
+	<title>User search</title>
+</svelte:head>
 
 {#await fetchuserinfo()}
 	<div class="text-center"><Spinner size="10" color="red" /></div>

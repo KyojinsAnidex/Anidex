@@ -1,6 +1,6 @@
 <script>
 	import { Spinner } from 'flowbite-svelte';
-	import {  search } from '../stores/store';
+	import { search } from '../stores/store';
 	let animes = {
 		success: false,
 		resultAnime: []
@@ -44,14 +44,13 @@
 			animes = temp;
 			//  console.log(animes);
 			fetchanimepic();
-		
 		}
 	}
 	async function proxyfetchanimepic(source) {
 		const response = await fetch(source);
 		if (response.status === 200) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -73,11 +72,12 @@
 				//  console.log(ntemp);
 			}
 		}
-	
 	}
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 h-screen bg-solarizedBase3 text-solarizedBase02">
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 h-screen bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchanimeinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}

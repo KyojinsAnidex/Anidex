@@ -1,8 +1,7 @@
 <script>
-	import { Spinner, AccordionFlush, Rating } from 'flowbite-svelte';
+	import { Spinner } from 'flowbite-svelte';
 
 	let animes;
-	let animeinfos = [];
 	let endpoint = 'http://localhost:5000/anime';
 	let image = 'http://localhost:5000/uploads/images/';
 
