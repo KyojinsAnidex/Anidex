@@ -12,12 +12,12 @@
 1. [Official Postgresql Docs](https://www.postgresql.org/docs/14/index.html)
 
 ### NodeJS and ExpressJS
-**That Udemy Course Modules 6 and 7...** [Drive Link](https://drive.google.com/drive/u/1/folders/1Ftcq5Pxf5Aq2Mn3V6qU70QixoVllTmrC)
+**That Course Modules 6 and 7...** [Drive Link](https://drive.google.com/drive/u/1/folders/1Ftcq5Pxf5Aq2Mn3V6qU70QixoVllTmrC)
 1. [ExpressJS getting started](https://expressjs.com/en/starter/installing.html)
 2. [ExpressJS Docs](https://expressjs.com/en/guide/routing.html) (Just check top navbar for next pages) 
 
 ### RESTfull API with ExpressJS and Postgresql
-**That Udemy Course Modules 6 and 7... It is just that good**
+**That Course Modules 6 and 7... It is just that good**
 1. [Good Video](https://www.youtube.com/watch?v=_Mun4eOOf2Q)
 2. [Postgresql website had this one](https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/)
 3. [Official NodeJS Postgresql library Docs](https://node-postgres.com/guides/project-structure/)
