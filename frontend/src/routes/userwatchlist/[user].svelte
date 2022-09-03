@@ -6,9 +6,8 @@
 </script>
 
 <script>
-	import { Spinner, Checkbox } from 'flowbite-svelte';
-import { prop_dev } from 'svelte/internal';
-	import { wlanimes, curruser } from '../../stores/store';
+	import { Spinner } from 'flowbite-svelte';
+	import { curruser } from '../../stores/store';
 	export let user;
 
 	let watchlist = {
@@ -65,8 +64,6 @@ import { prop_dev } from 'svelte/internal';
 			}
 		}
 		//console.log(resanimes);
-		$wlanimes = resanimes;
-		//console.log($wlanimes);
 	}
 	//fetchanimeinfo();
 </script>
@@ -79,22 +76,22 @@ import { prop_dev } from 'svelte/internal';
 	{:then}
 		{#each resanimes as prop, i}
 			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-				{#if user!=$curruser.name}
-				<a href="/anime/{prop.anime.animeid}">
-					<img
-						class="h-52 rounded-full mb-4"
-						src={image + resanimes[i].animepicture[0].pictureid}
-						alt="Anime Pic"
-					/>
-				</a>
+				{#if user != $curruser.name}
+					<a href="/anime/{prop.anime.animeid}">
+						<img
+							class="h-52 rounded-full mb-4"
+							src={image + resanimes[i].animepicture[0].pictureid}
+							alt="Anime Pic"
+						/>
+					</a>
 				{:else}
-				<a href="/wlanime/{i}">
-					<img
-						class="h-52 rounded-full mb-4"
-						src={image + resanimes[i].animepicture[0].pictureid}
-						alt="Anime Pic"
-					/>
-				</a>
+					<a href="/wlanime/{i}">
+						<img
+							class="h-52 rounded-full mb-4"
+							src={image + resanimes[i].animepicture[0].pictureid}
+							alt="Anime Pic"
+						/>
+					</a>
 				{/if}
 				<h4 class="mt-2 text-2xl font-medium  dark:text-red-700">
 					{resanimes[i].anime.title}
