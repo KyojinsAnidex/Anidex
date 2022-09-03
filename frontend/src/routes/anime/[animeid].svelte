@@ -256,7 +256,9 @@
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
 				Genre:
 				{#each refanime.animegenres as genre}
+				<a href="/genre/{genre.genrename}">
 					{genre.genrename + ' | '}
+				</a>
 				{/each}
 			</h4>
 			<h4 class="mt-2 text-lg font-medium  dark:text-red-700">
