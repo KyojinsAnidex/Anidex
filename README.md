@@ -13,7 +13,6 @@ A simple website to find and list one's favourite anime, discover characters, an
 - [Technologies Used](#main-technologies-used)
 - [Features](#features)
 - [Setup](#setup)
-- [Demonstration](#demonstration)
 - [Project Status](#project-status)
 - [Room for Improvement](#room-for-improvement)
 - [Resources](#resources-used)
@@ -85,9 +84,9 @@ We are using a **ExpressJS** RESTfull API server in the backend to serve the **S
 - **Frontend:** You can set up the frontend by going through these [steps](https://github.com/KyojinsAnidex/Anidex/blob/main/frontend/README.md).
 
 
-## Demonstration
+<!--- ## Demonstration
 
-Here is a little demo of the running project:
+ Here is a little demo of the running project: --->
 
 
 ## Project Status
@@ -108,7 +107,7 @@ Room for improvement:
 
 ## Resources Used
 
-- This project was inspired by the fan-made user generated anime database **[Anidb](anidb.net)** and not-so-fan-made anime database **[MAL](myanimelist.net)**.
+- This project was inspired by the fan-made user generated anime database **[Anidb](https://www.anidb.net)** and not-so-fan-made anime database **[MAL](https://www.myanimelist.net)**.
 - The backend was inspired by the RESTful API server idea of this [Course](https://www.udemy.com/course/react-nodejs-express-mongodb-the-mern-fullstack-guide/).
 - The frontend was made using multiple tutorials and ideas, list of which can be found [here](https://github.com/KyojinsAnidex/Anidex/tree/main/resources#svelte).
 
