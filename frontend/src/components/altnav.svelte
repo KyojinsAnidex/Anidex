@@ -1,3 +1,5 @@
+
+
 <script>
 	import { goto } from '$app/navigation';
 	import { state, curruser, search } from './../stores/store.js';
@@ -55,8 +57,20 @@
 		console.log($search.txt);
 		// goto(next);
 	}
+	let genres;
+	async function getgenres()
+	{
+		let response;
+		response = await fetch('http://localhost:5000/genre');
+		if (response.status === 200) {
+			genres = await response.json();
+		} else {
+			console.log('An error Try Again');
+			throw new Error(response.statusText);
+		}
+	}
 </script>
-
+{#await getgenres() then}
 {#if logchoice == 1}
 	<Alert>
 		<div class="flex justify-center text-solarizedYellow bg-solarizedBase02" />
@@ -149,6 +163,7 @@
 			inline={true}
 			labelClass="flex items-center justify-between w-full py-2 pl-3 pr-4 text-base font-bold text-solarizedYellow border-b border-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-solarizedBlue md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700  md:dark:hover:bg-transparent"
 			class="z-50"
+			on:click={getgenres}
 		>
 			<a href="http://127.0.0.1:5173/allanime">
 				<DropdownItem>Anime</DropdownItem>
@@ -162,6 +177,23 @@
 			<a href="http://127.0.0.1:5173/allstudio">
 				<DropdownItem>Studio</DropdownItem>
 			</a>
+			<DropdownItem>
+				<Dropdown
+					label="Genre"
+					inline={true}
+					labelClass="flex items-center justify-between w-full py-2 pl-3 pr-4 text-base font-bold text-solarizedYellow border-b border-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-solarizedBlue md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700  md:dark:hover:bg-transparent"
+					class="z-50"
+				>
+				{#each genres.results as gen}
+				<DropdownItem>
+					<a href="http://127.0.0.1:5173/genre/{gen.genrename}">
+					{gen.genrename}
+				</a>
+				</DropdownItem>
+				{/each}
+				</Dropdown>
+				
+			</DropdownItem>
 		</Dropdown>
 
 		<NavLi
@@ -242,3 +274,4 @@
 		<NavHamburger on:click={toggle} />
 	</div>
 </Navbar>
+{/await}
