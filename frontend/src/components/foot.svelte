@@ -53,10 +53,10 @@
 		year={2022}
 	/> -->
 	<span class="block text-base font-semibold text-gray-500 sm:text-center dark:text-gray-400">
-		2022 
+		Anidex is licensed under a  
 		<a href="https://github.com/KyojinsAnidex/Anidex/blob/main/LICENSE" class="hover:underline hover:text-solarizedBlue">
 			GNU General Public License v3.0
-		</a> by 
+		</a>  © 2022 by  
 		<a href="https://github.com/KyojinsAnidex/" class="hover:underline hover:text-solarizedBlue">
 			Kyojins
 		</a>
