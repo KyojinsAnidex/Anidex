@@ -24,10 +24,10 @@
 		dataArray.append('email', user.email);
 		dataArray.append('bio', user.bio);
 		dataArray.append('image', image[0]);
-		for (var key of dataArray.entries()) {
-			console.log(key[0] + ', ' + key[1]);
-		}
-		console.log(user);
+		// for (var key of dataArray.entries()) {
+		// 	console.log(key[0] + ', ' + key[1]);
+		// }
+		// console.log(user);
 		//console.log(dataArray);
 		let endpoint = 'http://localhost:5000/users/signup';
 		const response = await fetch(endpoint, {
@@ -37,7 +37,7 @@
 			},
 			body: dataArray
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -55,15 +55,16 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			goto('/login');
 		}
 	}
 </script>
 
 <svelte:head>
-	<title>Sign up</title>
+	<title>Sign up in Anidex</title>
 </svelte:head>
+
 <div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
 	<div class="h-full w-1/2 ">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
@@ -80,6 +81,7 @@
 							bind:value={user.name}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Name"
+							required
 						/>
 					</div>
 					<div>
@@ -90,6 +92,7 @@
 							bind:value={user.email}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="user@test.com"
+							required
 						/>
 					</div>
 					<div>
@@ -100,6 +103,7 @@
 							bind:value={user.password}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Password"
+							required
 						/>
 					</div>
 					<div>
@@ -110,6 +114,7 @@
 							bind:value={user.con_password}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Confirm Password"
+							required
 						/>
 					</div>
 					{#if check == false}
@@ -119,7 +124,7 @@
 					{/if}
 					<div>
 						<label for="sys" class="mb-2.5 block font-bold ">Bio</label>
-						<Input bind:value={user.bio} id="sys" size="lg" placeholder="Bio" />
+						<Input bind:value={user.bio} id="sys" size="lg" placeholder="Bio" required />
 					</div>
 					<div>
 						<label class="mb-2.5 block font-bold" for="File">Upload Picture</label>
@@ -128,7 +133,8 @@
 							bind:files={image}
 							id="avatar"
 							name="avatar"
-							accept="image/png, image/jpeg"
+							accept="image/png, image/jpeg, image/jpg"
+							required
 						/>
 					</div>
 					<div class="my-10 flex justify-center">

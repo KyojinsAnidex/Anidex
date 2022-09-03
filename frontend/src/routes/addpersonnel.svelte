@@ -19,7 +19,7 @@
 	import { curruser } from '../stores/store';
 	import { goto } from '$app/navigation';
 	export let animes;
-	console.log(animes);
+	// console.log(animes);
 	let personnel = {
 		lastname: '',
 		firstname: '',
@@ -40,10 +40,10 @@
 		dataArray.append('website', personnel.website);
 		dataArray.append('anime', personnel.anime);
 		dataArray.append('image', image[0]);
-		for (var key of dataArray.entries()) {
-			console.log(key[0] + ', ' + key[1]);
-		}
-		console.log(personnel);
+		// for (var key of dataArray.entries()) {
+		// 	console.log(key[0] + ', ' + key[1]);
+		// }
+		// console.log(personnel);
 		//console.log(dataArray);
 		let endpoint = 'http://localhost:5000/personnel';
 		const response = await fetch(endpoint, {
@@ -83,8 +83,8 @@
 			alert('Could not Add');
 		} else {
 			alert('Successfully Added Personnel');
-			goto('http://127.0.0.1:5173/allpersonnel');
-			console.log(temp);
+			goto('/allpersonnel');
+			// console.log(temp);
 		}
 	}
 </script>

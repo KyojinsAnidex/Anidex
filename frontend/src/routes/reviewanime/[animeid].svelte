@@ -17,10 +17,10 @@
 
 <script>
 	export let discussion, animeid;
-	import { AccordionFlush, Avatar, Textarea, Button } from 'flowbite-svelte';
+	import { AccordionFlush, Avatar, Textarea } from 'flowbite-svelte';
 	import { state, curruser } from './../../stores/store.js';
-	console.log(discussion);
-	console.log(animeid);
+	// console.log(discussion);
+	// console.log(animeid);
 	let anime;
 	async function fetchanime() {
 		let response = await fetch('http://localhost:5000/anime/' + animeid);
@@ -31,7 +31,7 @@
 			throw new Error(response.statusText);
 		}
 	}
-	console.log(anime);
+	// console.log(anime);
 	let review;
 	let tags = [];
 	tags.push('Review');
@@ -80,7 +80,7 @@
 		if (temp.success == false) {
 			alert('Could not Add Review');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			review = '';
 			refresh();
 		}
@@ -88,7 +88,7 @@
 </script>
 
 <svelte:head>
-	<title>Reviews of {animeid}</title>
+	<title>Reviews of anime {animeid}</title>
 </svelte:head>
 
 {#await fetchanime() then}

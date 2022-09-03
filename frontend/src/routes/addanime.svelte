@@ -21,7 +21,7 @@
 </script>
 
 <script>
-	import { Input, Dropdown, DropdownItem, Radio, Select } from 'flowbite-svelte';
+	import { Input, Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
 	import { curruser } from '../stores/store';
 	import { goto } from '$app/navigation';
 	export let genres, studios;
@@ -45,11 +45,11 @@
 		dataArray.append('genres', anime.genre);
 		dataArray.append('studios', anime.studio);
 		dataArray.append('image', image[0]);
-		for (var key of dataArray.entries()) {
-			console.log(key[0] + ', ' + key[1]);
-		}
-		console.log(anime);
-		//console.log(dataArray);
+		// for (var key of dataArray.entries()) {
+		// 	console.log(key[0] + ', ' + key[1]);
+		// }
+		// console.log(anime);
+		// //console.log(dataArray);
 		let endpoint = 'http://localhost:5000/anime';
 		const response = await fetch(endpoint, {
 			method: 'POST',
@@ -59,7 +59,7 @@
 			},
 			body: dataArray
 		});
-		console.log(response);
+		// console.log(response);
 		anime = {
 			title: '',
 			releasedate: '',
@@ -87,7 +87,7 @@
 		} else {
 			alert('Successfully Added Anime');
 			goto('/allanime');
-			console.log(temp);
+			// console.log(temp);
 		}
 	}
 </script>
@@ -129,11 +129,17 @@
 					</div>
 					<div>
 						<label for="sys" class="mb-2.5 block  font-bold ">Synopsis</label>
-						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" required/>
+						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" required />
 					</div>
 					<br />
 					Choose Season (required)
-					<Dropdown label={anime.releaseseason} class="w-60 text-xl font-bold" size="xl" color="black" required>
+					<Dropdown
+						label={anime.releaseseason}
+						class="w-60 text-xl font-bold"
+						size="xl"
+						color="black"
+						required
+					>
 						<ul slot="content" class="p-3 ">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={anime.releaseseason} name="dropdown" value={'Spring'} tinted

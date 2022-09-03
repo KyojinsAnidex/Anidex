@@ -21,9 +21,7 @@
 		TableBodyCell,
 		TableBodyRow,
 		TableHead,
-		TableHeadCell,
-		Checkbox,
-		TableSearch
+		TableHeadCell
 	} from 'flowbite-svelte';
 	export let tags;
 	// console.log(tags);
@@ -33,7 +31,9 @@
 	<title>Forum</title>
 </svelte:head>
 
-<div class="flex-col justify-center items-center relative h-full w-full bg-solarizedBase3 text-solarizedBase02">
+<div
+	class="flex-col justify-center items-center relative h-full w-full bg-solarizedBase3 text-solarizedBase02"
+>
 	<div>
 		<h2 class="text-3xl flex justify-center items-center font-bold ">Welcome to Anidex forum!</h2>
 	</div>

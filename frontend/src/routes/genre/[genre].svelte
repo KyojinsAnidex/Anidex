@@ -15,13 +15,13 @@
 			const response = await fetch(genreendpoint, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json'
 					// like application/json or text/xml
 				},
 				body: JSON.stringify({
 					// Example: Update JSON file with
 					//          local data properties
-					searchedGenre:genre
+					searchedGenre: genre
 					// etc.
 				})
 			});
@@ -55,9 +55,9 @@
 				const response = await fetch('http://localhost:5000/anime/' + animeid);
 				if (response.status === 200) {
 					let temp = await response.json();
-				//	console.log(temp);
+					//	console.log(temp);
 					animeresults[animeresults.length] = temp.anime;
-				//	console.log(animeresults);
+					//	console.log(animeresults);
 				}
 			}
 			return animeresults;
@@ -85,7 +85,7 @@
 					console.log('Picture Not Found');
 				} else {
 					pictures[i] = image + ntemp.gallery[0].pictureid;
-					console.log(ntemp);
+					// console.log(ntemp);
 				}
 			}
 			return pictures;
@@ -94,10 +94,12 @@
 		return { props: { animeresults, pictures, genre } };
 	}
 </script>
+
 <script>
-    export let animeresults,pictures;
-    export let genre;
+	export let animeresults, pictures;
+	export let genre;
 </script>
+
 <svelte:head>
 	<title>
 		{genre}
@@ -129,15 +131,6 @@
 				<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
 					{animeresults[i].releasedate.slice(0, 4)}
 				</h4>
-				<!--
-         <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-           {animes.results[i].averagerating}
-         </h4>
-         <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
-           {animes.results[i].animerank}
-         </h4>
-       <p class="text-blue-500">{animes.results[i].synopsis}</p>
-       -->
 			</div>
 		{/each}
 	</div>

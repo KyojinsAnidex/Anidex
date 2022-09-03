@@ -46,9 +46,9 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			console.log(temp);
+			// console.log(temp);
 			alert('Successfully Added');
-			goto('http://127.0.0.1:5173/allstudio');
+			goto('/allstudio');
 		}
 	}
 </script>

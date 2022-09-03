@@ -36,8 +36,8 @@
 	import { curruser, state } from '../../stores/store';
 	export let foruminfo, tag;
 	export let anime;
-	console.log(foruminfo);
-	console.log(anime);
+	// console.log(foruminfo);
+	// console.log(anime);
 	let text;
 	let tags = [];
 	tags.push(tag);
@@ -124,36 +124,34 @@
 <div
 	class="relative flex justify-center w-full text-2xl font-bold bg-solarizedBase3 text-solarizedBase02"
 >
-	Welcome to {tag} Subforum 
+	Welcome to {tag} Subforum
 </div>
 {#if $state == 1}
 	<div class="relative flex-grow w-full bg-solarizedBase3 text-solarizedBase02">
 		<div class="h-screen/2 w-1/2 ">
 			{#if tag == 'Anime' || tag == 'Review' || tag == 'Watchroom'}
-					
-			<h2 class="text-lg flex justify-center font-medium">Select Anime</h2>
-			<div class="px-5 flex justify-center">
-				<select bind:value={animeid} class="text-black">
-					{#each anime.results as an}
-						<option value={an.animeid}>
-							{an.title}
-						</option>
-					{/each}
-				</select>
-			</div>
+				<h2 class="text-lg flex justify-center font-medium">Select Anime</h2>
+				<div class="px-5 flex justify-center">
+					<select bind:value={animeid} class="text-black">
+						{#each anime.results as an}
+							<option value={an.animeid}>
+								{an.title}
+							</option>
+						{/each}
+					</select>
+				</div>
 			{/if}
 		</div>
 		<div class="h-screen/2 w-1/2 ">
-			<br/>
-			<br/>
+			<br />
+			<br />
 			<h2 class="text-xl flex justify-center font-medium">Start a thread NOW!</h2>
-			
+
 			<div class="flex justify-center">
 				<Textarea
 					bind:value={text}
 					class="mb-4 p-2"
 					placeholder="Add a discussion thread To this subforum"
-					
 				/>
 			</div>
 			<br />
@@ -178,28 +176,31 @@
 		No discussion thread exists for this subforum yet, care to make one?
 	</h2>
 {:else}
-	<h2 class="mb-2 text-2xl font-bold w-full flex justify-center bg-solarizedBase3 text-solarizedBase02">
+	<h2
+		class="mb-2 text-2xl font-bold w-full flex justify-center bg-solarizedBase3 text-solarizedBase02"
+	>
 		Many discussions in this subforum:
 	</h2>
 	<div class="flex justify-center p-20 w-full bg-solarizedBase3 text-solarizedBase02">
 		<Table hoverable={true} class="w-full bg-solarizedBase3 text-solarizedBase02">
 			<TableHead>
 				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Thread</TableHeadCell>
-				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Original poster</TableHeadCell>
+				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02"
+					>Original poster</TableHeadCell
+				>
 				<TableHeadCell class="text-xl bg-solarizedBase3 text-solarizedBase02">Votes</TableHeadCell>
-
 			</TableHead>
 			<TableBody class="divide-y">
 				{#each foruminfo.allDiscussionHeads as forum}
 					<TableBodyRow>
 						<a
-								href="/discussion/{forum.discussionheadid}"
-								class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+							href="/discussion/{forum.discussionheadid}"
+							class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+						>
+							<TableBodyCell class="text-xl bg-solarizedBase3 text-solarizedBase02"
+								>{forum.contentofdiscussion.slice(0, 50) + '...'}</TableBodyCell
 							>
-								
-							
-						<TableBodyCell class="text-xl bg-solarizedBase3 text-solarizedBase02">{forum.contentofdiscussion.slice(0, 50) + '...'}</TableBodyCell>
-					</a>
+						</a>
 						<TableBodyCell
 							><Avatar
 								src={'http://localhost:5000/uploads/images/' + forum.pictureid}
@@ -209,7 +210,6 @@
 							)}</TableBodyCell
 						>
 						<TableBodyCell>{forum.votes}</TableBodyCell>
-						
 					</TableBodyRow>
 				{/each}
 			</TableBody>

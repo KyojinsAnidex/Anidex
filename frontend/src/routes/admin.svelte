@@ -66,7 +66,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -84,7 +84,7 @@
 			alert('Could not delete anime');
 		} else {
 			alert('Deleted Anime Successfully');
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 			resetalert();
 		}
@@ -98,7 +98,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -116,7 +116,7 @@
 			alert('Could not delete character');
 		} else {
 			alert('Deleted Character Successfully');
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 			resetalert();
 		}
@@ -130,7 +130,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -148,7 +148,7 @@
 			alert('Could not delete person');
 		} else {
 			alert('Deleted Person Successfully');
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 			resetalert();
 		}
@@ -162,7 +162,7 @@
 				// like application/json or text/xml
 			}
 		});
-		console.log(response);
+		// console.log(response);
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -180,7 +180,7 @@
 			alert('Could not delete episode ');
 		} else {
 			alert('Deleted Episode Successfully');
-			console.log(temp);
+			// console.log(temp);
 			refresh();
 			resetalert();
 		}

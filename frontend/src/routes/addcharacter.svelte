@@ -50,11 +50,11 @@
 		dataArray.append('voiceActors', character.voiceactors);
 		dataArray.append('anime', character.anime);
 		dataArray.append('image', image[0]);
-		for (var key of dataArray.entries()) {
-			console.log(key[0] + ', ' + key[1]);
-		}
-		console.log(character);
-		//console.log(dataArray);
+		// for (var key of dataArray.entries()) {
+		// 	console.log(key[0] + ', ' + key[1]);
+		// }
+		// console.log(character);
+		// //console.log(dataArray);
 		let endpoint = 'http://localhost:5000/characters';
 		const response = await fetch(endpoint, {
 			method: 'POST',
@@ -93,8 +93,8 @@
 			alert('Could not Add');
 		} else {
 			alert('SuccessFully Added Character');
-			goto('http://127.0.0.1:5173/allcharacters');
-			console.log(temp);
+			goto('/allcharacters');
+			// console.log(temp);
 		}
 	}
 </script>

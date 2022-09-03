@@ -46,6 +46,8 @@
 	
 </script>
 
+<svelte:head><title>Studio search</title></svelte:head>
+
 <div class="felx justify-center bg-solarizedBase3 text-solarizedBase02">
 	<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
 		{#await fetchstudioinfo()}

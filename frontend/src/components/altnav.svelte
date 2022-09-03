@@ -17,8 +17,7 @@
 		Input,
 		Alert
 	} from 'flowbite-svelte';
-	import { Search, SimpleSearch, VoiceSearch } from 'flowbite-svelte';
-
+	
 	let logchoice = 0;
 	function handlelogout() {
 		state.set(0);
@@ -42,19 +41,7 @@
 	function resetalert() {
 		logchoice = 0;
 	}
-	function handleSearch() {
-		let next = '';
-		if ($search.type === 'anime') {
-			next = 'http://127.0.0.1:5173/animesearchresult';
-		} else {
-			next = '/' + $search.type + 'search';
-		}
-		// console.log("ki hocce ");
-		// console.log($search.type);
-		// console.log(next);
-		console.log($search.txt);
-		// goto(next);
-	}
+	
 	let genres;
 	async function getgenres() {
 		let response;
@@ -122,13 +109,13 @@
 			</Dropdown>
 			<!-- <Search bind:value = {$search.txt} on:submit={handleSearch} /> -->
 			<Input bind:value={$search.txt} noBorder id="search" placeholder="Search..." />
-			<a href="http://127.0.0.1:5173/loadingpage">
+			<a href="/loadingpage">
 				<button
 					class="px-5 inline py-3 text-lg font-medium leading-5 shadow-3xl text-white transition-all duration-400 border border-transparent rounded-3xl focus:outline-none bg-blue-600 active:bg-slate-600 hover:bg-red-700"
 					>Search</button
 				></a
 			>
-		
+
 			<Dropdown
 				label="Database"
 				inline={true}
@@ -136,16 +123,16 @@
 				class="z-50"
 				on:click={getgenres}
 			>
-				<a href="http://127.0.0.1:5173/allanime">
+				<a href="/allanime">
 					<DropdownItem>Anime</DropdownItem>
 				</a>
-				<a href="http://127.0.0.1:5173/allcharacters">
+				<a href="/allcharacters">
 					<DropdownItem>Character</DropdownItem>
 				</a>
-				<a href="http://127.0.0.1:5173/allpersonnel">
+				<a href="/allpersonnel">
 					<DropdownItem>Personnel</DropdownItem>
 				</a>
-				<a href="http://127.0.0.1:5173/allstudio">
+				<a href="/allstudio">
 					<DropdownItem>Studio</DropdownItem>
 				</a>
 				<DropdownItem>
@@ -157,7 +144,7 @@
 					>
 						{#each genres.results as gen}
 							<DropdownItem>
-								<a href="http://127.0.0.1:5173/genre/{gen.genrename}">
+								<a href="/genre/{gen.genrename}">
 									{gen.genrename}
 								</a>
 							</DropdownItem>
@@ -167,19 +154,19 @@
 			</Dropdown>
 
 			<NavLi
-				href="http://127.0.0.1:5173/ratedanime"
+				href="/ratedanime"
 				activeClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
 				nonActiveClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow border-b border-gray-100 hover:bg-solarizedBase2 md:hover:bg-transparent md:border-0 md:hover:text-solarizedBlue md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
 				>Top Rated</NavLi
 			>
 			<NavLi
-				href="http://127.0.0.1:5173/aboutus"
+				href="/aboutus"
 				activeClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
 				nonActiveClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow border-b border-gray-100 hover:bg-solarizedBase2 md:hover:bg-transparent md:border-0 md:hover:text-solarizedBlue md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
 				>About</NavLi
 			>
 			<NavLi
-				href="http://127.0.0.1:5173/forumhome"
+				href="/forumhome"
 				activeClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
 				nonActiveClass="block py-2 pr-4 pl-3 text-base font-bold text-solarizedYellow border-b border-gray-100 hover:bg-solarizedBase2 md:hover:bg-transparent md:border-0 md:hover:text-solarizedBlue md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
 				>Forum</NavLi
@@ -207,25 +194,25 @@
 					</a>
 					<DropdownItem class="text-solarizedRed">
 						<Dropdown label="Add" inline={true} class="ml-16 w-44">
-							<a href="http://127.0.0.1:5173/addanime">
+							<a href="/addanime">
 								<DropdownItem>Add Anime</DropdownItem>
 							</a>
-							<a href="http://127.0.0.1:5173/addpersonnel">
+							<a href="/addpersonnel">
 								<DropdownItem>Add Personnel</DropdownItem>
 							</a>
-							<a href="http://127.0.0.1:5173/addcharacter">
+							<a href="/addcharacter">
 								<DropdownItem>Add Character</DropdownItem>
 							</a>
-							<a href="http://127.0.0.1:5173/addstudio">
+							<a href="/addstudio">
 								<DropdownItem>Add Studio</DropdownItem>
 							</a>
-							<a href="http://127.0.0.1:5173/addgenre">
+							<a href="/addgenre">
 								<DropdownItem>Add Genre</DropdownItem>
 							</a>
 						</Dropdown>
 					</DropdownItem>
 					{#if $curruser.admin == true}
-						<a href="http://127.0.0.1:5173/admin">
+						<a href="/admin">
 							<DropdownItem>Admin Page</DropdownItem>
 						</a>
 					{/if}
@@ -233,10 +220,10 @@
 
 					<DropdownItem on:click={logout}>Log out</DropdownItem>
 				{:else}
-					<a href="http://127.0.0.1:5173/login">
+					<a href="/login">
 						<DropdownItem>Log in</DropdownItem>
 					</a>
-					<a href="http://127.0.0.1:5173/signup">
+					<a href="/signup">
 						<DropdownItem>Sign up</DropdownItem>
 					</a>
 				{/if}

@@ -43,7 +43,6 @@
 			animes = temp;
 			//			console.log(animes);
 			addcharpic();
-			
 		}
 	}
 
@@ -54,7 +53,9 @@
 	}
 </script>
 
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 h-screen bg-solarizedBase3 text-solarizedBase02">
+<div
+	class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 h-screen bg-solarizedBase3 text-solarizedBase02"
+>
 	{#await fetchcharinfo()}
 		<div class="text-center"><Spinner size="10" color="red" /></div>
 	{:then}
