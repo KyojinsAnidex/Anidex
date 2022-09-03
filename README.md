@@ -26,9 +26,9 @@ This project was our submission for CSE 216 Database Lab term project in Level 2
 We are both avid anime watchers and fan of all things anime, so we thought, why not try and make an anime database? Thus we got into this project and tried to make a simple website where users can -
 
 - find and view anime and all related data
-- make watched list of anime
+- make list of watched anime
 - add new anime and other related data
-- discuss with each other in forum
+- discuss with one another in a forum
 
 
 ## Main Technologies Used
@@ -37,9 +37,12 @@ We are both avid anime watchers and fan of all things anime, so we thought, why 
   <img height="50" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" /> <img height="50" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" /> <img height="50" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original-wordmark.svg" /><img height="50" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />       
 </p>
 
+**Backend:**
 - Postgresql - version 14.4
 - NodeJS - version 16.13
 - Express JS - version 4.18
+
+**Frontend:**
 - Svelte JS - version 3.44
 
 For convenience, backend guy thought of the name **SNEP stack**...
