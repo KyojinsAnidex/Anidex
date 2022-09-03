@@ -8,9 +8,9 @@ In a suitable folder, clone the **Anidex** repo:
 
 #### Install dependencies
 
-Move to ` /backend ` folder, install dependencies:
+Move to ` /frontend ` folder, install dependencies:
 
-` cd ./backend `
+` cd ./frontend `
 
 ` npm install `
 
