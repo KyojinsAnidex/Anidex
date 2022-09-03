@@ -15,10 +15,8 @@
 
 <script>
 	export let personnels;
-	import { allper, pershowchoice } from '../stores/store.js';
-	$allper = personnels;
-	$pershowchoice = 1;
 </script>
+
 <svelte:head>
 	<title>All Personnel</title>
 </svelte:head>
@@ -32,7 +30,6 @@
 				<img
 					class="h-52 rounded-full mb-4"
 					src={'http://localhost:5000/uploads/images/' + per.pictureid}
-					
 					alt="Char Pic"
 				/>
 			</a>

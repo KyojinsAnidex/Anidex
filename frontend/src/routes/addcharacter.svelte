@@ -23,7 +23,7 @@
 <script>
 	import { Input, Dropdown, DropdownItem, Radio } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
-		export let animes, personnels;
+	export let animes, personnels;
 	// console.log(animes);
 	// console.log(personnels);
 
@@ -66,15 +66,15 @@
 		});
 		console.log(response);
 		character = {
-		lastname: '',
-		firstname: '',
-		gender: '',
-		role: '',
-		age: 0,
-		description: '',
-		voiceactors: [],
-		anime: []
-	};
+			lastname: '',
+			firstname: '',
+			gender: '',
+			role: '',
+			age: 0,
+			description: '',
+			voiceactors: [],
+			anime: []
+		};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -92,11 +92,10 @@
 		if (temp.success == false) {
 			alert('Could not Add');
 		} else {
-			alert("SuccessFully Added Character");
-			goto('http://127.0.0.1:5173/allcharacters')
+			alert('SuccessFully Added Character');
+			goto('http://127.0.0.1:5173/allcharacters');
 			console.log(temp);
 		}
-
 	}
 </script>
 
@@ -109,7 +108,7 @@
 			<div class="mt-10">
 				<h2 class="text-2xl font-bold">Add Character</h2>
 
-				<form on:submit|preventDefault={handleadd}>
+				<form on:submit|preventDefault={handleadd} >
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">First Name</label>
 						<input
@@ -118,6 +117,7 @@
 							bind:value={character.firstname}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="First Name"
+							required
 						/>
 					</div>
 					<div>
@@ -128,23 +128,26 @@
 							bind:value={character.lastname}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Last Name"
+							required
 						/>
 					</div>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Age</label>
 						<input
 							type="number"
+							min = "1"
 							id="firstname"
 							bind:value={character.age}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Age"
+							required
 						/>
 					</div>
 					<br />
 					<div class="grid grid-cols-2 divide-x items-center">
 						<div class="font-bold">
 							Role
-							<Dropdown label={character.role} class="w-60" color="white" size="l">
+							<Dropdown label={character.role} class="w-60" color="white" size="l" required>
 								<ul slot="content" class="p-3">
 									<DropdownItem
 										class="rounded"
@@ -167,7 +170,7 @@
 							</Dropdown>
 							<div class="font-bold">
 								Gender
-								<Dropdown label={character.gender} class="w-60" color="white" size="l">
+								<Dropdown label={character.gender} class="w-60" color="white" size="l" required>
 									<ul slot="content" class="p-3">
 										<DropdownItem
 											class="rounded"
@@ -192,6 +195,7 @@
 							id="sys"
 							size="lg"
 							placeholder="Description"
+							required
 						/>
 					</div>
 					<br />
@@ -203,7 +207,8 @@
 								bind:files={image}
 								id="avatar"
 								name="avatar"
-								accept="image/png, image/jpeg"
+								accept="image/png, image/jpeg, image/jpg"
+								required
 							/>
 						</div>
 					</div>
@@ -218,7 +223,7 @@
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Anime</label>
-						<select multiple bind:value={character.anime} class="text-solarizedBase02">
+						<select multiple bind:value={character.anime} class="text-solarizedBase02" required>
 							{#each animes.results as an}
 								<option value={an.animeid}>
 									{an.title}
@@ -228,7 +233,7 @@
 					</div>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Voice Actor</label>
-						<select multiple bind:value={character.voiceactors} class="text-solarizedBase02">
+						<select multiple bind:value={character.voiceactors} class="text-solarizedBase02" required>
 							{#each personnels.personnels as per}
 								<option value={per.personnelid}>
 									{per.firstname + '  ' + per.lastname}

@@ -26,10 +26,10 @@
 			})
 		});
 		studio = {
-		studioname: '',
-		office_address: '',
-		website: ''
-	};
+			studioname: '',
+			office_address: '',
+			website: ''
+		};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -59,8 +59,8 @@
 <div class="relative flex h-screen w-full">
 	<div class="h-screen w-1/2 items-center bg-solarizedBase3 text-solarizedBase02">
 		<div class="mx-auto flex h-screen w-2/3 flex-col justify-center  xl:w-1/2">
-			<h2 class="text-2xl flex justify-center font-bold">		Add Studio </h2>		
-		
+			<h2 class="text-2xl flex justify-center font-bold">Add Studio</h2>
+
 			<div class="mt-10">
 				<form on:submit|preventDefault={handleadd}>
 					<div>
@@ -71,6 +71,7 @@
 							bind:value={studio.studioname}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Name"
+							required
 						/>
 					</div>
 					<div>
@@ -81,6 +82,7 @@
 							bind:value={studio.office_address}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Address"
+							required
 						/>
 					</div>
 					<div>
@@ -91,6 +93,7 @@
 							bind:value={studio.website}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="website address"
+							required
 						/>
 					</div>
 

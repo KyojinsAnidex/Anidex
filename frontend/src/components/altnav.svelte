@@ -184,7 +184,7 @@
 		>
 	</NavUl>
 	<div class="flex justify-end">
-		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible">
+		<Dropdown arrowIcon={false} inline={true} class="bg-white overflow-visible z-50">
 			<Avatar src={$curruser.image} slot="label" />
 			{#if $state == 1}
 				<DropdownHeader>

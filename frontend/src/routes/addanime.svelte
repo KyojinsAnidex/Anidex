@@ -61,21 +61,19 @@
 		});
 		console.log(response);
 		anime = {
-		title: '',
-		releasedate: '',
-		synopsis: '',
-		releaseseason: '',
-		genre: [],
-		studio: []
-	};
+			title: '',
+			releasedate: '',
+			synopsis: '',
+			releaseseason: '',
+			genre: [],
+			studio: []
+		};
 		if (response.status === 201) {
 			return await response.json();
-			
 		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
-			
 
 			throw new Error(response.statusText);
 		}
@@ -115,24 +113,27 @@
 							bind:value={anime.title}
 							class="inline-block w-full rounded-full p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Title"
+							required
 						/>
 					</div>
 					<div>
 						<label class="mb-2.5 block  font-bold" for="release date">Release Date</label>
 						<input
-							type="text"
+							type="date"
 							id="Releasedate"
 							bind:value={anime.releasedate}
 							class="inline-block w-full rounded-full p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="YYYY-MM-DD"
+							required
 						/>
 					</div>
 					<div>
 						<label for="sys" class="mb-2.5 block  font-bold ">Synopsis</label>
-						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" />
+						<Input bind:value={anime.synopsis} id="sys" size="lg" placeholder="Synopsis" required/>
 					</div>
 					<br />
-					<Dropdown label="Season" class="w-60 text-xl font-bold" size="xl" color="black">
+					Choose Season (required)
+					<Dropdown label={anime.releaseseason} class="w-60 text-xl font-bold" size="xl" color="black" required>
 						<ul slot="content" class="p-3 ">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={anime.releaseseason} name="dropdown" value={'Spring'} tinted
@@ -164,7 +165,8 @@
 							bind:files={image}
 							id="avatar"
 							name="avatar"
-							accept="image/png, image/jpeg"
+							accept="image/png, image/jpeg, image/jpg"
+							required
 						/>
 					</div>
 				</form>
@@ -177,7 +179,7 @@
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Genre</label>
-						<select multiple bind:value={anime.genre} class="text-black">
+						<select multiple bind:value={anime.genre} class="text-black" required>
 							{#each genres.results as gen}
 								<option value={gen.genrename}>
 									{gen.genrename}
@@ -187,7 +189,7 @@
 					</div>
 					<div>
 						<label class="mb-2.5 block font-bold" for="title">Select Studio</label>
-						<select multiple bind:value={anime.studio} class="text-black">
+						<select multiple bind:value={anime.studio} class="text-black" required>
 							{#each studios.results as std}
 								<option value={std.studioname}>
 									{std.studioname}

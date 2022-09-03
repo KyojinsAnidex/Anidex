@@ -21,11 +21,11 @@
 			})
 		});
 		genre = {
-		genre: ''
-	};
+			genre: ''
+		};
 		if (response.status === 201) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -41,7 +41,7 @@
 		} else {
 			console.log(temp);
 			alert('Successfully Added Genre');
-			goto('/')
+			goto('/');
 		}
 	}
 </script>
@@ -54,7 +54,7 @@
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center xl:w-1/2">
 			<div class="mt-10">
 				<h2 class="text-2xl font-bold">Add Genre</h2>
-		
+
 				<form on:submit|preventDefault={handleadd}>
 					<div>
 						<label class="mb-2.0  text-xl font-bold flex justify-center" for="title">Genre</label>
@@ -64,6 +64,7 @@
 							bind:value={genre.genre}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Genre Name"
+							required
 						/>
 					</div>
 					<div class="my-5 ">

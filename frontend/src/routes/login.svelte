@@ -1,6 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { curruser, state,search } from '../stores/store';
+	import { curruser, state, search } from '../stores/store';
 	let user = {
 		name: '',
 		email: '',
@@ -54,8 +54,7 @@
 		});
 		if (response.status === 200) {
 			return await response.json();
-		}
-		else {
+		} else {
 			user.name = '';
 			user.email = '';
 			user.password = '';
@@ -87,12 +86,12 @@
 			$curruser.mail = temp.email;
 			$curruser.token = temp.token;
 			$curruser.admin = temp.admin;
-			
-		search.set({
-			txt: '',
-			type: ''
-		});
-		
+
+			search.set({
+				txt: '',
+				type: ''
+			});
+
 			//console.log($curruser);
 			//console.log(user);
 			$curruser.image = await fetchuserinfo();
@@ -103,7 +102,7 @@
 </script>
 
 <svelte:head>
-	<title>Log Into Anidex</title>
+	<title>Anidex Log In</title>
 </svelte:head>
 
 <div class="relative flex h-full w-full bg-solarizedBase3 text-solarizedBase02">
@@ -123,6 +122,7 @@
 							id="name"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="username"
+							required
 						/>
 					</div>
 					<div>
@@ -133,6 +133,7 @@
 							id="email"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="mail@user.com"
+							required="true"
 						/>
 					</div>
 					<div class="mt-4">
@@ -142,6 +143,7 @@
 							bind:value={user.password}
 							id="password"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow"
+							required="true"
 						/>
 					</div>
 					<div class="my-10 flex justify-center">

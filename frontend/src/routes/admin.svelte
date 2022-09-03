@@ -69,7 +69,7 @@
 		console.log(response);
 		if (response.status === 201) {
 			return await response.json();
-		}else {
+		} else {
 			let errorMessage = await response.json();
 			// console.log();
 			alert('An error occurred: ' + errorMessage.message);
@@ -81,8 +81,9 @@
 		let temp = await proxydeleteanime();
 
 		if (temp.success == false) {
-			alert('Could not Delete');
+			alert('Could not delete anime');
 		} else {
+			alert('Deleted Anime Successfully');
 			console.log(temp);
 			refresh();
 			resetalert();
@@ -112,8 +113,9 @@
 		let temp = await proxydeletecharacters();
 
 		if (temp.success == false) {
-			alert('Could not Delete');
+			alert('Could not delete character');
 		} else {
+			alert('Deleted Character Successfully');
 			console.log(temp);
 			refresh();
 			resetalert();
@@ -143,8 +145,9 @@
 		let temp = await proxydeletepersonnel();
 
 		if (temp.success == false) {
-			alert('Could not Delete');
+			alert('Could not delete person');
 		} else {
+			alert('Deleted Person Successfully');
 			console.log(temp);
 			refresh();
 			resetalert();
@@ -174,8 +177,9 @@
 		let temp = await proxydeleteepisode();
 
 		if (temp.success == false) {
-			alert('Could not Delete');
+			alert('Could not delete episode ');
 		} else {
+			alert('Deleted Episode Successfully');
 			console.log(temp);
 			refresh();
 			resetalert();
@@ -232,65 +236,15 @@
 <svelte:head>
 	<title>Admin Page</title>
 </svelte:head>
-{#if animedelchoice == 1}
-	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do you really want to delete this anime?</span
-		>
-		<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
-		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-	</Alert>
-{/if}
-{#if chardelchoice == 1}
-	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do you really want to delete this character?</span
-		>
-		<Button on:click={handledeletecharacter} size="xs" outline color="blue">Yes</Button>
-		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-	</Alert>
-{/if}
-{#if perdelchoice == 1}
-	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do you really want to delete this person</span
-		>
-		<Button on:click={handledeletepersonnel} size="xs" outline color="blue">Yes</Button>
-		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-	</Alert>
-{/if}
-{#if epdelchoice == 1}
-	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do you really want to delete this episode?</span
-		>
-		<Button on:click={handledeleteepisode} size="xs" outline color="blue">Yes</Button>
-		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-	</Alert>
-{/if}
-{#if animedelchoice == 1}
-	<Alert>
-		<div class="flex justify-center" />
-		<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
-			>Do you really want to delete this anime?</span
-		>
-		<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
-		<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
-	</Alert>
-{/if}
 <div class="relative flex justify-center h-full w-full bg-solarizedBase3">
 	<div class="h-full w-1/2  text-solarizedBase01">
 		<h2 class="text-3xl font-medium flex justify-center">Anidex Admin Page</h2>
 		<h2 class="text-2xl font-medium flex justify-center">Entry Deletion</h2>
-		
+
 		<AccordionFlush id="1">
 			<h2 slot="header" class="text-xl font-bold">Delete Anime</h2>
 			<div slot="body">
-				<select bind:value={chosenanime} class="text-black">
+				<select bind:value={chosenanime} class="text-black" required>
 					{#each animes.results as an}
 						<option value={an.animeid}>
 							{an.title}
@@ -308,10 +262,21 @@
 				</div>
 			</div>
 		</AccordionFlush>
+		{#if animedelchoice == 1}
+			<Alert color="red">
+				<div class="sticky flex justify-center" />
+				<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
+					>Do you really want to delete this anime?</span
+				>
+				<Button on:click={handledeleteanime} size="xs" outline color="blue">Yes</Button>
+				<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+			</Alert>
+		{/if}
+
 		<AccordionFlush id="5">
-			<h2 slot="header"  class="text-xl font-bold">Delete Character</h2>
+			<h2 slot="header" class="text-xl font-bold">Delete Character</h2>
 			<div slot="body">
-				<select bind:value={chosencharacter} class="text-black">
+				<select bind:value={chosencharacter} class="text-black required">
 					{#each characters.results as char}
 						<option value={char.characterid}>
 							{char.firstname + '  ' + char.lastname}
@@ -329,10 +294,21 @@
 				</div>
 			</div>
 		</AccordionFlush>
+		{#if chardelchoice == 1}
+			<Alert color="red">
+				<div class="flex justify-center" />
+				<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
+					>Do you really want to delete this character?</span
+				>
+				<Button on:click={handledeletecharacter} size="xs" outline color="blue">Yes</Button>
+				<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+			</Alert>
+		{/if}
+
 		<AccordionFlush id="2">
-			<h2 slot="header" class ="text-xl font-bold">Delete Personnel</h2>
+			<h2 slot="header" class="text-xl font-bold">Delete Personnel</h2>
 			<div slot="body">
-				<select bind:value={chosenpersonnel} class="text-black">
+				<select bind:value={chosenpersonnel} class="text-black required">
 					{#each personnels.personnels as per}
 						<option value={per.personnelid}>
 							{per.firstname + '  ' + per.lastname}
@@ -350,21 +326,42 @@
 				</div>
 			</div>
 		</AccordionFlush>
+		{#if perdelchoice == 1}
+			<Alert color="red">
+				<div class="flex justify-center" />
+				<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
+					>Do you really want to delete this person</span
+				>
+				<Button on:click={handledeletepersonnel} size="xs" outline color="blue">Yes</Button>
+				<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+			</Alert>
+		{/if}
+
 		<AccordionFlush id="3">
-			<h2 slot="header" class ="text-xl font-bold">Delete Episode</h2>
+			<h2 slot="header" class="text-xl font-bold">Delete Episode</h2>
 			<div slot="body">
-				<select bind:value={chosenanime} class="text-black">
+				<select bind:value={chosenanime} class="text-black required">
 					{#each animes.results as an}
 						<option value={an.animeid}>
 							{an.title}
 						</option>
 					{/each}
 				</select>
+				{#if epdelchoice == 1}
+					<Alert color="red">
+						<div class="flex justify-center" />
+						<span class="text-lg font-medium text-blue-700 dark:text-blue-800"
+							>Do you really want to delete this episode?</span
+						>
+						<Button on:click={handledeleteepisode} size="xs" outline color="blue">Yes</Button>
+						<Button on:click={resetalert} size="xs" outline color="blue">No</Button>
+					</Alert>
+				{/if}
 				<AccordionFlush id="4">
-					<h2 slot="header" class ="text-lg font-bold">Choose Episode</h2>
+					<h2 slot="header" class="text-lg font-bold">Choose Episode</h2>
 					<div slot="body">
 						{#await fetchepisodes() then}
-							<select bind:value={chosenepisode} class="text-black">
+							<select bind:value={chosenepisode} class="text-black required">
 								{#each episodes.episodes as prop}
 									<option value={prop.episodeid}>
 										{prop.title}
@@ -378,13 +375,12 @@
 							<button
 								on:click={epdel}
 								class="px-5 inline py-2 text-lg font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-2xl focus:outline-none bg-solarizedRed active:bg-red-900 hover:bg-red-900"
-						
 								>Delete Chosen Episode</button
 							>
 						</div>
 					</div>
 				</AccordionFlush>
-			</div></AccordionFlush
-		>
+			</div>
+		</AccordionFlush>
 	</div>
 </div>

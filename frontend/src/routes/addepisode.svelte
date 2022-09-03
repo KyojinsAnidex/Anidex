@@ -31,12 +31,12 @@
 			})
 		});
 		episode = {
-		episode: '',
-		season: '',
-		title: '',
-		airingdate: '',
-		runtime: ''
-	};
+			episode: '',
+			season: '',
+			title: '',
+			airingdate: '',
+			runtime: ''
+		};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -52,7 +52,7 @@
 		if (temp.success == false) {
 			alert('Could not Add Episode. Try Again');
 		} else if (temp.success == true) {
-			alert("Successfully Added Episode");
+			alert('Successfully Added Episode');
 			goto('http://127.0.0.1:5173/allanime');
 			console.log(temp);
 		}
@@ -77,6 +77,7 @@
 							id="title"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none  placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Title"
+							required
 						/>
 					</div>
 					<div>
@@ -87,6 +88,7 @@
 							id="season"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Season"
+							required
 						/>
 					</div>
 					<div>
@@ -98,26 +100,29 @@
 							id="episode"
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Episode"
+							required
 						/>
 					</div>
 					<div>
 						<label class="mb-2.5 block text-lg font-bold" for="release date">Airing Date</label>
 						<input
-							type="text"
+							type="date"
 							id="AirDate"
 							bind:value={episode.airingdate}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="YYYY-MM-DD"
+							required
 						/>
 					</div>
 					<div>
 						<label class="mb-2.5 block text-lg font-bold" for="release date">Runtime</label>
 						<input
-							type="text"
+							type="interval"
 							id="Runtime"
 							bind:value={episode.runtime}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="HH:MM:SS"
+							required
 						/>
 					</div>
 

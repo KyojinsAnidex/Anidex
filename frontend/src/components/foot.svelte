@@ -45,7 +45,7 @@
 		</div>
 	</div>
 </Footer> -->
-<Footer class=" bottom-0 left-0 z-20 w-full text-base bg-solarizedBase3 text-solarizedBase02">
+<Footer class="sticky bottom-0 left-0 z-20 w-full text-base bg-solarizedBase3 text-solarizedBase02">
 	<FooterCopyright
 		spanClass="block text-base font-semibold text-gray-500 sm:text-center dark:text-gray-400"
 		href="https://github.com/KyojinsAnidex/"

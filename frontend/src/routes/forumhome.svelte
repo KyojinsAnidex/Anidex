@@ -26,7 +26,7 @@
 		TableSearch
 	} from 'flowbite-svelte';
 	export let tags;
-	console.log(tags);
+	// console.log(tags);
 </script>
 
 <svelte:head>

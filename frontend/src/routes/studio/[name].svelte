@@ -15,13 +15,10 @@
 			const response = await fetch(studioendpoint);
 			if (response.status === 200) {
 				return await response.json();
-			}
-			else if(response.status === 404) 
-			{
-				alert("No Anime Of That Studio Found");
+			} else if (response.status === 404) {
+				alert('No Anime Of That Studio Found');
 				return await response.json();
-			}
-			else {
+			} else {
 				console.log('An error Try Again');
 				throw new Error(response.statusText);
 			}
@@ -82,43 +79,49 @@
 			return pictures;
 		}
 		pictures = await fetchanimepic();
-		return { props: { animeresults, pictures,name } };
+		return { props: { animeresults, pictures, name } };
 	}
 </script>
 
 <script>
-	
 	export let animeresults;
 	export let pictures;
 	export let name;
-
 </script>
 
+<svelte:head>
+	<title>
+		{name}
+	</title>
+</svelte:head>
+
 <div class=" bg-solarizedBase3 text-solarizedBase02">
-<div class= "flex justify-center">
-	<div class=" bg-solarizedBase3 text-solarizedBase02">
-		<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
-			Studio : {name}
-		</h4>
-	</div>
-	</div>
-	
-<div class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02">
-	{#each animeresults as prop, i}
-		<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-			<a href="/anime/{prop.animeid}">
-				<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
-			</a>
-			<h2 class="mt-2 text-2xl text-center font-medium dark:text-red-700">
-				{animeresults[i].title}
-			</h2>
-			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
-				{animeresults[i].releaseseason}
+	<div class="flex justify-center">
+		<div class=" bg-solarizedBase3 text-solarizedBase02">
+			<h4 class="mt-2 text-3xl font-medium  dark:text-red-700">
+				Studio : {name}
 			</h4>
-			<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
-				{animeresults[i].releasedate.slice(0, 4)}
-			</h4>
-			<!--
+		</div>
+	</div>
+
+	<div
+		class="grid grid-cols- gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 bg-solarizedBase3 text-solarizedBase02"
+	>
+		{#each animeresults as prop, i}
+			<div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+				<a href="/anime/{prop.animeid}">
+					<img class="h-52 rounded-full mb-4" src={pictures[i]} alt="Anime Pic" />
+				</a>
+				<h2 class="mt-2 text-2xl text-center font-medium dark:text-red-700">
+					{animeresults[i].title}
+				</h2>
+				<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
+					{animeresults[i].releaseseason}
+				</h4>
+				<h4 class="mt-2 text-lg text-center font-medium  dark:text-red-700">
+					{animeresults[i].releasedate.slice(0, 4)}
+				</h4>
+				<!--
          <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-red-700">
            {animes.results[i].averagerating}
          </h4>

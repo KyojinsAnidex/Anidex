@@ -57,14 +57,14 @@
 		// console.log(response);
 		// console.log(await response.json());
 		personnel = {
-		lastname: '',
-		firstname: '',
-		gender: '',
-		birthday: '',
-		address: '',
-		website: '',
-		anime: []
-	};
+			lastname: '',
+			firstname: '',
+			gender: '',
+			birthday: '',
+			address: '',
+			website: '',
+			anime: []
+		};
 		if (response.status === 201) {
 			return await response.json();
 		} else {
@@ -107,6 +107,7 @@
 							bind:value={personnel.firstname}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="First Name"
+							required
 						/>
 					</div>
 					<div>
@@ -117,11 +118,12 @@
 							bind:value={personnel.lastname}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Last Name"
+							required
 						/>
 					</div>
 					<br />
 					<h2 class="text-lg font-bold">Choose Gender</h2>
-					<Dropdown label={personnel.gender} class="w-60" color="white" size="l">
+					<Dropdown label={personnel.gender} class="w-60" color="white" size="l" required>
 						<ul slot="content" class="p-3">
 							<DropdownItem class="rounded" liClass="p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
 								<Radio bind:group={personnel.gender} name="dropdown" value={'M'} tinted>Male</Radio>
@@ -140,6 +142,7 @@
 							bind:value={personnel.address}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="Address"
+							required
 						/>
 					</div>
 					<div>
@@ -150,16 +153,18 @@
 							bind:value={personnel.website}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="website address"
+							required
 						/>
 					</div>
 					<div>
 						<label class="mb-2.0 block text-lg font-bold" for="release date">BirthDay</label>
 						<input
-							type="text"
+							type="date"
 							id="Birthdate"
 							bind:value={personnel.birthday}
 							class="inline-block w-full rounded-full bg-white p-2.5 leading-none text-black placeholder-indigo-900 shadow placeholder:opacity-30"
 							placeholder="YYYY-MM-DD"
+							required
 						/>
 					</div>
 					<br />
@@ -170,7 +175,8 @@
 							bind:files={image}
 							id="avatar"
 							name="avatar"
-							accept="image/png, image/jpeg"
+							accept="image/png, image/jpeg image/jpg"
+							required
 						/>
 					</div>
 				</form>
@@ -180,10 +186,10 @@
 	<div class="h-full w-1/2 ">
 		<div class="mx-auto flex h-full w-2/3 flex-col justify-center  xl:w-1/2">
 			<div class="mt-10 text-xl">
-				<form on:submit|preventDefault={handleadd}>
+				<form on:submit|preventDefault={handleadd} required>
 					<div>
 						<label class="mb-2.5 block text-lg font-bold" for="title">Select Anime</label>
-						<select multiple bind:value={personnel.anime} class="text-black">
+						<select multiple bind:value={personnel.anime} class="text-black" required>
 							{#each animes.results as an}
 								<option value={an.animeid}>
 									{an.title}
