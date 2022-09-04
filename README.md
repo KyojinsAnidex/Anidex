@@ -75,7 +75,7 @@ In the backend, there is
 - **Authentication** with **JWT**
 - Secure **password storage** using **Bcrypt**
 - **File** upload and static hosting
-- **Documentation of the RESTfull API using Swagger**, hosted in the backend server
+- **Documentation of the RESTful API using Swagger**, hosted in the backend server
 
 
 ## Setup
