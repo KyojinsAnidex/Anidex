@@ -55,21 +55,23 @@ Without signing up, a user can:
 - **View** all **anime**, top rated anime and all related ratings
 - **View** anime by **genres and studios**
 - **View** anime **episodes** and related ratings
-- **View** anime **staffs and characters**, see which anime they had been in
+- **View** anime **staffs, characters, studios**, see which anime they are related to
 - **View** the **forum**
+- **View reviews** of anime in the forum
 
 After siging up, a user can furthermore:
 
 - **Rate** anime and episodes
 - **Add** anime to **watchlist and favourite list**
-- **Add to database** new anime, episoded, character, personnel, genre and studio with pictures as applicable
+- **Add to database** new anime, episoded, character, personnel, genre and studio **with pictures** as applicable
 - **Participate** in all discussion threads in the **forum**
+- **Post reviews** of anime in the forum
 - **Edit** their account information
 - **Delete** database entry if admin privilege is given to user
 
 In the backend, there is
 
-- **RESTfull API** with endpoints for various data and operations with authentication if necessary
+- **RESTful API** with endpoints for various data and operations with authentication if necessary
 - **Authentication** with **JWT**
 - Secure **password storage** using **Bcrypt**
 - **File** upload and static hosting
@@ -108,6 +110,7 @@ Room for improvement:
 ## Resources Used
 
 - This project was inspired by the fan-made user generated anime database **[Anidb](https://www.anidb.net)** and not-so-fan-made anime database **[MAL](https://www.myanimelist.net)**.
+- **[Razin Vaiya's](https://github.com/RazinReaz/)** Database lab project **[My Anime List](https://github.com/RazinReaz/my-anime-list)** was the one thing that directly encouraged us to create Anidex.
 - The backend was inspired by the RESTful API server idea of this [Course](https://www.udemy.com/course/react-nodejs-express-mongodb-the-mern-fullstack-guide/).
 - The frontend was made using multiple tutorials and ideas, list of which can be found [here](https://github.com/KyojinsAnidex/Anidex/tree/main/resources#svelte).
 
@@ -121,6 +124,9 @@ We would like to specially give our heartfelt thanks to our honourable professor
 We would also like to express our heartiest gratitude to our project supervisor **[Mr. Mohammad Tawhidul Hasan Bhuiyan](https://cse.buet.ac.bd/faculty_list/detail/tawhid)** for the very important guidances and suggestions he gave us throughout the project.
 
 We would like to give our heartfelt thanks to **[Sihat Afnan](https://github.com/AfnanCSE98)** vaiya for his guidance starting the project and his help throughout the term. Without his starting pointers, we would not have managed to complete the project at all.
+
+We are very much grateful to **[Razin Reaz](https://github.com/RazinReaz/)** vaiya for his team's awesome **[anime database project](
+https://github.com/RazinReaz/my-anime-list)**. It was this work that inspired us first to try and create a fan-made anime database. He also helped us getting our project started with valuable advices.
 
 A special shoutout to **[this cat](https://github.com/Siam11651)** for helping us out anytime we needed. Check out his **[project](https://github.com/ePathshala-org)**, dude is one of the only two backend guys out of roughly 60 to use **CPP 🤲** in backend. Thanks man!
 
