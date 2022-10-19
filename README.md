@@ -93,7 +93,7 @@ We are using a **ExpressJS** RESTfull API server in the backend to serve the **S
 
 ## Project Status
 
-Project is: _in progress_ .
+Project is: _not being worked on anymore_ .
 
 
 ## Room for Improvement
